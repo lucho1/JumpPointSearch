@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="j1App.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Scene.cpp">
+      <Filter>Game Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PugiXml\src\pugixml.cpp">
+      <Filter>Core\Tools\PuguiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="p2Log.cpp">
+      <Filter>Core\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Game Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Game Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Game Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Game Files\Modules\Main Functionalities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Game Files\Modules\Main Functionalities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Game Files\Modules\Main Functionalities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Core\Tools\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Core\Tools\Timers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="j1App.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Module.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Scene.h">
+      <Filter>Game Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
+      <Filter>Core\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugixml.hpp">
+      <Filter>Core\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Defs.h">
+      <Filter>Core\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Log.h">
+      <Filter>Core\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Core\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Map.h">
+      <Filter>Game Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Game Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Game Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Game Files\Modules\Main Functionalities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Game Files\Modules\Main Functionalities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Window.h">
+      <Filter>Game Files\Modules\Main Functionalities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Core\Tools\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Core\Tools\Timers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Tools">
+      <UniqueIdentifier>{42c748be-4a37-49de-970f-5be811d06b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Tools\PuguiXML">
+      <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files">
+      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\Modules">
+      <UniqueIdentifier>{ccbdc630-da99-4b4e-b411-8c4add0a7181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\Modules\Main Functionalities">
+      <UniqueIdentifier>{ce55ec0d-15fc-4a27-92d8-77b4e4fa7827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\XML Files">
+      <UniqueIdentifier>{b8b1c1f3-3bf4-4c02-9be3-ea57266fc526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Tools\Timers">
+      <UniqueIdentifier>{44f68f56-2713-477a-b7af-8463a30c0c99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\User Interface">
+      <UniqueIdentifier>{46cac277-4cff-44fd-a934-2431359b983a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\Scenes">
+      <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
