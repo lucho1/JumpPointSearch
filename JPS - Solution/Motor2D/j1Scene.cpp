@@ -49,6 +49,18 @@ bool j1Scene::Start()
 bool j1Scene::PreUpdate()
 {
 
+	// Switch between A* and JPS
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+
+		activateJPS = !activateJPS;
+
+		if (activateJPS == true)
+			AlgorithmUsed = "JPS";
+		else
+			AlgorithmUsed = "A-Star";
+	}
+
+
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -62,8 +74,16 @@ bool j1Scene::PreUpdate()
 	{
 		if(origin_selected == true)
 		{
-			App->pathfinding->CreatePath(origin, p);
+
+			LOG("========PATHFINDING PERFORMANCE TEST RESULTS=========");
+			LOG("Using Algorithm: %s", AlgorithmUsed);
+
+			PathfindingTimer.Start();
+			App->pathfinding->CreatePath(origin, p, activateJPS);
+			Ptime = PathfindingTimer.ReadMs();
 			origin_selected = false;
+
+			LOG("PATHFINDING LASTED: %f ms", Ptime);
 		}
 		else
 		{

@@ -51,7 +51,7 @@ public:
 
 	p2Point operator + (const p2Point &v) const
 	{
-		p2Vector2 r;
+		p2Point r;
 
 		r.x = x + v.x;
 		r.y = y + v.y;
@@ -124,13 +124,7 @@ public:
 
 	TYPE DistanceManhattan(const p2Point& v) const
 	{
-
-	/*	TYPE dx = abs(v.x - x);
-		TYPE dy = abs(v.y - y);
-		return dx + dy;*/
-
 		return abs(v.x - x) + abs(v.y - y);
-
 	}
 
 	TYPE DiagonalDistance(const p2Point& v) const

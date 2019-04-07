@@ -110,14 +110,8 @@
     <Filter Include="Game Files\Modules\Main Functionalities">
       <UniqueIdentifier>{ce55ec0d-15fc-4a27-92d8-77b4e4fa7827}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Files\XML Files">
-      <UniqueIdentifier>{b8b1c1f3-3bf4-4c02-9be3-ea57266fc526}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Tools\Timers">
       <UniqueIdentifier>{44f68f56-2713-477a-b7af-8463a30c0c99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Files\User Interface">
-      <UniqueIdentifier>{46cac277-4cff-44fd-a934-2431359b983a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game Files\Scenes">
       <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>

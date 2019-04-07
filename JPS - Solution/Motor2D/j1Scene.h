@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1PerfTimer.h"
 
 struct SDL_Texture;
 
@@ -33,7 +34,14 @@ public:
 	bool CleanUp();
 
 private:
+
+	//Pathfinding Stuff
 	SDL_Texture* debug_tex;
+	bool activateJPS = false;
+	char* AlgorithmUsed = "A-Star";
+	j1PerfTimer PathfindingTimer;
+	double Ptime;
+
 };
 
 #endif // __j1SCENE_H__

@@ -8,6 +8,8 @@
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
+struct PathNode;
+
 class j1PathFinding : public j1Module
 {
 public:
@@ -24,7 +26,7 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	// Main function to request a path from A to B
-	int CreatePath(const iPoint& origin, const iPoint& destination);
+	int CreatePath(const iPoint& origin, const iPoint& destination, bool JPS_active);
 
 	// To request all tiles involved in the last generated path
 	const std::vector<iPoint>* GetLastPath() const;
@@ -38,11 +40,16 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 
+public:
+
 	//Runs A*
 	int PropagateAStar(const iPoint& origin, const iPoint& destination);
 
 	//Runs JPS
 	int PropagateJPS(const iPoint& origin, const iPoint& destination);
+
+	//Decides which nodes to keep based on a direction and tile's walkability
+	PathNode* Jump(iPoint current_position, iPoint direction, const iPoint& destination, PathNode* parent);
 
 private:
 
@@ -62,11 +69,16 @@ struct PathNode
 {
 	// Convenient constructors
 	PathNode();
-	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	PathNode(int g, int h, const iPoint& pos, PathNode* parent);
 	PathNode(const PathNode& node);
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	uint FindWalkableAdjacents(PathList& list_to_fill);
+
+	//Builds a list with the only nodes that we want to keep considering the direction and calling Jump() function
+	//We need to pass the pathfinding module because Jump() is in there
+	PathList PruneNeighbours(const iPoint& destination, j1PathFinding* PF_Module = nullptr);
+
 	// Calculates this tile score
 	int Score() const;
 	// Calculate the F for a specific destination tile
@@ -76,7 +88,7 @@ struct PathNode
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	PathNode* parent; // needed to reconstruct the path in the end
 };
 
 

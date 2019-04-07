@@ -36,6 +36,10 @@
 #define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #define TO_BOOL( a )  ( (a != 0) ? true : false )
 
+//Clamp: https://stackoverflow.com/questions/21656574/why-is-there-no-clamp-function-in-math-h 
+//If X is between lower and upper, returns X. Else, if X < lower, returns lower. Else, if X > upper, returns upper.
+#define CLAMP(x, upper, lower) (MIN(upper, MAX(x, lower)))
+
 typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef unsigned __int32 uint32;
