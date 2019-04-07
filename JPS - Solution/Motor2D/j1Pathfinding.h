@@ -25,7 +25,7 @@ public:
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
 
-	// Main function to request a path from A to B
+	// Main function to request a path from A to B - Decides (with the bool) if expands A* or JPS
 	int CreatePath(const iPoint& origin, const iPoint& destination, bool JPS_active);
 
 	// To request all tiles involved in the last generated path
@@ -48,7 +48,7 @@ public:
 	//Runs JPS
 	int PropagateJPS(const iPoint& origin, const iPoint& destination);
 
-	//Decides which nodes to keep based on a direction and tile's walkability
+	//Decides next Jump Point based on a direction and tile's walkability
 	PathNode* Jump(iPoint current_position, iPoint direction, const iPoint& destination, PathNode* parent);
 
 private:

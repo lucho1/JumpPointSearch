@@ -40,6 +40,9 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Core\Tools\Timers</Filter>
     </ClCompile>
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Core\Tools\Fonts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -90,6 +93,9 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Core\Tools\Timers</Filter>
     </ClInclude>
+    <ClInclude Include="Fonts.h">
+      <Filter>Core\Tools\Fonts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -115,6 +121,9 @@
     </Filter>
     <Filter Include="Game Files\Scenes">
       <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Tools\Fonts">
+      <UniqueIdentifier>{2cb8575e-3660-4230-a59c-adc9e6b4b32f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@ class j1Textures;
 class j1Scene;
 class j1Map;
 class j1PathFinding;
+class Fonts;
 
 class j1App
 {
@@ -76,6 +77,7 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1PathFinding*		pathfinding;
+	//Fonts*				fonts;
 
 private:
 

@@ -233,7 +233,7 @@ int j1PathFinding::PropagateAStar(const iPoint& origin, const iPoint& destinatio
 		AdjacentNodes.list.clear();
 
 		(*lower).FindWalkableAdjacents(AdjacentNodes);
-		std::list<PathNode>::iterator it = AdjacentNodes.list.begin(); //iterator of Adjacent Nodes list
+		std::list<PathNode>::iterator it = AdjacentNodes.list.begin();
 
 		for (; it != AdjacentNodes.list.end(); it = next(it)) {
 
