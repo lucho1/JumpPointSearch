@@ -57,6 +57,7 @@ Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one
 
 ***
 Many information? Looking for other section? Go back to [Index](#index).
+***
 
 ## A* First Improvements, Generalities and Context
 ## Nowadays - Hierarchies and other Games
