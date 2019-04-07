@@ -21,11 +21,24 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
        * [Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets](#generalized-adaptive-a-gaa---initial-approach-to-moving-targets)
        * [Dynamic A* (D*) and Lifelong Planning A* (LPA*)](#dynamic-a-d-and-lifelong-planning-a-lpa)
          * [LPA* and D*’s son: A love story](#lpa-and-d-s-son-a-love-story)
-      * [Angled Pathfinding](#angled-pathfinding)
-        * [Field D*](#field-d)
-        * [Theta*](#theta)
-        * [Incremental Phi*](#incremental-phi)
+     * [Angled Pathfinding](#angled-pathfinding)
+       * [Field D*](#field-d)
+       * [Theta*](#theta)
+       * [Incremental Phi*](#incremental-phi)
   4. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
+     * [Hierarchical Pathfinding (HPA*)](#hierarchical-pathfinding-hpa)
+       * [Improving HPA* - Partial Refinement A* (PRA*)](#improving-HPA---partial-refinement-a-pra)
+     * [Other Games’ Approaches](#other-games-approaches)  
+         * [Professor Lupo - Thankful Mention](#professor-lupo---thankful-mention)     
+       * [Navigation Meshes and Hierarchy](#navigation-meshes-and-hierarchy)
+         * [Starcraft II](#starcraft-ii)
+         * [Dragon Age Origins](#dragon-age-origins)
+         * [Heroes on the Move](#heroes-on-the-move)
+         * [Supernauts](#supernauts)
+       * [Hierarchical Pathfinding](#hierarchical-pathfinding)       
+         * [Castle Story](#castle-story)
+         * [KillZone 2](#killZone-2)
+         * [Company of Heroes and Dawn of War 2](#company-of-heroes-and-dawn-of-war-2)
   5. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
   6. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
   7. [Links to Additional Information](#links-to-additional-information)
@@ -105,7 +118,7 @@ In this section, I will talk about general A* improvements that can speed up the
 ##### Dragon Age Origins
 ##### Heroes on the Move
 ##### Supernauts
-#### Hierarchical Pathfinding in Other Games
+#### Hierarchical Pathfinding
 ##### Castle Story
 ##### KillZone 2
 ##### Company of Heroes and Dawn of War 2
