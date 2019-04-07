@@ -19,7 +19,7 @@ Then I conclude this research with additional information and final thoughts.
 
 # Introduction to Problem
 As you may deduce, in many games, there is a need to find paths from a location to another, for example, to give a path for a unit to move. To do this, we build algorithms in order to find these paths in an automatic manner. In this research, we will talk about one specific algorithm, which I will suppose you already know, the A*, in order to find optimizations and improvements for it.
-![Image of General Pathfinding](https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/generalpathfinding.png)
+![](https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/generalpathfinding.png)
 
 # A* First Improvements, Generalities and Context
 # Nowadays - Hierarchies and other Games
