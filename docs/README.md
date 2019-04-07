@@ -6,6 +6,13 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
 
 ## Index
 
+  1. [Research Organization](#research-organization)
+  2. [A* First Improvements, Generalities and Context](#a-first-improvements-generalities-and-context)
+  3. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
+  4. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
+  5. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
+  6. [Links to Additional Information](links-to-additional-information)
+
 ## Research Organization
 As you may see in the index, this page has many sections and many information. It’s possible that you are not interested in everything that is explained here, so to ease your accessibility, let me explain how the research is organized (apart of introduction part).
 
@@ -17,7 +24,7 @@ As you may see in the index, this page has many sections and many information. I
   
 Then I conclude this research with additional information and final thoughts.
 
-# Introduction to Problem
+## Introduction to Problem
 As you may deduce, in many games, there is a need to find paths from a location to another, for example, to give a path for a unit to move. To do this, we build algorithms in order to find these paths in an automatic manner. In this research, we will talk about one specific algorithm, which I will suppose you already know, the A*, in order to find optimizations and improvements for it.
 
 <p align="center">
@@ -37,6 +44,17 @@ So it’s a matter of efficiency; efficiency helps the program running fast and 
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/iuWB2NM48R2r9q7QhyJfhe-320-80.jpg?raw=true" width="468px" height="344px"/>
 </p>
 
-# A* First Improvements, Generalities and Context
-# Nowadays - Hierarchies and other Games
-# My Approach - Killing Path Symmetries
+### Before Starting
+Before starting, it’s important for you to know how A* works as well as how grid maps are abstracted in graphs to perform pathfinding and how everything is calculated (if you don’t you can check [this](https://www.redblobgames.com/pathfinding/a-star/introduction.html) page or [this](https://www.redblobgames.com/pathfinding/a-star/implementation.html) one about implementing A*). Also, remember that there are, at least, 3 kind of distance calculations that you can use for heuristics (g values) depending on how do you want pathfinding to work in your game. They are:
+
+  * Manhattan Distance for for 4 or 6 directions movement →  d = Cl * (|dx| + |dy|)
+  * Diagonal Movement (8 directions): Chebyshev Distance → d = Cd * max(|dx|, |dy|) for Cd = Cl or Octile Distance for Cd = Cl * sqrt(2) → d = Cl * (dx+dy) + (Cd - 2Cl) * min(dx, dy)
+  * Euclidean Distance for straight line (any angle/direction) movement, a more expensive calculation and descaling (of g and h) problems →  d = Cl * sqrt(2*dx*dy)
+  
+Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one, dx = x-x0 and dy = y -y0. I'm saying this because you can play with heuristics to change the types of paths you get.
+
+## A* First Improvements, Generalities and Context
+## Nowadays - Hierarchies and other Games
+## My Approach - Killing Path Symmetries
+## Final Thoughts and Recommendations
+## Links to Additional Information
