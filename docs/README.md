@@ -56,10 +56,19 @@ Before starting, it’s important for you to know how A* works as well as how gr
 Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one, dx = x-x0 and dy = y -y0. I'm saying this because you can play with heuristics to change the types of paths you get.
 
 ***
-Many information? Looking for other section? Go back to [Index](#index).
+> *Many information? Looking for other section? Go back to [Index](#index)*
 ***
 
 ## A* First Improvements, Generalities and Context
+### General Improvements and Heuristics Changes
+In this section, I will talk about general A* improvements that can speed up the algorithm. I recommend (if they are used) to mix them with some algorithm explained downwards to a better improvement.
+
+#### Beam Search
+#### Bidirectional Search
+#### Dynamic Weighting
+#### Iterative Deepening (IDA*)
+#### Building This Section
+
 ## Nowadays - Hierarchies and other Games
 ## My Approach - Killing Path Symmetries
 ## Final Thoughts and Recommendations
