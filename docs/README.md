@@ -7,11 +7,13 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
 ## Index
 
   1. [Research Organization](#research-organization)
-  2. [A* First Improvements, Generalities and Context](#a-first-improvements-generalities-and-context)
-  3. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
-  4. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
-  5. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
-  6. [Links to Additional Information](links-to-additional-information)
+  2. [Introduction to Problem](#introduction-to-problem)
+       [Before Starting](#before-starting)
+  3. [A* First Improvements, Generalities and Context](#a-first-improvements-generalities-and-context)
+  4. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
+  5. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
+  6. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
+  7. [Links to Additional Information](#links-to-additional-information)
 
 ## Research Organization
 As you may see in the index, this page has many sections and many information. It’s possible that you are not interested in everything that is explained here, so to ease your accessibility, let me explain how the research is organized (apart of introduction part).
