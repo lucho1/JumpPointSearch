@@ -27,7 +27,9 @@ A* is one of the most used algorithms for Pathfinding since it’s pretty fast, 
 
 So it’s a matter of efficiency; efficiency helps the program running fast and give more importance to other things, so until know, we make it work, and now, we will make it fast, let’s get into it!
 
-![](https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/iuWB2NM48R2r9q7QhyJfhe-320-80.jpg)
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/iuWB2NM48R2r9q7QhyJfhe-320-80.jpg?raw=true" alt="Image"/>
+</p>
 
 # A* First Improvements, Generalities and Context
 # Nowadays - Hierarchies and other Games
