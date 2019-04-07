@@ -109,20 +109,37 @@ In this section, I will talk about general A* improvements that can speed up the
 #### Iterative Deepening (IDA*)
 #### Building This Section
 
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
+
 ### Paths Recalculations - Incremental Searches
 #### Fringe Saving A*
 #### Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets
 #### Dynamic A* (D*) and Lifelong Planning A* (LPA*)
 ##### LPA* and D* ’s son: A love story
 
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
+
 ### Angled Pathfinding
 #### Field D*
 #### Theta*
 #### Incremental Phi*
 
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
+
 ## Nowadays - Hierarchies and other Games
 ### Hierarchical Pathfinding (HPA*)
 #### Improving HPA* - Partial Refinement A* (PRA*)
+
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
+
 ### Other Games’ Approaches
 ##### Professor Lupo - Thankful Mention
 #### Navigation Meshes and Hierarchy
@@ -134,6 +151,10 @@ In this section, I will talk about general A* improvements that can speed up the
 ##### Castle Story
 ##### KillZone 2
 ##### Company of Heroes and Dawn of War 2
+
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
 
 ## My Approach - Killing Path Symmetries
 ### Jump Point Search (JPS)
@@ -148,9 +169,21 @@ In this section, I will talk about general A* improvements that can speed up the
 ##### Performance
 ##### More Information on JPS and Sources
 
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
+
 ### Other Improvements
 #### Rectangular Symmetry Reduction (RSR)
 #### Hierarchical Annotated A* (HAA*)
 
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
+
 ## Final Thoughts and Recommendations
 ## Links to Additional Information
+
+***
+> *Many information? Looking for other section? Go back to [Index](#index)*
+***
