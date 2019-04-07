@@ -233,8 +233,43 @@ To finish with angled pathfinding, just mention Incremental Phi*. It mixes Theta
 ***
 
 ## Nowadays - Hierarchies and other Games
+On top of the previous researches and especially on top of everything explained in the previous sections, pathfinding started to have different directions. What it seems to be widely used by other reference videogames is the map abstraction into a hierarchy with different levels representing the tiles of the lower levels (that is, dividing the map into areas that, each time with bigger tiles, represent the map itself, like a Quadtree).
+Before seeing it, let’s see the different types of map representations or how to represent the map in a graph.
+
 ### Hierarchical Pathfinding (HPA*)
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hierarchy.jpg?raw=true" width="214px" height="143px"/>
+</p>
+
+Pathfinding with a large number of units on a large graph, all with different starting locations and potentially different destinations can be tricky and time and performance consuming if there is not a good strategy. Hierarchical pathfinding might solve this problem when needing the previous features. It breaks the graph into a hierarchy and, inside each hierarchy levels, into sectors (called clusters) and performs pathfinding first in the higher levels, and then, in the lower levels that these high-level paths touch. This is that, on a high level layer, a path is planned and then, a second one within clusters of lower level and so. HPA* is used to quickly find an optimal path for many units faster than running A* individually. The number of nodes to check out is lower (since we do smaller searches) and the performance is better. 
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hpa/grid-hierarchy.png?raw=true" width="268px" height="134px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hierarchyPF1.png?raw=true" width="128px" height="116px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hierarchyPF2.png?raw=true" width="146px" height="132px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hierarchyPF3.png?raw=true" width="268px" height="220px"/>
+</p>
+
+The hierarchical pathfinding addresses, mainly, three issues (the next parts are very well explained in this [AI Game Dev article](http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/), which also includes the HPA* paper to download and a evaluation of the algorithm):
+
+  1. Dynamic environment and paths changings
+  2. A* ’s slow performance in big maps
+  3. Profiting Previous searches (Incremental Search)
+
+And to tackle these, it uses a combination of grid preprocessing to have a high-level graph (with many levels as necessary) using cluster algorithms like Quadtrees, path-planning within the hierarchy (1st at a higher level, then recursively at lower ones) and path re-using.
+
+As you will see, many of the nowadays game uses this approach towards pathfinding. For that reason, you might understand better HPA*, by can check out the next section of this page explaining approaches by other games, especially the ones talking about Castle Story, Heroes on the Move and Killzone.
+
+
 #### Improving HPA* - Partial Refinement A* (PRA*)
+HPA* also has some improvements. One of them is Partial Refinement A* (PRA*), that combines the hierarchical map abstraction like HPA* but also connects the different levels of the hierarchy (keeping the current nodes’ connectivity inside a same level), forming kind of pyramids. Then, to find a path, a level of the hierarchy is chosen and search for nodes representing the origin and destination nodes of that path.
+So, at the higher level chosen, PRA* uses A* to find a path and then projects the first steps down to the next hierarchy levels until reaching the final one (the one in which we need the path to work), where the final path is refined, meaning that is definitively done by considering a corridor around the previous projected path. However, PRA* performance is similar to HPA*.
+
+[This paper](https://drive.google.com/open?id=1UsIyOZQZwcV07r3xKoZMbOmIl2Sdp24h) explains PRA* better and [this one](https://drive.google.com/open?id=17HYI_ZHk0RQ_LV1bzESXIis1mQaEZ85r) purposes an improvement on it.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
