@@ -8,7 +8,7 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
 
   1. [Research Organization](#research-organization)
   2. [Introduction to Problem](#introduction-to-problem)
-       [Before Starting](#before-starting)
+     * [Before Starting](#before-starting)
   3. [A* First Improvements, Generalities and Context](#a-first-improvements-generalities-and-context)
   4. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
   5. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
