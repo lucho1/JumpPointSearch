@@ -13,7 +13,7 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
      * [General Improvements and Heuristics Changes](#general-improvements-and-heuristics-changes)
        * [Beam Search](#beam-search)
        * [Bidirectional Search](#bidirectional-search)
-       * [Dynamic Weighting](##dynamic-weighting)
+       * [Dynamic Weighting](#dynamic-weighting)
        * [Iterative Deepening (IDA*)](#iterative-deepening-ida)
        * [Building This Section](#building-this-section)
      * [Paths Recalculations - Incremental Searches](#paths-recalculations---incremental-searches)
