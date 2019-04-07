@@ -19,7 +19,7 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
      * [Paths Recalculations - Incremental Searches](#paths-recalculations---incremental-searches)
        * [Fringe Saving A*](#fringe-saving-a)
        * [Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets](#generalized-adaptive-a---gaa--initial-approach-to-moving-targets)
-       * [Dynamic A* (D*) and Lifelong Planning A* (LPA*)](#dynamic-a--d--and-lifelong-planning-a--lpa)
+       * [Dynamic A* (D*) and Lifelong Planning A* (LPA*)](#dynamic-a-d-and-lifelong-planning-a-lpa)
          * [LPA* and D*’s son: A love story](#lpa-and-d-s-son-a-love-story)
       * [Angled Pathfinding](#angled-pathfinding)
         * [Field D*](#field-d)
