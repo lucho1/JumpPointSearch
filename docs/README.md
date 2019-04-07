@@ -10,6 +10,21 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
   2. [Introduction to Problem](#introduction-to-problem)
      * [Before Starting](#before-starting)
   3. [A* First Improvements, Generalities and Context](#a-first-improvements-generalities-and-context)
+     * [General Improvements and Heuristics Changes](#general-improvements-and-heuristics-changes)
+       * [Beam Search](#beam-search)
+       * [Bidirectional Search](#bidirectional-search)
+       * [Dynamic Search](#dynamic-search)
+       * [Iterative Deepening (IDA*)](#iterative-deepening--ida)
+       * [Building This Section](#building-this-section)
+     * [Paths Recalculations - Incremental Searches](#paths-recalculations---incremental-searches)
+       * [Fringe Saving A*](#fringe-saving-a)
+       * [Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets](#generalized-adaptive-a---gaa--initial-approach-to-moving-targets)
+       * [Dynamic A* (D*) and Lifelong Planning A* (LPA*)](#dynamic-a--d--and-lifelong-planning-a--lpa)
+         * [LPA* and D*’s son: A love story](#lpa-and-d-s-son-a-love-story)
+      * [Angled Pathfinding](#angled-pathfinding)
+        * [Field D*](#field-d)
+        * [Theta*](#theta)
+        * [Incremental Phi*](#incremental-phi)
   4. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
   5. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
   6. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
@@ -69,7 +84,32 @@ In this section, I will talk about general A* improvements that can speed up the
 #### Iterative Deepening (IDA*)
 #### Building This Section
 
+### Paths Recalculations - Incremental Searches
+#### Fringe Saving A*
+#### Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets
+#### Dynamic A* (D*) and Lifelong Planning A* (LPA*)
+##### LPA* and D* ’s son: A love story
+
+### Angled Pathfinding
+#### Field D*
+#### Theta*
+#### Incremental Phi*
+
 ## Nowadays - Hierarchies and other Games
+### Hierarchical Pathfinding (HPA*)
+#### Improving HPA* - Partial Refinement A* (PRA*)
+### Other Games’ Approaches
+##### Professor Lupo - Thankful Mention
+#### Navigation Meshes and Hierarchy
+##### Starcraft II
+##### Dragon Age Origins
+##### Heroes on the Move
+##### Supernauts
+#### Hierarchical Pathfinding in Other Games
+##### Castle Story
+##### KillZone 2
+##### Company of Heroes and Dawn of War 2
+
 ## My Approach - Killing Path Symmetries
 ## Final Thoughts and Recommendations
 ## Links to Additional Information
