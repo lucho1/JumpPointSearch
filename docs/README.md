@@ -55,6 +55,9 @@ Before starting, it’s important for you to know how A* works as well as how gr
   
 Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one, dx = x-x0 and dy = y -y0. I'm saying this because you can play with heuristics to change the types of paths you get.
 
+***
+Many information? Looking for other section? Go back to [Index](#index).
+
 ## A* First Improvements, Generalities and Context
 ## Nowadays - Hierarchies and other Games
 ## My Approach - Killing Path Symmetries
