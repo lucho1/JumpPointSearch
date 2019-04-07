@@ -163,7 +163,6 @@ If the robot detects new map informations (for instance, previously unknown obst
 But nevertheless, even though being similar to A*, is more complex and has been obsoleted by a new version which is simpler.
 
 ###### LPA* and D* ’s son: A love story
-
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/lpa.png?raw=true" width="57px" height="57px"/>
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/love.jpg?raw=true" width="93px" height="59px"/>
@@ -176,10 +175,10 @@ Although, LPA* has a problem: it finds the best path from the same start to the 
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/WALLE.jpeg?raw=true" width="228px" height="152px"/>
-   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/robotPATH.png?raw=true" width="147px" height="165px"/>
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/robotPATH.png?raw=true" width="162px" height="182px"/>
 </p>
 
-So, to fix LPA* ’s heart, it appeared [D* Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D*), mentioned before as it obsoleted D*. Generally, D* and D* Lite have the same behaviour but D*Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
+So, to fix LPA* ’s heart, it appeared [D* Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D*), mentioned before as it obsoleted D*. Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/DLite.png?raw=true" width="137px" height="135px"/>
@@ -190,9 +189,44 @@ So, to fix LPA* ’s heart, it appeared [D* Lite](https://drive.google.com/open?
 ***
 
 ### Angled Pathfinding
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/angle.png?raw=true" width="162px" height="102px"/>
+</p>
+
+[Angled pathfinding](https://en.wikipedia.org/wiki/Any-angle_path_planning) is very useful to build more realistic paths and also to improve A* performance. Algorithms allowing this do not only explore from node to node at 45º or 90º like usual, but at any angle thanks to [visibility](https://www.redblobgames.com/articles/visibility/). This means that, instead of just going node per node, if there is a farther node that is visible from the current node (no obstacles in the middle), it will set the parent of the visible node to the current node no matter the angle between both nodes. As said, this makes path to be more realistic while also improving the base A* performance (so we have a win-win!).
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/angledpath.png?raw=true" width="332px" height="138px"/>
+</p>
+
+For a comparison and explanation between different angled pathfinding algorithm, check out [this paper](https://drive.google.com/open?id=1O7HlD0lUHE7M5B2ruPDhUol4wgrRnG7M).
+
 #### Field D*
+Field D* is a variant of D* Lite that does not constraints to a grid, it gives the best path moving along any angle adding smooth to the path by using interpolation (which complicates it a bit). It was used for a Mars Rovers, see [this paper](https://drive.google.com/open?id=1GbV9tLGrmLRy2EqLdXikn8gY7Ko4xnAA) for more information.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/Mars1.jpeg?raw=true" width="192px" height="192px"/>
+</p>
+
 #### Theta*
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavsa.png?raw=true" width="167px" height="166px"/>
+</p>
+
+Theta* is an A* and D* variant (like Field D*) but it doesn’t has fast-replanning capabilities. It runs on square grids and it finds shortest paths that do not strictly follow the grid by pointing to adjacent ancestors, if there is a line of sight towards that node, it can save it as a parent node, skipping the nodes in-between (what is called visibility).
+See this [AI Game Dev article](http://aigamedev.com/open/tutorials/theta-star-any-angle-paths/) for further information, is well explained there. Also you can see this [paper](https://drive.google.com/open?id=1hMGIUlks5_YRiU9zSVlU0H2R-VNUp-so) in which there’s a longer and deeper explanation on angled pathfinding and also, on Block A*, which is a version of Theta* that is faster because it uses a hierarchical approach ([this article](https://drive.google.com/open?id=1jbFISJ4SRsnVN2R8UWHvOxKWuXFQgQvY) gets even more information on Block A*). 
+
+Appart of Block A*, there’s also another faster version for Theta* called Lazy Theta*. You can check this AI Game Dev article for more information on it, basically, in four more lines of code, it makes Theta* faster by performing less line of sight checks.
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavslazytheta.png?raw=true" width="291px" height="169px"/>
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavslazytheta2.png?raw=true" width="350px" height="158px"/>
+</p>
+
+A good advantage of these algorithms is that they are pretty easy to understand and implement.
+
 #### Incremental Phi*
+To finish with angled pathfinding, just mention Incremental Phi*. It mixes Theta* and Field D*, by making an incremental version of Theta* (so, allowing fast-replanning). It’s useful for dynamic environments. [This paper](https://drive.google.com/open?id=1IlMBIdmF6ARN_VX7yaxn9NK5Z0mz-IlN) gets deep into it.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
