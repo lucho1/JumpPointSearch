@@ -40,6 +40,18 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
          * [KillZone 2](#killzone-2)
          * [Company of Heroes and Dawn of War 2](#company-of-heroes-and-dawn-of-war-2)
   5. [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries)
+       * [Jump Point Search (JPS)](#jump-point-search-jps)  
+         * [Introduction](#introduction)
+         * [Pruning](#pruning)
+           * [Neighbour Pruning Rules](#neighbour-pruning-rules)
+         * [C/C++ Implementation](#cc--implementation)
+           * [Step by Step Implementation - Do it Yourself Exercise](#step-by-step-implementation--do-it-yourself-exercise)      
+           * [Exercise Solutions](#exercise-solutions)           
+           * [Performance](#performance)         
+           * [More Information on JPS and Sources](#more-information-on-jps-and-sources) 
+       * [Other Improvements](#other-improvements)
+         * [Rectangular Symmetry Reduction (RSR)](#rectangular-symmetry-reduction-rsr)
+         * [Hierarchical Annotated A*](#hierarchical-annotated-a)
   6. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
   7. [Links to Additional Information](#links-to-additional-information)
 
@@ -124,5 +136,21 @@ In this section, I will talk about general A* improvements that can speed up the
 ##### Company of Heroes and Dawn of War 2
 
 ## My Approach - Killing Path Symmetries
+### Jump Point Search (JPS)
+#### Introduction
+
+#### Pruning
+##### Neighbour Pruning Rules
+
+#### C/C++ Implementation
+##### Step by Step Implementation - Do it Yourself Exercise
+##### Exercise Solutions
+##### Performance
+##### More Information on JPS and Sources
+
+### Other Improvements
+#### Rectangular Symmetry Reduction (RSR)
+#### Hierarchical Annotated A*
+
 ## Final Thoughts and Recommendations
 ## Links to Additional Information
