@@ -44,14 +44,14 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
          * [Introduction](#introduction)
          * [Pruning](#pruning)
            * [Neighbour Pruning Rules](#neighbour-pruning-rules)
-         * [C/C++ Implementation](#cc--implementation)
-           * [Step by Step Implementation - Do it Yourself Exercise](#step-by-step-implementation--do-it-yourself-exercise)      
+         * [C/C++ Implementation](#cc-implementation)
+           * [Step by Step Implementation - Do it Yourself Exercise](#step-by-step-implementation---do-it-yourself-exercise)      
            * [Exercise Solutions](#exercise-solutions)           
            * [Performance](#performance)         
            * [More Information on JPS and Sources](#more-information-on-jps-and-sources) 
        * [Other Improvements](#other-improvements)
          * [Rectangular Symmetry Reduction (RSR)](#rectangular-symmetry-reduction-rsr)
-         * [Hierarchical Annotated A*](#hierarchical-annotated-a)
+         * [Hierarchical Annotated A* (HAA*)](#hierarchical-annotated-a-haa)
   6. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
   7. [Links to Additional Information](#links-to-additional-information)
 
@@ -150,7 +150,7 @@ In this section, I will talk about general A* improvements that can speed up the
 
 ### Other Improvements
 #### Rectangular Symmetry Reduction (RSR)
-#### Hierarchical Annotated A*
+#### Hierarchical Annotated A* (HAA*)
 
 ## Final Thoughts and Recommendations
 ## Links to Additional Information
