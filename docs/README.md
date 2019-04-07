@@ -104,20 +104,86 @@ Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one
 In this section, I will talk about general A* improvements that can speed up the algorithm. I recommend (if they are used) to mix them with some algorithm explained downwards to a better improvement.
 
 #### Beam Search
+Beam Search sets a limit on the size of OPEN list and, if reached, the elements with less priority are deleted (or which is the same: the elements with less chance of giving a good path). Only the most promising nodes are retained for further branching (reducing memory requirements).
+
 #### Bidirectional Search
+Bidirectional Search is to start two searches in parallel, one from start to goal (being last node found X) and other from goal to start (being last node found Y). When they meet, the search is ended. Instead of doing the A* ’s heuristic, it calculates it as: F = G(start, X) + H (X, Y) + G(Y, goal).
+
 #### Dynamic Weighting
+At the beginning of the search, it’s assumed that is more important to get to the destination rather fast than better, so it changes heuristics to F = G + H * W. This W is a weight associated to the heuristic which goes decreasing as getting closer to the goal, so it goes decreasing the importance of the heuristics and increases the importance of the actual cost of the path, making it faster at the begin and better at the end.
+
 #### Iterative Deepening (IDA*)
+[IDA*](https://es.wikipedia.org/wiki/IDA*) is an algorithm that can find the shortest path in a weighted graph. It uses A*’s heuristic to calculate the heuristic of getting to the goal node but, since it’s a depth-first search algorithm, it uses less memory than A*. Even though, it explores the most promising nodes so it does not go to the same depth always (meaning that the time spent is worth). It might explore the same node many times.
+So, basically, it starts by performing a depth-first search and stops when the heuristics (F = H + G) exceeds a determined value, so if the value is too large, it won’t be considered. This value starts as an estimate initially and it goes increasing at each iteration.
+
+IDA* works for memory constrained problems. While A* keeps a queue of nodes, IDA* do not remember them (excepting the ones in current path), so the memory needed is linear and lower than in A*. A good thing of IDA* is that doesn’t spend memory on lists since it goes in-depth, but it has some disadvantages that the usage of a base algorithm like [Fringe Search](https://en.wikipedia.org/wiki/Fringe_search) can solve (at least partially).
+[This](https://drive.google.com/open?id=1Yu3bnZXCnRsxiuk6l-ZbHEQbF7mGe8a2) paper explains it deeper.
+
 #### Building This Section
+To build this section, apart of the links used and placed over the text above, I have used fragments of [this](https://drive.google.com/open?id=1D_NkL1co6TvEbcS5PyoceycbSPr59IDu) thesis that explains, among others, interesting things on Heuristics, IDA*, A* and Fringe Search.
+Also, I have used a part of [this](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html) page in [Amit’s Thoughts on Pathfinding](http://theory.stanford.edu/~amitp/GameProgramming/).
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
 ***
 
 ### Paths Recalculations - Incremental Searches
+In this section I will talk about a way to improve and speed up A* through [incremental searches](https://drive.google.com/open?id=1tmqB_ooKRxiBzbYO6aB7ptmx3B62rwTk) which uses information from previous searches to have a basis over which to build the new searches and, therefore, spend less time (speed up searches for sequences of similar problems by using experience from previous problems).
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/incremental.jpg?raw=true" width="172px" height="138px"/>
+</p>
+
+Incremental searches were developed for mobile robots and autonomous vehicle navigation, so it’s a quite deep sector. They tend to have more efficient algorithms than A* (and based on it), but, as they were thought to robotics, they support one only unit in movement, so they might be inefficient for many pathfindings in short times, like the ones we need in games, but it’s good to know them to have a deeper vision on pathfinding.
+
 #### Fringe Saving A*
+[Fringe Saving A*](https://drive.google.com/open?id=1ejkyIuEKYb5_12k2F9QNcLZrgsZ212F1) launches an A* search and then, if detects a map change, restores the first A* search until the point in which map has changed. Then it begins an A* search from there, instead of doing it from scratch.
+
 #### Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets
+This variant of A* can handle moving target points. When there is a moving point, the H variable of the heuristics change. If the target is constantly moving, these H values might become inconsistent, so Generalized Adaptive A* (GAA*) updates these H values using information of previous searches and keeps them consistent.
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/movingtargetGIF.gif?raw=true" width="147px" height="147px"/>
+</p>
+
+This allows to find shortest paths in state spaces where the action costs can increase over time since consistent h-values remain consistent after action cost increases. It’s easy to implement and understand and better explained in [this article](https://drive.google.com/open?id=1e4gbDqxuCwCO9b-5i8fIykFHqmW92qTK).
+
 #### Dynamic A* (D*) and Lifelong Planning A* (LPA*)
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/D.jpg?raw=true" width="125px" height="125px"/>
+</p>
+
+[Dynamic A*](https://en.wikipedia.org/wiki/D*) (D*) was developed for robotics (mobile robot and autonomous vehicle navigation) to make robots navigate with the shortest path possible and towards a goal in an unknown terrain based on assumptions made (such as no obstacles in the way).
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/bostondynamics-640x353.jpg?raw=true" width="160px" height="88px"/>
+</p>
+
+If the robot detects new map informations (for instance, previously unknown obstacles), adds the information to its previous assumptions and, if it’s necessary, it replans a new path. Doing this ensures to have more speed than restarting A*, so D* is for cases in which the complete information is not available, cases in which  A* can make mistakes, but D* solves them quickly (making it fit to dynamic obstacles) and allowing fast-replanning.
+But nevertheless, even though being similar to A*, is more complex and has been obsoleted by a new version which is simpler.
+
 ###### LPA* and D* ’s son: A love story
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/lpa.png?raw=true" width="57px" height="57px"/>
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/love.jpg?raw=true" width="93px" height="59px"/>
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/D.jpg?raw=true" width="62px" height="62px"/>
+</p>
+
+Parallely, there is an (obsoleted) algorithm called DynamicSWSF-FP that stored the distance from every node to the destination node. It had a big initial setup when calling it, but after graph changes, it updated ONLY the nodes whose distances had changed.
+This is important for [Incremental A*](https://drive.google.com/open?id=1tHE54ptXXKkmyM84ALw130HJtO4LNvne), also called Lifelong Planning A* (LPA*) which is a combination between DynamicSWSF-FP and A*. In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A*, the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time (but it consumes memory).
+Although, LPA* has a problem: it finds the best path from the same start to the same finish, but is not very used if the start point is moving or changing (such as units movement), since it works with pairs of the same coordinates. Also, another problem is that both D* and LPA* need lots of space (because, to understand it, you run A* and keep its information) to, if the map changes, decide if adjusting the path fastly. This means that, in a game with many units moving, it’s not practical to use these algorithms because it’s not just the memory used, but the fact that they been designed for robots, which is one only unit moving; if you use them for many units, it stops being better than A*.
+
+<p align="center">
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/WALLE.jpeg?raw=true" width="228px" height="152px"/>
+   <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/robotPATH.png?raw=true" width="147px" height="165px"/>
+</p>
+
+So, to fix LPA* ’s heart, it appeared [D* Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D*), mentioned before as it obsoleted D*. Generally, D* and D* Lite have the same behaviour but D*Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/DLite.png?raw=true" width="137px" height="135px"/>
+</p>
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
