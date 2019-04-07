@@ -117,7 +117,7 @@ In this section, I will talk about general A* improvements that can speed up the
 #### Fringe Saving A*
 #### Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets
 #### Dynamic A* (D*) and Lifelong Planning A* (LPA*)
-##### LPA* and D* ’s son: A love story
+###### LPA* and D* ’s son: A love story
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
@@ -141,16 +141,16 @@ In this section, I will talk about general A* improvements that can speed up the
 ***
 
 ### Other Games’ Approaches
-##### Professor Lupo - Thankful Mention
+###### Professor Lupo - Thankful Mention
 #### Navigation Meshes and Hierarchy
-##### Starcraft II
-##### Dragon Age Origins
-##### Heroes on the Move
-##### Supernauts
+###### Starcraft II
+###### Dragon Age Origins
+###### Heroes on the Move
+###### Supernauts
 #### Hierarchical Pathfinding
-##### Castle Story
-##### KillZone 2
-##### Company of Heroes and Dawn of War 2
+###### Castle Story
+###### KillZone 2
+###### Company of Heroes and Dawn of War 2
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
@@ -161,13 +161,13 @@ In this section, I will talk about general A* improvements that can speed up the
 #### Introduction
 
 #### Pruning
-##### Neighbour Pruning Rules
+###### Neighbour Pruning Rules
 
 #### C/C++ Implementation
-##### Step by Step Implementation - Do it Yourself Exercise
-##### Exercise Solutions
-##### Performance
-##### More Information on JPS and Sources
+###### Step by Step Implementation - Do it Yourself Exercise
+###### Exercise Solutions
+###### Performance
+###### More Information on JPS and Sources
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
