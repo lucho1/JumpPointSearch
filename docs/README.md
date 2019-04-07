@@ -209,8 +209,9 @@ Field D* is a variant of D* Lite that does not constraints to a grid, it gives t
 </p>
 
 #### Theta*
+The next is an image of a comparison between A* (in Red) and Lazy Theta* (in Blue, a Theta* improvement):
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavsa.png?raw=true" width="167px" height="166px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavsa.png?raw=true" width="217px" height="216px"/>
 </p>
 
 Theta* is an A* and D* variant (like Field D*) but it doesn’t has fast-replanning capabilities. It runs on square grids and it finds shortest paths that do not strictly follow the grid by pointing to adjacent ancestors, if there is a line of sight towards that node, it can save it as a parent node, skipping the nodes in-between (what is called visibility).
