@@ -2,8 +2,8 @@
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
-    <organization>UPC</organization>
+    <title>JPS - AStar Optimizations</title>
+    <organization>UPC/Project II - Lucho Suaya</organization>
   </app>
 	
   <renderer>
