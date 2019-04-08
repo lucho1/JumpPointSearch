@@ -31,6 +31,9 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+
+	testFont = App->fonts->Print("Hellow: ");
+	App->fonts->CalcSize("Hellow: ", font_rect.w, font_rect.h);
 	if(App->map->Load("iso_walk.tmx") == true)
 	{
 		int w, h;
@@ -70,7 +73,7 @@ bool j1Scene::PreUpdate()
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
-
+	
 	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if(origin_selected == true)
@@ -138,6 +141,9 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
+
+	App->render->Blit(testFont, 0, 0, &font_rect); //cameera pos
+
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

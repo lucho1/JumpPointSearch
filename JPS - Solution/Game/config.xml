@@ -25,5 +25,12 @@
   <map>
     <folder>maps/</folder>
   </map>
+  
+  <fonts>
+    <open_sans id="0" file="fonts/open_sans/OpenSans-Regular.ttf" size="30" />
+    <russian id="1" file="fonts/russian/Russian.ttf" size="30" />
+    <molot id="2" file="fonts/molot/Molot.otf" size="30" />
+    <end/>
+  </fonts>
 
 </config>

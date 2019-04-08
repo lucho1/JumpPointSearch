@@ -35,6 +35,8 @@ public:
 
 private:
 
+	SDL_Rect font_rect;
+	SDL_Texture* testFont = nullptr;
 	//Pathfinding Stuff
 	SDL_Texture* debug_tex;
 	bool activateJPS = false;

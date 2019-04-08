@@ -54,7 +54,7 @@ public:
 public:
 
 	text_font* fontsList[(int)font_id::MAX_FONTS];
-	_TTF_Font* defaultFont;
+	_TTF_Font* defaultFont = nullptr;
 
 };
 

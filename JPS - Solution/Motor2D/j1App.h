@@ -77,7 +77,7 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1PathFinding*		pathfinding;
-	//Fonts*				fonts;
+	Fonts*				fonts;
 
 private:
 
