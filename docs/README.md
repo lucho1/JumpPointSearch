@@ -316,8 +316,8 @@ As told, Dragon Age’s approach is similar to the previous: they hierarchize th
 Their goals towards pathfinding were to achieve a fast planner while planning long paths and being memory efficient. The next are images of a prototype for Dragon Age with a low level grid representation (red) and the second image has, in yellow, the representation of the high level grid.
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/DAOAbstractGraph.png?raw=true" width="215px" height="121px"/>
-<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/DAOLevelsAbs.png?raw=true" width="215px" height="121px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/DAOAbstractGraph.png?raw=true" width="323px" height="182px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/DAOLevelsAbs.png?raw=true" width="323px" height="182px"/>
 </p>
 
 Just for curiosity, he mentions that they use octile heuristics. Also (and because of curiosity too) it mentions that Google can perform fast pathfinding because they rely a lot on roads properties (highways are the faster way to get somewhere).
@@ -354,9 +354,63 @@ To know the place where to cross between lines, they just calculated the nearest
 This pathfinding way is also explained in the same [GDC 2011 talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) than Starcraft II and Dragon Age Origin (from minute 20 to 36).
 
 ###### Supernauts
+Harri Hatinen, Lead Programmer of [Grand Cru](http://grandcrugames.com/), explained in the GDC China 2014 that they abstracted the map to a [Navigation Mesh](https://en.wikipedia.org/wiki/Navigation_mesh) and mixed with hierarchy representation for [Supernauts](http://supernauts.com/). I could recover the [presentation](https://drive.google.com/file/d/1HIj5jPo2WcK7q9KyQ6ADoWFakRCGPbd-/view?usp=sharing) in which explains how they handle the navigation map, how they make it work (taking into account the frontier between nodes and its longitude, How the IA knows where to pass by in a large frontier between nodes?) and how they update it each time that the map changes.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/supernauts.jpg?raw=true" width="341px" height="256px"/>
+</p>
+
+There is a [video](https://www.gdcvault.com/play/1021705/Advanced-Real-time-Path-Find) of that presentation, but it’s a little annoying to hear a chinese voice over the Harri Hatinen’s viking’s voice (and the video quality is a bit low, but with the diapositives it can be understood).
+
 #### Hierarchical Pathfinding
 ###### Castle Story
+Another interesting talk, this case in the GDC 2018, was the one by Alain Benoit, Lead Programmer and CTO (Chief Technology Officer) of [Sauropod Studio](https://www.sauropodstudio.com/english-1). I could only find the [diapositives](https://drive.google.com/open?id=1oH2uebOgW39KZxkZp4Z6xxiqnfAX9yS_)’ presentation because to see the video you must be a GDC member (which I’m not, I’m a student and sadly I don’t have 550$ each year to invest in GDC), but in case you are, I leave you the search of that presentation [here](https://www.gdcvault.com/search.php#&category=free&firstfocus=&keyword=Benoit+Alain&conference_id=).
+Anyway, with the diapositives it’s pretty understandable that for their game, [Castle Story](http://www.castlestory.net/), they decided to use Hierarchical Pathfinding to fulfill their needs to have many agents moving, dynamic obstacles, stairs and blockages, deformable terrain and buildable blocks in a large scale map.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/Astar%20Trap2.png?raw=true" width="326px" height="242px"/>
+</p>
+
+The truth is that this way of solving pathfinding problems is very effective and it solves them in a fast way. So, as told, they us hierarchy to abstract the grid and improve pathfinding efficiency, see it with images:
+
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy1.PNG?raw=true" width="641px" height="167px"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy2.PNG?raw=true" width="638px" height="163px"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy3.PNG?raw=true" width="640px" height="164px"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy4.PNG?raw=true" width="642px" height="168px"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy5.PNG?raw=true" width="400px" height="139px"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy6.PNG?raw=true" width="261px" height="140px"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy7.PNG?raw=true" width="242px" height="282px"/></p>
+
+To find optimum paths, they state a certain chain of rules such as explore lower hierarchy levels as getting closer to the goal, or exploring them if they have dynamic obstacles, not exploring childs if parents already were...
+
+<p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy8.PNG?raw=true" width="435px" height="184px"/></p>
+
 ###### KillZone 2
+I can’t talk that much about Killzone 2 since the only thing I have is [this](https://drive.google.com/file/d/1GlsWO-dw_8zj3AENfcwjmSQysAmHZIH9/view) power point from the Game AI Conference celebrated in Paris in 2009.
+From the diapositives I could translate and extract that they use kind of a mix between waypoints and hierarchy (a set of areas created as groups of waypoints):
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Killzone/killzone1.PNG?raw=true" width="305px" height="234px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Killzone/killzone2.PNG?raw=true" width="303px" height="232px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Killzone/killzone3.PNG?raw=true" width="304px" height="231px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Killzone/killzone4.PNG?raw=true" width="304px" height="228px"/>
+</p>
+
+This is for supporting strategic decision making algorithms. They do a high-level graph based on the low-level waypoint network and use an automatic area generation algorithm.
+So, they have dynamic information over the strategic graph for many decisions (hide, defend, regroup…) and to store some influence information based on faction controls of the area, and they calculate it based on all bots, turrets… They put an example of this.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Killzone/killzone7.PNG?raw=true" width="303px" height="228px"/>
+</p>
+
+Over this, they work with pathfinding. Think that the game needs to make strategic decisions taking into account the previous strategic and influence graphs.
+So, they use a single-source pathfinder to calculate distances to a point, the algorithm combines Dijkstra and [Bellman-Ford-Moore](https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm) (paths from a single-source from all other vertices in a weighted directed graph, slower than Dijkstra but more versatile since handles nodes with negative numbers), but with some tricks to make it more efficient and improving the distance estimates (the heuristics) when multiple updates.
+Now from here, each squad of units has an own pathfinder which finds a path between waypoints in the selected areas.
+
+Again, this is a translation with some interpretations of the powerpoint linked above, I’m not 100% sure on how it actually works since I can’t go deeply on it with only this presentation, so I might be wrong in something.
+
 ###### Company of Heroes and Dawn of War 2
 
 ***
