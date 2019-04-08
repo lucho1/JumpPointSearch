@@ -412,12 +412,37 @@ Now from here, each squad of units has an own pathfinder which finds a path betw
 Again, this is a translation with some interpretations of the powerpoint linked above, I’m not 100% sure on how it actually works since I can’t go deeply on it with only this presentation, so I might be wrong in something.
 
 ###### Company of Heroes and Dawn of War 2
+The [AI Game Dev](http://aigamedev.com/) platform (sadly seems closed by now), interviewed Chris Jurney, which worked as Senior Programmer in [Relic Entertainment](http://aigamedev.com/) and at [Kaos Studios](http://aigamedev.com/). It was part of the development of Company of Heroes and Dawn of War 2, games for which he was interviewed in the interview that I’m talking about. You can see the transcription in [PDF](http://aigamedev.com/) and the [MP3](http://aigamedev.com/) recording.
+
+In there, he explains that the pathfinding in Company of Heroes worked as well with Hierarchical Pathfinding in a map of thousand of meters (so thousands of cells) in which the worst case was 1000x250 (250 000 cells). This was very complicated to implement (especially for map changes and updates), so he says that HPA* can be a good complexity-decrementer (event thought it confesses that he did not tried).
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/dawnofwar.jpg?raw=true" width="313px" height="176px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/companyofheroes.jpg?raw=true" width="250px" height="188px"/>
+</p>
+
+With hierarchical pathfinding, he says that each unit can recalculate behaviour each 3/10 to half a second to follow a leader that actually knows the whole picture and re-evaluates the route every second.
+In the GDC China 2007, this man, along with Shelby Hubick give a presentation about AI in Destructive environments in Company of Heroes, in case you are interested in it. This is the [Audio](https://drive.google.com/open?id=1r9MsnRnyEZ6S28W-YduDSiUJf2pat2Wc) (again, couldn’t find a video, sorry).
+In fact, I recently discovered that in [this](http://aigamedev.com/open/tutorials/clearance-based-pathfinding/) article of AI Game Dev, is said that Chris Jurney at a that GDC 2007 talk, explains that they use a similar method to HAA* (explained downwards) with the usage of a variant of [Brushfire](http://roboscience.org/book/html/Planning/Brushfire.html) algorithm to put numeric values to the tiles of the map according their nearness to an obstacle and, therefore, calculating if the size of a troop make it able to pass through an area. The reason why this is not very explained here is because is not very shared in the talk and the article about it in the AI Game Dev page is premium (and I cannot have access). Anyway, you have a similar approach detailed downwards if you are interested (HAA* section, link above in this paragraph).
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
 ***
 
 ## My Approach - Killing Path Symmetries
+In this section I will explain my approach to improve as much as possible the A* pathfinding taking into account the projects of video games creation that we are developing for a University’s subject, in which we will need a pathfinding fast as possible, but it might serve for any reader or other projects, too.
+I will deeply explain Jump Point Search algorithm because is the one that best fits into my team’s project, but I will also leave an explanation of two other systems called Rectangular Symmetry Reduction and Hierarchical Annotated Pathfinding, just in case that Jump Point Search does not fit to your requirements. Anyway, I won’t explain deeply its development (unlikely JPS) because of space and time matters, but I will let you some documentation so you can access to the information needed to implement it in case you need it.
+
+Before going into it, let me explain what a path symmetry is. As you may guess, from a starting point, there might be many ways to reach a destination, this means that for the same start/destination, there can be many paths. Well, symmetric paths are these kind of paths in which the only difference is the places they pass by.
+The formal definition is: “Two paths in a grid are symmetric if they share the same start and end point and one can be derives from the other by swapping the order of the constituent vectors”. They would look like:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/pathSymmetries.PNG?raw=true" width="155px" height="155px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/pathSymmetries2.PNG?raw=true" width="175px" height="153px"/>
+</p>
+
+A* explores all the paths even if they are symmetric, so it makes lots of useless efforts and searches traduced in decreasing performance, so many approaches to improve A* focus on killing or avoiding path symmetries, having great results. In this page, we will see two of them, but we will focus especially on one, explaining its development, an algorithm A*-based called Jump Point Search. [This](https://harablog.wordpress.com/2011/08/26/fast-pathfinding-via-symmetry-breaking/) page contains more information about this (but I think it was clearly explained and does not needs further expanding, I place the link here to make you know that the information comes from there).
+
 ### Jump Point Search (JPS)
 #### Introduction
 
