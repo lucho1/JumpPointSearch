@@ -445,15 +445,91 @@ A* explores all the paths even if they are symmetric, so it makes lots of useles
 
 ### Jump Point Search (JPS)
 #### Introduction
+Jump Point Search is a grid-specific algorithm developed by [Daniel Harabor](http://www.harabor.net/daniel/) and [Alban Grastien](https://cecs.anu.edu.au/people/alban-grastien) in 2012 under the supervision of the [NICTA](https://www.nicta.gov.pg/) (Papua New Guinea Information and Communications Authority) and the [Australian National University](http://www.anu.edu.au/).
+The algorithm expands by choosing (pruning) certain nodes in the grid map (called Jump Points) while the intermediate nodes are not expanded (skipping the exploration of a lot of nodes). The technique used by JPS, is based on avoiding useless searches of symmetrical paths that A* do, saving lots of time with the same memory load.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/jps1.PNG?raw=true" width="310px" height="222px"/>
+</p>
+
+In the article in which they present it, they prove that JPS computes always optimal solutions and is way faster than A* (over an [order of magnitude](https://en.wikipedia.org/wiki/Order_of_magnitude), meaning that can be until a thousand times faster, as shown in [this video](https://www.youtube.com/watch?v=1C_SF0lKd-Y)). Also, it does not have memory overloads, in contrary of Hierarchical Pathfinding, which gives, although fast, sub-optimal paths (more useful than better solutions) while having small memory overloads.
+In the above picture’s case, the node x (with parent p(x)) in the standard A* version, would open up all the traversable neighbours around, but JPS would just go to the right and keep moving towards that direction until finding a node such as y (a Jump Point) and then generate it as successor of x and assigning it a G value. In case that y was an obstacle, JPS assumes that it has to stop searching towards that direction.
 
 #### Pruning
+Moving from a Jump Point to another is done by travelling in a concrete direction while recursively applying two neighbour pruning rules (one for horizontal and vertical steps and the other for diagonal ones) until reaching a dead-end, a non-walkable area or the next Jump Point.
+To keep going on with JPS, is important to understand the concept of “pruning”, which is the elimination of nodes to expand. This is to say that is the way in which the algorithm decides which nodes to explore. Take into account that the [definition of pruning](https://www.google.com/search?rlz=1C1CHBF_esES839ES839&ei=O0qiXMjyCcXRgwfS77GoBA&q=pruning+definition&oq=pruning+definition&gs_l=psy-ab.1.0.0i203i70i249j0i203l5j0i22i30l4.9976.11884..16087...2.0..0.165.1371.8j5......0....1..gws-wiz.......0i71j35i39j35i39i19j0j0i13i70i249j0i13i30.UZq6RMnw2XE) is “to trime (a tree, bush…) by cutting away dead or overgrown branches or stems, especially to encourage growth”. Actually, nodes are trees in the eyes of pathfinding algorithms, so it actually make sense the use of the word.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/184850-425x283-man-pruning-trees.jpg" width="425px" height="283px"/>
+</p>
+
+After the pruning of nodes, the ones that remain in the tree are called “natural neighbours” which are the only ones that we want to consider. However, sometimes we will need to consider one or two nodes (because obstacles or something) that are not natural itself. Those are called “forced neighbours”.
+
+Now, we are ready to get to work with Jump Point Search!
+
 ###### Neighbour Pruning Rules
+In Jump Point Search, our objective will be to avoid symmetric paths by “jumping” all nodes that can be optimally reached by a path that does not visit the current node (thanks recursive magic!). This means that we chose a Jump Point if the optimal path must, obligatory, pass through that node. Once it has reached an obstacle or another Jump Point, the recursion stops. So a Jump Point y with a neighbour z will be a successor of a Jump Point x only if to reach z we need to visit x and y.
+To make it real, we need to consider two pruning rules, one for straight moves (horizontal and vertical) and another one for diagonal moves.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/jpsPruning.PNG?raw=true" width="513px" height="185px"/>
+</p>
+
+In the left image, from a Jump Point x (with parent p(x)), we recursively go straight until y and set it as a successor Jump Point of x because z can’t be reached (optimally) if we don’t pass through x and y. The nodes in the middle are not evaluated or explored.
+In the right image, from a Jump Point x (with parent p(x)), we recursively go diagonally until y and set it as an x Jump Point Successor (the same than left). In this case, after each diagonal step, we do a recursion straightly (marked with discontinue lines) and only if the two straight recursions fail, we keep going diagonally. Also in the image, the node w is shown, which is a forced neighbour of x because of being in a place in which, to reach it optimally from the coming direction (p(x)), we need to pass through x.
 
 #### C/C++ Implementation
+In this part, we will see how to properly implement Jump Point Search in C/C++. In order to do that, we will do an exercise step-by-step to learn how to build it, and then I will put the solution for that exercise. You can download both the exercise and the solution [here](https://github.com/lucho1/JumpPointSearch), in my research repository of GitHub. If you do, have into account that is a modular system (take into account only the Scene Module, which is the one that asks for paths and the Pathfinding Module, the one actually doing them).
+First of all, let’s see what’s new from A*. We have three new functions:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/explanationJPS1.jpg?raw=true" width="911px" height="230px"/>
+</p>
+
+  * **PropagateJPS()** - Runs the algorithm. Is kept equal to PropagateAStar() but with the exception of a line deciding each tile’s neighbours.
+  * **Jump()** - Decides, recursively, which will be the next Jump Point from the current node based on direction and walkability
+  * **PruneNeighbours()** - This one is inside each PathNode structure (meaning that only can be called through a tile of PathNode type).
+
+The other functions in the image are the **PropagateAStar()**, which is self-explanatory, and **CreatePath()**, that is called each time we want to compute a path and decides, based on the bool that is passed, if calling JPS or A*.
+So, now that we have seen what’s new (is not much, right?), we can start with the exercise!
+
 ###### Step by Step Implementation - Do it Yourself Exercise
 ###### Exercise Solutions
-###### Performance
-###### More Information on JPS and Sources
+
+#### Performance
+Now, with Jump Point Search implemented we can take measures! In the exercise, the Scene Module is ready to pick pathfinding measures (which are shown both in output and screen). If we run both algorithms for the same path, we can check how many steps each one did (this is, how many nodes exploring) and how fast they come up with a path for the same start/end points. Let’s see some captures:
+
+**PUT IMAGES OF YOUR PERFORMANCE TESTS HERE**
+
+If, you are not implementing JPS with the system I provide (or you can’t see the measures), you can see the next pictures provided by Daniel Harabor of its own results in different maps:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/JPSresults1H.PNG?raw=true" width="730px" height="562px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/JPSresults2H.PNG?raw=true" width="729px" height="260px"/>
+</p>
+
+They show how many tiles are explored by A*, A* with the RSR optimization ([explained below]((#rectangular-symmetry-reduction-rsr))) and A* with JPS optimization. Harabor also compared to two other algorithms ([Swamps](https://drive.google.com/open?id=1UDrccZBE5aVRPReeYvil89llWP_cNWBx) and HPA*, talked about it [above](#hierarchical-pathfinding-hpa)). This results are presented in the paper in which Harabor presented JPS.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/JPSresults3H.PNG?raw=true" width="781px" height="197px"/>
+</p>
+
+As you may see, sometimes HPA* can be as performatic as JPS. For that reason (and because it has other advantages), [downwards](#hierarchical-annotated-a-haa), we will talk a bit about HAA*, an HPA* variant. Also, you can checkout [this](http://qiao.github.io/PathFinding.js/visual/) visual and interactive page to see how many pathfinding algorithms work and how much they last to come up with a path (including JPS, be careful because if you choose, in JPS, to show recursion, will visually last because will show the full recursion, but the real lasted time is shown in the bottom left corner).
+Finally, [here](https://www.youtube.com/watch?v=q_5l7EqDRPs) there is a video in which JPS is run several times in a big maze showing how much time lasts on finding a path (at the bottom right corner), and, in [this video](https://www.youtube.com/watch?v=1C_SF0lKd-Y), they compare JPS and A* performance on the same maze with the same paths (watchout! In there is like a thousand times faster!).
+
+#### More Information on JPS and Sources
+With the results that Jump Point Search give, we can see that is a heavy improvement for A* algorithm. If you still don’t understand it, you can check [this page](https://zerowidth.com/2013/05/05/jump-point-search-explained.html) that gives a more visual explanation of JPS (and you can even try the algorithm!). Also, Daniel Harabor has a [page in his blog](https://zerowidth.com/2013/05/05/jump-point-search-explained.html) (the same than [Rectangular Symmetry Reduction](https://harablog.wordpress.com/2011/09/01/rectangular-symmetry-reduction/) and [Path Symmetries](https://harablog.wordpress.com/2011/08/26/fast-pathfinding-via-symmetry-breaking/)) explaining it in a more informal and understandable (less mathematical) way than in the paper (linked downwards).
+
+There is [another explanation](https://gamedevelopment.tutsplus.com/tutorials/how-to-speed-up-a-pathfinding-with-the-jump-point-search-algorithm--gamedev-5818) with code and visual examples and a [video with a step by step JPS](https://www.youtube.com/watch?v=jB1IOR5roUM).
+
+
+If you have understood it and still have some curiosity, you can read [this paper](https://www.cs.du.edu/~sturtevant/papers/GPPC-2014.pdf) in which many Artificial Intelligence experts (including Harabor) put to compete many algorithms in some different maps and see [another video](https://www.youtube.com/watch?v=qKcOF9BOw5k) showing different pathfinding ways.
+
+And finally, you can see the [paper](https://drive.google.com/open?id=1ICnE_fVsjxhWexcq1LyH0HuPccUNSCb3) in which Harabor and Grastien presented JPS (and a [summary](https://drive.google.com/open?id=1lGJGcz2IA9mqBCgsTVvJc9pQDcjB2YPy) of that paper).
+
+All the links in this section (except some of the videos) were the basis to building it.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
