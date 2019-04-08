@@ -461,7 +461,69 @@ A* explores all the paths even if they are symmetric, so it makes lots of useles
 
 ### Other Improvements
 #### Rectangular Symmetry Reduction (RSR)
+Rectangular Symmetry Reduction is an algorithm that checks and eliminates path symmetries by decomposing a map into empty rectangles (meaning that they have no obstacles inside) pathfind by only expanding nodes in the perimeter of those rectangles (not in the inside). RSR is very effective and fast for maps with large open areas or which can be naturally decomposed into rectangular regions. It follows the next steps:
+
+  1. Decompose the grid into empty rectangles (size of rectangles can vary according to map size and obstacles on it) and prune the nodes inside of them.
+  2. Connect nodes of the perimeters of a rectangle with nodes in other perimeters.
+  3. When a origin/destination is located inside a rectangle, a temporarily procedure is performed by connecting these nodes to the nearest 4 perimeter nodes.
+
+At the end, RSR looks like this (arrows are the macro edges):
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/rsr.png?raw=true" width="545px" height="246px"/>
+</p>
+
+RSR is pretty simple to understand, quick to apply, preserves optimally and has low memory overheads. If we combine it with another search algorithm, it can speed it up considerably. 
+
+Regarding memory, the only things to store are the IDs of the parent rectangle of each traversable node in the map and the dimensions and origin of each rectangle, so in the worst case we need until 5n integers.
+
+Check out [this](https://harablog.wordpress.com/2011/09/01/rectangular-symmetry-reduction/) blog page of Daniel Harabor (the developer of RSR), which explains it visually and understandably. He also leaves there access to its papers to check RSR deeply.
+
 #### Hierarchical Annotated A* (HAA*)
+Hierarchical Annotated A* (HAA*) extends HPA* by dividing a map into traversable terrain and blocked areas (as traditional) but doing a detailed analysis on the different terrains that the traversable parts might have (and the costs), like water, sand…
+This makes that the units that must move over the map have into account the terrain which they are passing through (since the path does it), allowing to have a map with different terrain types with an optimized pathfinding that can be efficiently supported in a game like an RTS. Also, it allows the moving of units with variable sizes.
+This approach is interesting because very little works focused on diverse-size moving elements and different terrain types (with different costs), case in which JPS or RSR might not be a good idea for you.
+
+The basis for HAA* is to have a clearance value (a distance to obstacle) which is thought as the amount of traversable space and is used to do a fast guess if a moving element of a determined size will be able to cross a map area (this idea, explains Harabor, was extracted from an algorithm called [Brushfire](http://roboscience.org/book/html/Planning/Brushfire.html), for robotics).
+It first assign a value of 1 to each tile aside a static obstacle. Then, their immediate neighbours are assigned with a 2, then, their neighbours with a 3, and keeps going until it all tiles have a value. With this, we can compare the moving elements with the capability of passing through or not.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa1.PNG?raw=true" width="578px" height="259px"/>
+</p>
+
+For big units, a path can look like this (notice that there are many tiles in black because it only considers values bigger than 1, it does not mean that they are non-traversable):
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa2.PNG?raw=true" width="262px" height="258px"/>
+</p>
+
+But this can give path problems like this, in which the tank should be able to pass but the path calculates that it doesn’t:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa3.PNG?raw=true" width="251px" height="253px"/>
+</p>
+
+This is solved by Harabor (linked downwards), by doing what he calls “true clearance”, which is, instead of considering each tile individually to assign a clearance value, it considers groups of tiles. It’s done by surrounding each tile with a 1x1 square and, if the tile is traversable, a clearance value of 1 is assigned. Then this square is expanded symmetrically down to the right incrementing clearance value, and does so until it detects an obstacle or limit within that square. It looks like:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa4.PNG?raw=true" width="567px" height="263px"/>
+</p>
+
+Being a, b and c the square expansion, d the moment in which stops and the right image the final result, with which the problem seen before would be solved. Now the question is how to process different terrain types. Well, the solution is simple, we first assign clearance values to all the map without considering the terrain type, just as we did before (only considering if an area is or is not walkable). Then, we assign clearance values for each terrain type considering other terrains also as non-traversable. Finally, we sum the both layers of clearance values. The process for sand (white) + water (blue) and result are:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa5.PNG?raw=true" width="258px" height="258px"/>
+  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa6.PNG?raw=true" width="258px" height="257px"/>
+  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/haa/haa7.PNG?raw=true" width="257px" height="257px"/>
+</p>
+
+This uses more memory than other methods, but allows to have a pathfinding that has into account moving units sizes and terrain types.
+
+So, the algorithm has two parts, a modification of A* and a Hierarchical part. This modification of A* (called Annotated A*) consists on passing to the function (a part of its usual parameters), the size and the capability of the moving element and then, when exploring a node, it checks if its traversable for the size and capability that the element has, being a tile traversable if the clearance value is (at minimum) equal to the agent size and the terrain traversable according to the capability. Everything else, is the same than A*.
+
+On top of this algorithm, a hierarchical abstraction is made to speed up. To have it is difficult since, with different terrain types, it must be as approximate as possible that can be as representative of the map as possible. To achieve that, first the map is divided into adjacent Clusters connected with entrances (consisting on two tiles of the both connected clusters that must be of the same terrain type), allowing to represent terrains accurately in this hierarchical representation (event though seems to contain redundant or duplicated information).
+
+[Here](http://aigamedev.com/open/tutorials/clearance-based-pathfinding/) you will find an article of AI Game Dev written by Daniel Harabor about HAA* (used for this section) in which it links to [this](https://harablog.files.wordpress.com/2009/01/haa.pdf) bigger paper explaining it better. In that article, they also purpose optimizations for this system which decrease the memory used and increase performance by optimizing both the map representation and the algorithm. Also, it shows an analysis on performance, proving that is a fast and good approach to tackle games that feature different terrain types and mobile unit sizes.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
