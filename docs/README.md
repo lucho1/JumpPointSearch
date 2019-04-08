@@ -497,11 +497,28 @@ So, now that we have seen what’s new (is not much, right?), we can start with 
 ###### Exercise Solutions
 
 #### Performance
-Now, with Jump Point Search implemented we can take measures! In the exercise, the Scene Module is ready to pick pathfinding measures (which are shown both in output and screen). If we run both algorithms for the same path, we can check how many steps each one did (this is, how many nodes exploring) and how fast they come up with a path for the same start/end points. Let’s see some captures:
+Now, with Jump Point Search implemented we can take measures! In the exercise, the Scene Module is ready to pick pathfinding measures (which are shown both in output and screen). If we run both algorithms for the same path, we can check how many steps (this only in the console output area in Visual Studio) each one did (or how many nodes exploring) and how fast they come up with a path for the same start/end points.
+So first I tested it in a map done with Tiled of 25x25. In Debug mode the results were this (note that, in all the images, the blue tile that is outside the map and not in the path is a tile that marks the mouse position to select start/end nodes when calling a path, but mouse is not seeable in screen captures):
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt1AS.PNG?raw=true" width="444px" height="228px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt1JPS.PNG?raw=true" width="444px" height="227px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt2AS.PNG?raw=true" width="444px" height="225px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt2JPS.PNG?raw=true" width="444px" height="227px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt3AS.PNG?raw=true" width="444px" height="227px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt3JPS.PNG?raw=true" width="444px" height="226x"/>
+</p>
+
+Then I tried it in Release mode to see how it was in run-time:
 
 **PUT IMAGES OF YOUR PERFORMANCE TESTS HERE**
 
-If, you are not implementing JPS with the system I provide (or you can’t see the measures), you can see the next pictures provided by Daniel Harabor of its own results in different maps:
+###### Other External Results
+If, you are not implementing JPS with the system I provide (or you can’t see the measures or want to see other external results to prove JPS efficiency), you can check the next pictures provided by Daniel Harabor of its own results in different maps:
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/JPSresults1H.PNG?raw=true" width="730px" height="562px"/>
