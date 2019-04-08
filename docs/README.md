@@ -265,7 +265,6 @@ And to tackle these, it uses a combination of grid preprocessing to have a high-
 
 As you will see, many of the nowadays game uses this approach towards pathfinding. For that reason, you might understand better HPA*, by can check out the next section of this page explaining approaches by other games, especially the ones talking about Castle Story, Heroes on the Move and Killzone.
 
-
 #### Improving HPA* - Partial Refinement A* (PRA*)
 HPA* also has some improvements. One of them is Partial Refinement A* (PRA*), that combines the hierarchical map abstraction like HPA* but also connects the different levels of the hierarchy (keeping the current nodes’ connectivity inside a same level), forming kind of pyramids. Then, to find a path, a level of the hierarchy is chosen and search for nodes representing the origin and destination nodes of that path.
 So, at the higher level chosen, PRA* uses A* to find a path and then projects the first steps down to the next hierarchy levels until reaching the final one (the one in which we need the path to work), where the final path is refined, meaning that is definitively done by considering a corridor around the previous projected path. However, PRA* performance is similar to HPA*.
@@ -277,11 +276,84 @@ So, at the higher level chosen, PRA* uses A* to find a path and then projects th
 ***
 
 ### Other Games’ Approaches
+Until here, we have been looking different ways to improve A* ’s performance. Anyway, we should also see how other different games try to overcome the problem to take them as a reference (since they are the ones that have people investigating for their games to work). First of all, to have the first clue, mention that [this]() project is a package for unity that provides an improved A* version and supports different graph set ups (navigation meshes, waypoints…) and even ways to automate them. It’s used by games like [Kim](https://store.steampowered.com/app/433400/Kim/), [Folk Tale](http://www.gamesfoundry.com/), [Divide](http://www.explodingtuba.com/), [CubeMen](http://cubementd.com/) or [Dark Frontier](https://www.youtube.com/watch?v=tOc-xdtufmg).
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/unity.jpg?raw=true" width="285px" height="154px"/>
+</p>
+
+I would like to mention that we have tried (with time enough, like a month or two ago) to contact different studios and companies to ask them how they work towards pathfinding, but only two answered. I would like to thank them, one is [Beautifun Games](https://beautifungames.com/) (whose we will talk now) and the other is [Yatch Club Games](https://yachtclubgames.com/), developers of games like [Shovel Knight](https://yachtclubgames.com/shovel-knight/) or [Cyber Shadow](https://yachtclubgames.com/cyber-shadow/). I won’t talk about them because they answered that they do not use pathfinding in their games since they are simple enough.
+
+Without further delay, let’s keep moving!
+
 ###### Professor Lupo - Thankful Mention
+[Professor Lupo](http://www.professorlupo.com/), from Beautifun Games, uses [Bresenham](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm) algorithm for straight lines. We won’t go deeper into it, but if you are interested, [here](https://deepnight.net/tutorials/bresenham-magic-raycasting-line-of-sight-pathfinding/) there is a blog explaining it with code implementation and a check for obstacles blocking the sight between monsters and the player (case in which pathfinding should not be done, and therefore skipping useless calls) and some other features.
+[Red Blob Games](https://www.redblobgames.com/) has also a [page](https://www.redblobgames.com/grids/line-drawing.html) in which explains line drawing with Bresenham and the concept of linear interpolation.
+Also, you can check a fragment of [this book](https://books.google.es/books?id=Sz-Sqvm-hSYC&pg=PA12&lpg=PA12&dq=bresenham+for+pathfinding&source=bl&ots=vOkq_j6DgK&sig=ACfU3U1yUTEFxRg6QMwJqfkhpZaXGJFF1g&hl=es&sa=X&ved=2ahUKEwiCserggZHhAhUC2uAKHXHlBEAQ6AEwCXoECAgQAQ#v=onepage&q=bresenham%20for%20pathfinding&f=false) (AI For Game Devs), which explains more deeper the subjects mentioned.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/professor-lupo-and-his-horrible-pets-2017118121656_1.jpg?raw=true" width="300px" height="158px"/>
+</p>
+
 #### Navigation Meshes and Hierarchy
 ###### Starcraft II
+The developers of [Starcraft II](https://starcraft2.com/es-es/) had to lead with hundreds of units moving over a map with different terrains while improving the pathfinding of previous titles (this means, better IA with better and realistic paths).
+[James Anhalt](https://www.mobygames.com/developer/sheet/view/developerId,20733/), Lead Software Engineer on Game Systems of [Blizzard](https://www.blizzard.com/es-es/), explained at GDC 2011 that to attack the problem, they represented the world by using a triangulated Navigation Mesh** over which A* is run.
+As they needed to save a lot of memory, and to make it more faster, they statically allocated everything and condensed the structures into 16 bytes per face of triangle and 4 bytes per vertex, which allowed to have 64000 faces and 32000 vertices.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/starcraftTriangulation.png?raw=true" width="323px" height="182px"/>
+</p>
+
+I won’t talk more about Starcraft II pathfinding since it’s not in the direction of this research, but if you want to know more, you can go to that [2011 GDC talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) in which he explains it deeper (minutes 3 to 20), which is the same talk in which the orators explain the pathfinding for Heroes on the Move and Dragon Age Origin. Also, check the section 2.4 (Triangulation Based Pathfinding) of [this Pathfinding book](http://drops.dagstuhl.de/opus/volltexte/2013/4333/pdf/4.pdf) (pages 24-25) that explains a bit about Pathfinding with triangulated map representations.
+
+```
+> ** Specifically, [Constrained Delaunay Triangulation](https://en.wikipedia.org/wiki/Constrained_Delaunay_triangulation), which is a generalization of the [Delaunay Triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) that not always accomplishes a rule called the Delaunay Condition that states that the circle circumscribed of each triangle dividing, in this case the map, cannot contain any vertex of other triangle.
+A [Triangulation](https://en.wikipedia.org/wiki/Triangulation_(geometry)) is the division of the map into triangles, for the people who does not know.
+```
 ###### Dragon Age Origins
+The case of [Dragon Age Origins](https://www.ea.com/es-es/games/dragon-age/dragon-age-origins) is similar to the ones of its same talk in [GDC 2011 talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) (minute 36 to 54), Starcraft II and Heroes on the Move, and as they were before, [Nathan Sturtevant](https://www.cs.du.edu/~sturtevant/) (consultant for [BioWare](http://www.bioware.com/) that implemented pathfinding engine) do not explain a lot regarding to pathfinding itself since it seems pretty similar to the previous talks, so it focuses more on path smoothing, quality and trap avoidance (how to prevent pathfinding to make weird things and make it look good).
+As told, Dragon Age’s approach is similar to the previous: they hierarchize the map in a low level graph (represented by grids) and a higher level to make the world movement (represented by a kind of a Navigation Mesh). Also, they divide the whole map in sectors and sub-sectors (called regions).
+Their goals towards pathfinding were to achieve a fast planner while planning long paths and being memory efficient. The next are images of a prototype for Dragon Age with a low level grid representation (red) and the second image has, in yellow, the representation of the high level grid.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/DAOAbstractGraph.png?raw=true" width="215px" height="121px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/DAOLevelsAbs.png?raw=true" width="215px" height="121px"/>
+</p>
+
+Just for curiosity, he mentions that they use octile heuristics. Also (and because of curiosity too) it mentions that Google can perform fast pathfinding because they rely a lot on roads properties (highways are the faster way to get somewhere).
+
 ###### Heroes on the Move
+The Playstation’s [Heroes on the Move](https://es.wikipedia.org/wiki/PlayStation_Move_Heroes) developers had to come up with a solution that allowed runtime planning of pathfinding while spending no more than the 50% of the time on navigation, so they did something similar to Starcraft II but they also applied hierarchy levels and calculate paths in them to smooth them later. First of all, they triangulated a Navigation Mesh.
+
+With this, they have a high level (with two nodes per cell):
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/NavMesh.png?raw=true" width="335px" height="189px"/>
+<img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/NavMeshintoClusters.png?raw=true" width="335px" height="189px"/>
+</p>
+
+And, when they wanted to find a path, they found a solution first in the abstract graph:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/NodesofNavMesh.png?raw=true" width="258px" height="145px"/>
+</p>
+
+And then they went, in the abstract graph, area per area building a path. This means that, once they have an abstract solution, first pick an area and do the path inside and then the other and so while the game keeps running. Like this:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/AbstractGraphSol.png?raw=true" width="258px" height="145px"/>
+</p>
+
+And when the element moving arrives to the “portal” (the frontier between areas), they calculate the path to the next area. This allows what they seek: to pathfind in runtime and keeping it fast (not spending much time).
+To know the place where to cross between lines, they just calculated the nearest point to the moving element.
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/HotM/LowLevelSolution.png?raw=true" width="258px" height="145px"/>
+</p>
+
+This pathfinding way is also explained in the same [GDC 2011 talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) than Starcraft II and Dragon Age Origin (from minute 20 to 36).
+
 ###### Supernauts
 #### Hierarchical Pathfinding
 ###### Castle Story
