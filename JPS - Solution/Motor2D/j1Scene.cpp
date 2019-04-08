@@ -32,8 +32,6 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 
-	testFont = App->fonts->Print("Hellow: ");
-	App->fonts->CalcSize("Hellow: ", font_rect.w, font_rect.h);
 	if(App->map->Load("iso_walk.tmx") == true)
 	{
 		int w, h;
@@ -44,7 +42,18 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
+	//Debug Texture to show Pahtfinding and mouse position
 	debug_tex = App->tex->Load("maps/path2.png");
+
+	//Performance Test Elements - Loading (Debug Purposes)
+	algorithmUsed_text = App->fonts->Print(AlgorithmUsed);
+	App->fonts->CalcSize(AlgorithmUsed, algorithmUsed_rect.w, algorithmUsed_rect.h);
+
+	ms_charText = App->fonts->Print(ms_char);
+	App->fonts->CalcSize(ms_char, ms_charRect.w, ms_charRect.h);
+
+	number_msTexture = App->fonts->Print(number_ms);
+	App->fonts->CalcSize(number_ms, number_ms_rect.w, number_ms_rect.h);
 
 	return true;
 }
@@ -57,11 +66,15 @@ bool j1Scene::PreUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 
 		activateJPS = !activateJPS;
+		App->tex->UnLoad(algorithmUsed_text);
 
 		if (activateJPS == true)
-			AlgorithmUsed = "JPS";
+			AlgorithmUsed = "Algorithm Used: JPS (press F to change)";
 		else
-			AlgorithmUsed = "A-Star";
+			AlgorithmUsed = "Algorithm Used: A-Star (press F to change)";
+
+		algorithmUsed_text = App->fonts->Print(AlgorithmUsed);
+		App->fonts->CalcSize(AlgorithmUsed, algorithmUsed_rect.w, algorithmUsed_rect.h);
 	}
 
 
@@ -86,6 +99,13 @@ bool j1Scene::PreUpdate()
 			App->pathfinding->CreatePath(origin, p, activateJPS);
 			Ptime = PathfindingTimer.ReadMs();
 			origin_selected = false;
+
+			//Pathfinding Performance Test - measures changes
+			sprintf_s(number_ms, "%f", Ptime);
+
+			App->tex->UnLoad(number_msTexture);
+			number_msTexture = App->fonts->Print(number_ms);
+			App->fonts->CalcSize(number_ms, number_ms_rect.w, number_ms_rect.h);
 
 			LOG("PATHFINDING LASTED: %f ms", Ptime);
 		}
@@ -142,7 +162,10 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	App->render->Blit(testFont, 0, 0, &font_rect); //cameera pos
+	//Blitting elements used for performance test show
+	App->render->Blit(algorithmUsed_text, -App->render->camera.x, -App->render->camera.y, &algorithmUsed_rect);
+	App->render->Blit(ms_charText, -App->render->camera.x, -App->render->camera.y + 20, &ms_charRect);
+	App->render->Blit(number_msTexture, -App->render->camera.x + 150, -App->render->camera.y + 20, &number_ms_rect);
 
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -155,6 +178,12 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	App->tex->UnLoad(debug_tex);
+
+	//Unloading elements used for performance test show
+	App->tex->UnLoad(algorithmUsed_text);
+	App->tex->UnLoad(ms_charText);
+	App->tex->UnLoad(number_msTexture);
 
 	return true;
 }

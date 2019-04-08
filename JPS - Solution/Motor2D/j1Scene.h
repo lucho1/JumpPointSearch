@@ -35,14 +35,24 @@ public:
 
 private:
 
-	SDL_Rect font_rect;
-	SDL_Texture* testFont = nullptr;
-	//Pathfinding Stuff
+	//Pathfinding Debug Stuff
 	SDL_Texture* debug_tex;
 	bool activateJPS = false;
-	char* AlgorithmUsed = "A-Star";
 	j1PerfTimer PathfindingTimer;
 	double Ptime;
+
+	//Performance Test Showing (Debug Purposes)
+	char* AlgorithmUsed = "Algorithm Used: A-Star (press F to change)";
+	SDL_Rect algorithmUsed_rect = {0, 0, 1, 1};
+	SDL_Texture* algorithmUsed_text = nullptr;
+
+	char* ms_char = "Lasted Time (ms): ";
+	SDL_Rect ms_charRect = { 0, 0, 1, 1 };
+	SDL_Texture*  ms_charText = nullptr;
+
+	char number_ms[10];
+	SDL_Texture *number_msTexture = nullptr;
+	SDL_Rect number_ms_rect = { 0, 0, 1, 1 };
 
 };
 

@@ -33,7 +33,7 @@ bool Fonts::Awake(pugi::xml_node& conf)
 		text_font* tmpPtr;
 		int i = 0;
 
-		for (pugi::xml_node fontList = conf.first_child(); fontList != fontList.last_child(); fontList = fontList.next_sibling()) {	// @Carles, automatically allocate fonts
+		for (pugi::xml_node fontList = conf.first_child(); fontList != fontList.last_child(); fontList = fontList.next_sibling()) {
 
 			tmpPtr = new text_font;
 			tmpPtr->id = (font_id)fontList.attribute("id").as_int((int)font_id::DEFAULT);

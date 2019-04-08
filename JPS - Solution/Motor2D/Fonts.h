@@ -5,7 +5,7 @@
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT_PATH "fonts/open_sans/OpenSans-Regular.ttf"
-#define DEFAULT_FONT_SIZE 12
+#define DEFAULT_FONT_SIZE 6
 #define DEFAULT_FONT_COLOR { 255, 255, 255, 255 }
 
 struct SDL_Texture;
@@ -14,8 +14,6 @@ struct _TTF_Font;
 enum class font_id {
 
 	DEFAULT,
-	RUSSIAN,
-	MOLOT,
 
 	MAX_FONTS
 };
