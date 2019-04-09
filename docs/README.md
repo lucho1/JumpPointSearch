@@ -28,7 +28,7 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
   4. [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games)
      * [Hierarchical Pathfinding (HPA*)](#hierarchical-pathfinding-hpa)
        * [Improving HPA* - Partial Refinement A* (PRA*)](#improving-hpa---partial-refinement-a-pra)
-     * [Other Games’ Approaches](#other-games-approaches)  
+     * [Other Games’ Approaches](#other-games-approaches)
          * [Professor Lupo - Thankful Mention](#professor-lupo---thankful-mention)     
        * [Navigation Meshes and Hierarchy](#navigation-meshes-and-hierarchy)
          * [Starcraft II](#starcraft-ii)
@@ -497,11 +497,55 @@ So, now that we have seen what’s new (is not much, right?), we can start with 
 ###### Exercise Solutions
 
 #### Performance
-Now, with Jump Point Search implemented we can take measures! In the exercise, the Scene Module is ready to pick pathfinding measures (which are shown both in output and screen). If we run both algorithms for the same path, we can check how many steps each one did (this is, how many nodes exploring) and how fast they come up with a path for the same start/end points. Let’s see some captures:
+Now, with Jump Point Search implemented we can take measures! In the exercise, the Scene Module is ready to pick pathfinding measures (which are shown both in output and screen). If we run both algorithms for the same path, we can check how many steps (this only in the console output area in Visual Studio) each one did (or how many nodes exploring) and how fast they come up with a path for the same start/end points.
+So first I tested it in a map done with [Tiled](https://www.mapeditor.org/) of 25x25. In Debug mode the results were this (note that, in all the images, the blue tile that is outside the map and not in the path is a tile that marks the mouse position to select start/end nodes when calling a path, but mouse is not seeable in screen captures):
 
-**PUT IMAGES OF YOUR PERFORMANCE TESTS HERE**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt1AS.PNG?raw=true" width="404px" height="207px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt1JPS.PNG?raw=true" width="404px" height="206px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt2AS.PNG?raw=true" width="404px" height="205px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt2JPS.PNG?raw=true" width="404px" height="206px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt3AS.PNG?raw=true" width="404px" height="206px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/deb/pt3JPS.PNG?raw=true" width="404px" height="205x"/>
+</p>
 
-If, you are not implementing JPS with the system I provide (or you can’t see the measures), you can see the next pictures provided by Daniel Harabor of its own results in different maps:
+If the images are not properly seen, click on them to open up and see them bigger (you will see correctly the time that each algorithm, for the same path, lasts). Then I tried it in Release mode to see how it was in run-time:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/pt1AS.PNG?raw=true" width="404px" height="207px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/pt1JPS.PNG?raw=true" width="404px" height="206px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/pt2AS.PNG?raw=true" width="404px" height="205px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/pt2JPS.PNG?raw=true" width="404px" height="206px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/pt3AS.PNG?raw=true" width="404px" height="206px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/pt3JPS.PNG?raw=true" width="404px" height="205x"/>
+</p>
+
+Here I was a bit surprised because in Release mode the difference is not that much, so I felt like the effort of all this (of the algorithm that supposed to improve A* a lot) was useless. But then I come up with a little detail: this was a map of 25x25. Big games like Company of heroes, as mentioned above, use very huge maps in their games, as Chris Jurney said (this is explained in the section of [Other Games’ Approach](#other-games-approaches), concretely in the part of [Company of Heroes and Dawn of War 2](#company-of-heroes-and-dawn-of-war-2)), maps up to 250 000 cells.
+So I thought on make A* fight JPS in a map of the dimensions of one of the maps in the [project](https://chillchilistudio.github.io/Order227/) I’m currently doing in university for Project II subject, which have, approximately, 100 000 tiles (350x350). I even cut that map because in the system used for this research (the same for the exercise in the upper section) I didn’t had a way to optimize map rendering and was very slow (to the point that I couldn’t test it properly), so I did a very improvised map of 150x150 (in which I still have a bit slow map rendering but it was okay for testing this) and run it on Release (since the huge improvement in Debug mode was already proven), and the optimization is incredible (note that green grass parts are acting as colliders, this is because I did the map very fast with the thing I had in there in hand, but it serves to our testing purposes):
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/bigmap/PT1AS.PNG?raw=true" width="404px" height="205px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/bigmap/PT1JP.PNG?raw=true" width="404px" height="206px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/bigmap/PT2AS.PNG?raw=true" width="404px" height="206px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/performanceTests/rel/bigmap/PT2JP.PNG?raw=true" width="404px" height="205x"/>
+</p>
+
+As you can see, in the second test, JPS skips lots of nodes and is way faster. I just see it running 35 times faster than A*, but the map is 150x150, maybe in a bigger map with bigger paths calculations and more (and cleverly designed) obstacles, can reach a way higher optimization.
+
+If you want to see it with your eyes, go to the upper [C/C++ Implementation](#cc-implementation) section and download the code. You can do the exercise or see it in the solution. You can try it in both maps just by changing the path used to call the map to load in line 36 of j1Scene.cpp. Is an if() statement, you can use the one called “iso_walk.tmx” (the little map of 25x25) or the one called “iso.tmx” (the big desert map). By default, the little one is called, but just comment the if() statement that I told and uncomment the other one and will change the map (be careful because in the big map, A* might crash, I suspect that is because it cannot hold that big paths, but I’m not sure).
+
+###### Other External Results
+If, you are not implementing JPS with the system I provide (or you can’t see the measures or want to see other external results to prove JPS efficiency), you can check the next pictures provided by Daniel Harabor of its own results in different maps:
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/JPSresults1H.PNG?raw=true" width="730px" height="562px"/>
