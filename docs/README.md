@@ -763,22 +763,38 @@ With no more delay, here is the conversation:
 ```
 Hi Lucho, 
 
-Thank you for the email; it’s always nice to hear from a fellow pathfinding enthusiast! I am happy to read that you found my research interesting and I am humbled by your kind assessment of it. I will try my best to answer your questions below, inlined
+Thank you for the email; it’s always nice to hear from a fellow pathfinding enthusiast!
+I am happy to read that you found my research interesting and I am humbled by your kind assessment
+of it. I will try my best to answer your questions below, inlined
 ```
 **The first question is related to JPS against SRC. I have seen that SRC is way faster than JPS but spends lots of memory, so would you recommend better to use JPS instead of SRC? (you know, since I feel that the improvement in the speed it's not worth with that memory usage in a context like an RTS videogame).**
+
 ```
-A main advantage of JPS is that it runs online. That means if the map changes (e.g. your workers clear a new path through the forest, or your sappers blow up a bridge) then any subsequent shortest path searches will take those changes into account. SRC meanwhile assumes the map will remain static. Paths are computed faster than JPS and it’s also possible to extract just the first few steps of a path instead of searching all the way to the target. This can be advantageous because replanning is fast. The main price, as you know, is the offline preprocessing overhead of SRC and the online memory overhead.
+A main advantage of JPS is that it runs online. That means if the map changes (e.g. your workers clear
+a new path through the forest, or your sappers blow up a bridge) then any subsequent shortest path searches
+will take those changes into account. SRC meanwhile assumes the map will remain static. Paths are computed
+faster than JPS and it’s also possible to extract just the first few steps of a path instead of searching
+all the way to the target. This can be advantageous because replanning is fast. The main price, as you know,
+is the offline preprocessing overhead of SRC and the online memory overhead.
 
-Which method is better depends on the situation. In games such as Dragon Age for example, the maps are not so big (usually < 100K tiles) and the space and time overheads are usually small.
+Which method is better depends on the situation. In games such as Dragon Age for example, the maps are not
+so big (usually < 100K tiles) and the space and time overheads are usually small.
 
-In the last period I have been thinking about combining the advantages of JPS and SRC. There are a few ways to do this. One way is to combine the SRC database with a jump point database. In such a setup the SRC database tells the user which direction to take to reach the target and the jump point database tells how many steps to take in that direction before the path needs to turn. The preprocessing costs are the same as SRC and the memory overhead is similar. You can read more here:
+In the last period I have been thinking about combining the advantages of JPS and SRC. There are a few ways
+to do this. One way is to combine the SRC database with a jump point database. In such a setup the SRC
+database tells the user which direction to take to reach the target and the jump point database tells how
+many steps to take in that direction before the path needs to turn. The preprocessing costs are the same as
+SRC and the memory overhead is similar. You can read more here:
+
 http://harabor.net/data/papers/sbghs-toppgm-18.pdf
 ```
 **Then I was thinking on rectangular symmetry reduction. Do you think it's a good idea to mix it with JPS? I don't even know if that is possible.**
+
 ```
 RSR has two advantages vs JPS:
  1. Rooms are precomputed so there’s no grid scanning*
- 2. Rooms limit the area in which neighbours are found (JPS scans are only limited, in the worst case, by hitting the edge of the map).
+ 2. Rooms limit the area in which neighbours are found (JPS scans are only limited, in the worst case,
+ by hitting the edge of the map).
 
 It’s possible to add both of these advantages to JPS by: 
 
@@ -786,14 +802,21 @@ It’s possible to add both of these advantages to JPS by:
  (b) limiting the maximum distance for any jump to some fixed value k.
 
 You can find out more here:
+
 http://harabor.net/data/papers/harabor-grastien-icaps14.pdf
 https://www.youtube.com/watch?v=NmM4pv8uQwI
 ```
-__And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.__
-```
-This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path. The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this setting.
 
-If your map is also dynamic, you might consider e.g. weighted A* (which is bounded suboptimal) or some type of anytime search (which returns a best path it can find for a given time limit).
+__And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.__
+
+```
+This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path.
+The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR
+could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this
+setting.
+
+If your map is also dynamic, you might consider e.g. weighted A* (which is bounded suboptimal) or some type
+of anytime search (which returns a best path it can find for a given time limit).
 ```
 
 And here ends the conversation. I think that with this, we can already have an idea of which pathfinding areas to explore according to our game, but remember, we must avoid things like this:
