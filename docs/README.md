@@ -493,7 +493,7 @@ First of all, let’s see what’s new from A*. We have three new functions:
 The other functions in the image are the **PropagateAStar()**, which is self-explanatory, and **CreatePath()**, that is called each time we want to compute a path and decides, based on the bool that is passed, if calling JPS or A*.
 So, now that we have seen what’s new (is not much, right?), we can start with the exercise!
 
-##### Step by Step Implementation - Do it Yourself Exercise
+#### Step by Step Implementation - Do it Yourself Exercise
 Our goal now is to go step by step implementing JPS in order to understand how it works and how to build it. Before starting, it would be good if you just go around the pathfinding module seeing and trying to understand, conceptually, what the functions explained in the previous explanation do.
 So, if you download the exercise [linked again here](https://github.com/lucho1/JumpPointSearch), the exercise folder is the one called "Handout". In there, there is the code with the exercises to do, but also a folder with an executable showing how the result should look like (inside Game folder). You can play with it a bit to check the A* and JPS visual and performatic differences. Then, if you go to the exercises code, you will see that nothing happens if you call JPS (if you call A*, this one is already done to do the path).
 So let's begin.
@@ -572,7 +572,7 @@ Now the whole exercise is totally done. The result should look like in the solut
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6resultjps.PNG?raw=true" width="457px" height="195px"/>
 </p>
 
-##### Exercise Solutions
+#### Exercise Solutions
 Now I will show you the solutions for the previous TODOs to complete the exercise and have the resulting JPS. I think they don0t need further explanations.
 
 **Todo 1**
