@@ -98,7 +98,7 @@ Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ## A* First Improvements, Generalities and Context
 ### General Improvements and Heuristics Changes
@@ -126,7 +126,7 @@ Also, I have used a part of [this](http://theory.stanford.edu/~amitp/GameProgram
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
-***
+
 
 ### Paths Recalculations - Incremental Searches
 In this section I will talk about a way to improve and speed up A* through [incremental searches](https://drive.google.com/open?id=1tmqB_ooKRxiBzbYO6aB7ptmx3B62rwTk) which uses information from previous searches to have a basis over which to build the new searches and, therefore, spend less time (speed up searches for sequences of similar problems by using experience from previous problems).
@@ -187,7 +187,7 @@ So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/op
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ### Angled Pathfinding
 <p align="center">
@@ -232,7 +232,7 @@ To finish with angled pathfinding, just mention Incremental Phi*. It mixes Theta
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ## Nowadays - Hierarchies and other Games
 On top of the previous researches and especially on top of everything explained in the previous sections, pathfinding started to have different directions. What it seems to be widely used by other reference videogames is the map abstraction into a hierarchy with different levels representing the tiles of the lower levels (that is, dividing the map into areas that, each time with bigger tiles, represent the map itself, like a Quadtree).
@@ -274,7 +274,7 @@ So, at the higher level chosen, PRA* uses A* to find a path and then projects th
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ### Other Games’ Approaches
 Until here, we have been looking different ways to improve A* ’s performance. Anyway, we should also see how other different games try to overcome the problem to take them as a reference (since they are the ones that have people investigating for their games to work). First of all, to have the first clue, mention that [this]() project is a package for unity that provides an improved A* version and supports different graph set ups (navigation meshes, waypoints…) and even ways to automate them. It’s used by games like [Kim](https://store.steampowered.com/app/433400/Kim/), [Folk Tale](http://www.gamesfoundry.com/), [Divide](http://www.explodingtuba.com/), [CubeMen](http://cubementd.com/) or [Dark Frontier](https://www.youtube.com/watch?v=tOc-xdtufmg).
@@ -428,7 +428,7 @@ In fact, I recently discovered that in [this](http://aigamedev.com/open/tutorial
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ## My Approach - Killing Path Symmetries
 In this section I will explain my approach to improve as much as possible the A* pathfinding taking into account the projects of video games creation that we are developing for a University’s subject, in which we will need a pathfinding fast as possible, but it might serve for any reader or other projects, too.
@@ -677,7 +677,7 @@ All the links in this section (except some of the videos) were the basis to buil
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ### Other Improvements
 #### Rectangular Symmetry Reduction (RSR)
@@ -747,7 +747,7 @@ On top of this algorithm, a hierarchical abstraction is made to speed up. To hav
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
+
 
 ## Final Thoughts and Recommendations
 After all the information gathered here, I think that a conclusion is needed. There are lots of manners to improve A* ‘s pathfinding, to make it faster, to make it lighter… So we have to take a balance and put in there many things to have into account. First of all, we have to know what our game needs in terms of pathfinding efficiency and memory usage. Maybe, just by improving a bit A* our game runs okay, or maybe we have such a big map and we need a very fast pathfinding…
@@ -760,21 +760,22 @@ I will transcribe here my questions and annotations on **bold** letters and his 
 
 With no more delay, here is the conversation:
 
+```
 Hi Lucho, 
 
 Thank you for the email; it’s always nice to hear from a fellow pathfinding enthusiast! I am happy to read that you found my research interesting and I am humbled by your kind assessment of it. I will try my best to answer your questions below, inlined
-
+```
 **The first question is related to JPS against SRC. I have seen that SRC is way faster than JPS but spends lots of memory, so would you recommend better to use JPS instead of SRC? (you know, since I feel that the improvement in the speed it's not worth with that memory usage in a context like an RTS videogame).**
-
+```
 A main advantage of JPS is that it runs online. That means if the map changes (e.g. your workers clear a new path through the forest, or your sappers blow up a bridge) then any subsequent shortest path searches will take those changes into account. SRC meanwhile assumes the map will remain static. Paths are computed faster than JPS and it’s also possible to extract just the first few steps of a path instead of searching all the way to the target. This can be advantageous because replanning is fast. The main price, as you know, is the offline preprocessing overhead of SRC and the online memory overhead.
 
 Which method is better depends on the situation. In games such as Dragon Age for example, the maps are not so big (usually < 100K tiles) and the space and time overheads are usually small.
 
 In the last period I have been thinking about combining the advantages of JPS and SRC. There are a few ways to do this. One way is to combine the SRC database with a jump point database. In such a setup the SRC database tells the user which direction to take to reach the target and the jump point database tells how many steps to take in that direction before the path needs to turn. The preprocessing costs are the same as SRC and the memory overhead is similar. You can read more here:
 http://harabor.net/data/papers/sbghs-toppgm-18.pdf
-
+```
 **Then I was thinking on rectangular symmetry reduction. Do you think it's a good idea to mix it with JPS? I don't even know if that is possible.**
-
+```
 RSR has two advantages vs JPS:
  1. Rooms are precomputed so there’s no grid scanning*
  2. Rooms limit the area in which neighbours are found (JPS scans are only limited, in the worst case, by hitting the edge of the map).
@@ -787,12 +788,13 @@ It’s possible to add both of these advantages to JPS by:
 You can find out more here:
 http://harabor.net/data/papers/harabor-grastien-icaps14.pdf
 https://www.youtube.com/watch?v=NmM4pv8uQwI
-
+```
 __And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.__
-
+```
 This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path. The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this setting.
 
 If your map is also dynamic, you might consider e.g. weighted A* (which is bounded suboptimal) or some type of anytime search (which returns a best path it can find for a given time limit).
+```
 
 And here ends the conversation. I think that with this, we can already have an idea of which pathfinding areas to explore according to our game, but remember, we must avoid things like this:
 
@@ -820,4 +822,3 @@ Thanks Yatch Games, Beautifun Games, Rick Pillosu, Marc Garrigó, Roger Leon and
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
-***
