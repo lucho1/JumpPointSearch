@@ -573,34 +573,26 @@ Now the whole exercise is totally done. The result should look like in the solut
 </p>
 
 ##### Exercise Solutions
+Now I will show you the solutions for the previous TODOs to complete the exercise and have the resulting JPS. I think they don0t need further explanations.
+
 **TODO 1**
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosSolutions/todo1.PNG?raw=true" width="658px" height="493px"/>
 </p>
 
-**TODO 2**
+**TODO 2, 3 and 4**
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
-</p>
-
-**TODO 3**
-<p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
-</p>
-
-**TODO 4**
-<p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosSolutions/todo234.PNG?raw=true" width="825px" height="537px"/>
 </p>
 
 **TODO 5**
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosSolutions/todo5.PNG?raw=true" width="924px" height="459px"/>
 </p>
 
 **TODO 6**
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosSolutions/todo6.PNG?raw=true" width="931px" height="409px"/>
 </p>
 
 #### Performance
