@@ -821,7 +821,7 @@ of anytime search (which returns a best path it can find for a given time limit)
 
 And here ends the conversation. I think that with this, we can already have an idea of which pathfinding areas to explore according to our game, but remember, we must avoid things like this:
 
-<video align="center" src="https://www.youtube.com/watch?v=TYlWFbCknAI&feature=youtu.be" width="320" height="200" controls preload></video>
+<video src="https://github.com/lucho1/JumpPointSearch/blob/master/docs/LANoirePathfindingFAIL.mp4" width="320" height="200" controls preload></video>
 
 ## Links to Additional Information
 All the information that I have used to build this research is linked all over the text in their respective sections or directly given. Also, you can find more interesting links and additional information (from which, in some cases, I also extracted information for this web) here:
