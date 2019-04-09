@@ -788,7 +788,7 @@ You can find out more here:
 http://harabor.net/data/papers/harabor-grastien-icaps14.pdf
 https://www.youtube.com/watch?v=NmM4pv8uQwI
 
-**And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.**
+__And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.__
 
 This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path. The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this setting.
 
