@@ -67,6 +67,8 @@ As you may see in the index, this page has many sections and many information. I
   
 Then I conclude this research with [final thoughts](#final-thoughts-and-recommendations) and some [additional information](#links-to-additional-information).
 
+You can check a [diapositives presentation](https://drive.google.com/open?id=11SCDpKlDce9Gievg4LTOLhFot-Zl2kif) for this research too (helpful for the later exercise).
+
 ## Introduction to Problem
 As you may deduce, in many games, there is a need to find paths from a location to another, for example, to give a path for a unit to move. To do this, we build algorithms in order to find these paths in an automatic manner. In this research, we will talk about one specific algorithm, which I will suppose you already know, the A*, in order to find optimizations and improvements for it.
 
@@ -858,6 +860,8 @@ path it can find for a given time limit).
 And here ends the conversation. I think that with this, we can already have an idea of which pathfinding areas to explore according to our game, but remember, we must avoid things like this:
 
 <video src="https://github.com/lucho1/JumpPointSearch/blob/master/docs/LANoirePathfindingFAIL.mp4" width="320" height="200" controls preload></video>
+
+(If you can't see the video, see it [here](https://youtu.be/TYlWFbCknAI)).
 
 ## Links to Additional Information
 All the information that I have used to build this research is linked all over the text in their respective sections or directly given. Also, you can find more interesting links and additional information (from which I also extracted information) here:
