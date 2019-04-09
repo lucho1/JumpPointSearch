@@ -539,7 +539,19 @@ If this is done correctly, JPS should be able to find strictly straigh paths (or
 **Todo 5**
 
 Now is time to code the **Jump()** function. Let's begin by determining how the algorithm, according to the rules stated, must explore towards straight directions (horizonals and verticals).
-Remember that we just have to keep looking until finding a Jump Point, and a Jump Point is found **[Keep Going]**
+Remember that we just have to keep looking until finding a Jump Point. To remember those rules and give them a more coding meaning, if we are coming horizontal, a Jump Point is found when one of the tiles aside the current position in Y axis is not walkable and the one at +X direction of that non-walkable tile, is walkable.
+And if we are coming vertically, a Jump Point is found when one of the tiles aside the current position in X axis is not walkable and the one at +Y direction of that non-walkable tile, is walkable.
+You might understand it better with a drawing:
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/hor1.png?raw=true" width="347px" height="340px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/hor2.png?raw=true" width="347px" height="340px"/>
+</p>
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/vert1.png?raw=true" width="347px" height="340px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/vert2.png?raw=true" width="347px" height="340px"/>
+</p>
+
 
 Next is an image of Todos 5 and 6:
 <p align="center">
@@ -562,7 +574,15 @@ If you change the heuristics in the function **CalculateF()** and select the Dia
 
 **Todo 6**
 
-Finally we have to do the same than TODO 5 but with diagonal directions. For this, remember that a Jump Point is found if **[Keep going]**.
+Finally we have to do the same than TODO 5 but with diagonal directions. Diagonal directions had other rules. To give them a more coding definition, a Jump Point is found diagonally when the tile aside the current position in X direction or in Y direction is not walkable. I have made a drawing for this too:
+
+
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/diagonal1.png?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/diagonal2.png?raw=true" width="381px" height="195px"/>
+</p>
+
+Also, if, from the current point, there is no possibility on Jumping towards X direction or towards Y direction, then we have also found a Jump Point.
 
 In the function **FindWalkableAdjacent()**, remember to uncomment the lines that fill the list with diagonal tiles to be able to go diagonally.
 
