@@ -19,7 +19,7 @@ I am [Lucho Suaya](https://www.linkedin.com/in/luchosuaya/), a student of the Ba
      * [Paths Recalculations - Incremental Searches](#paths-recalculations---incremental-searches)
        * [Fringe Saving A*](#fringe-saving-a)
        * [Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets](#generalized-adaptive-a-gaa---initial-approach-to-moving-targets)
-       * [Dynamic A* (D*) and Lifelong Planning A* (LPA*)](#dynamic-a-d-and-lifelong-planning-a-lpa)
+       * [Dynamic A* (DStar) and Lifelong Planning A* (LPA*)](#dynamic-a-d-and-lifelong-planning-a-lpa)
          * [LPA* and D*’s son: A love story](#lpa-and-d-s-son-a-love-story)
      * [Angled Pathfinding](#angled-pathfinding)
        * [Field D*](#field-d)
@@ -63,7 +63,7 @@ As you may see in the index, this page has many sections and many information. I
   
    2. In the second part, [Nowadays - Hierarchies and other Games](#nowadays---hierarchies-and-other-games) I start with the Hierarchical Pathfinding approach to improve A*, which is very used and common nowadays, and for that reason, I put many examples of other games using it (in fact, it’s difficult to find big games that do not use it).
   
-   3. In the 3rd and final part, I introduce and develop [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries), to improve A*, which is a way to do it developed by an investigator called Daniel Harabor and makes A* way faster. Also, other improvements are explained since JPS might not be the best take for all games, so to have references if it’s your case (although they are not developed as JPS, I put links to works that show how to do it).
+   3. In the 3rd and final part, I introduce and develop [My Approach - Killing Path Symmetries](#my-approach---killing-path-symmetries), to improve A * , which is a way to do it developed by an investigator called Daniel Harabor and makes A* way faster. Also, other improvements are explained since JPS might not be the best take for all games, so to have references if it’s your case (although they are not developed as JPS, I put links to works that show how to do it).
   
 Then I conclude this research with [final thoughts](#final-thoughts-and-recommendations) and some [additional information](#links-to-additional-information).
 
@@ -114,7 +114,7 @@ Bidirectional Search is to start two searches in parallel, one from start to goa
 At the beginning of the search, it’s assumed that is more important to get to the destination rather fast than better, so it changes heuristics to F = G + H * W. This W is a weight associated to the heuristic which goes decreasing as getting closer to the goal, so it goes decreasing the importance of the heuristics and increases the importance of the actual cost of the path, making it faster at the begin and better at the end.
 
 #### Iterative Deepening (IDA*)
-[IDA](https://es.wikipedia.org/wiki/IDA*)* is an algorithm that can find the shortest path in a weighted graph. It uses A*’s heuristic to calculate the heuristic of getting to the goal node but, since it’s a depth-first search algorithm, it uses less memory than A*. Even though, it explores the most promising nodes so it does not go to the same depth always (meaning that the time spent is worth). It might explore the same node many times.
+[IDA](https://es.wikipedia.org/wiki/IDA*)* is an algorithm that can find the shortest path in a weighted graph. It uses A* ’s heuristic to calculate the heuristic of getting to the goal node but, since it’s a depth-first search algorithm, it uses less memory than A*. Even though, it explores the most promising nodes so it does not go to the same depth always (meaning that the time spent is worth). It might explore the same node many times.
 So, basically, it starts by performing a depth-first search and stops when the heuristics (F = H + G) exceeds a determined value, so if the value is too large, it won’t be considered. This value starts as an estimate initially and it goes increasing at each iteration.
 
 IDA* works for memory constrained problems. While A* keeps a queue of nodes, IDA* do not remember them (excepting the ones in current path), so the memory needed is linear and lower than in A*. A good thing of IDA* is that doesn’t spend memory on lists since it goes in-depth, but it has some disadvantages that the usage of a base algorithm like [Fringe Search](https://en.wikipedia.org/wiki/Fringe_search) can solve (at least partially).
@@ -149,7 +149,7 @@ This variant of A* can handle moving target points. When there is a moving point
 
 This allows to find shortest paths in state spaces where the action costs can increase over time since consistent h-values remain consistent after action cost increases. It’s easy to implement and understand and better explained in [this article](https://drive.google.com/open?id=1e4gbDqxuCwCO9b-5i8fIykFHqmW92qTK).
 
-#### Dynamic A* (D*) and Lifelong Planning A* (LPA*)
+#### Dynamic A* (D* ) and Lifelong Planning A* (LPA*)
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/D.jpg?raw=true" width="125px" height="125px"/>
 </p>
@@ -160,7 +160,7 @@ This allows to find shortest paths in state spaces where the action costs can in
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/bostondynamics-640x353.jpg?raw=true" width="160px" height="88px"/>
 </p>
 
-If the robot detects new map informations (for instance, previously unknown obstacles), adds the information to its previous assumptions and, if it’s necessary, it replans a new path. Doing this ensures to have more speed than restarting A*, so D* is for cases in which the complete information is not available, cases in which  A* can make mistakes, but D* solves them quickly (making it fit to dynamic obstacles) and allowing fast-replanning.
+If the robot detects new map informations (for instance, previously unknown obstacles), adds the information to its previous assumptions and, if it’s necessary, it replans a new path. Doing this ensures to have more speed than restarting A* , so D* is for cases in which the complete information is not available, cases in which  A* can make mistakes, but D* solves them quickly (making it fit to dynamic obstacles) and allowing fast-replanning.
 But nevertheless, even though being similar to A*, is more complex and has been obsoleted by a new version which is simpler.
 
 ###### LPA* and D* ’s son: A love story
@@ -171,7 +171,7 @@ But nevertheless, even though being similar to A*, is more complex and has been 
 </p>
 
 Parallely, there is an (obsoleted) algorithm called DynamicSWSF-FP that stored the distance from every node to the destination node. It had a big initial setup when calling it, but after graph changes, it updated ONLY the nodes whose distances had changed.
-This is important for [Incremental A](https://drive.google.com/open?id=1tHE54ptXXKkmyM84ALw130HJtO4LNvne)* , also called Lifelong Planning A* (LPA*) which is a combination between DynamicSWSF-FP and A*. In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A*, the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time (but it consumes memory).
+This is important for [Incremental A](https://drive.google.com/open?id=1tHE54ptXXKkmyM84ALw130HJtO4LNvne)* , also called Lifelong Planning A* (LPA* ) which is a combination between DynamicSWSF-FP and A* . In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A* , the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time but consumes memory.
 Although, LPA* has a problem: it finds the best path from the same start to the same finish, but is not very used if the start point is moving or changing (such as units movement), since it works with pairs of the same coordinates. Also, another problem is that both D* and LPA* need lots of space (because, to understand it, you run A* and keep its information) to, if the map changes, decide if adjusting the path fastly. This means that, in a game with many units moving, it’s not practical to use these algorithms because it’s not just the memory used, but the fact that they been designed for robots, which is one only unit moving; if you use them for many units, it stops being better than A*.
 
 <p align="center">
@@ -179,7 +179,7 @@ Although, LPA* has a problem: it finds the best path from the same start to the 
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/robotPATH.png?raw=true" width="162px" height="182px"/>
 </p>
 
-So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D*), mentioned before as it obsoleted D*. Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
+So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D* ), mentioned before as it obsoleted D* . Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/DLite.png?raw=true" width="137px" height="135px"/>
@@ -215,10 +215,10 @@ The next is an image of a comparison between A* (in Red) and Lazy Theta* (in Blu
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavsa.png?raw=true" width="217px" height="216px"/>
 </p>
 
-Theta* is an A* and D* variant (like Field D*) but it doesn’t has fast-replanning capabilities. It runs on square grids and it finds shortest paths that do not strictly follow the grid by pointing to adjacent ancestors, if there is a line of sight towards that node, it can save it as a parent node, skipping the nodes in-between (what is called visibility).
+Theta* is an A* and D* variant (like Field D* ) but it doesn’t has fast-replanning capabilities. It runs on square grids and it finds shortest paths that do not strictly follow the grid by pointing to adjacent ancestors, if there is a line of sight towards that node, it can save it as a parent node, skipping the nodes in-between (what is called visibility).
 See this [AI Game Dev article](http://aigamedev.com/open/tutorials/theta-star-any-angle-paths/) for further information, is well explained there. Also you can see this [paper](https://drive.google.com/open?id=1hMGIUlks5_YRiU9zSVlU0H2R-VNUp-so) in which there’s a longer and deeper explanation on angled pathfinding and also, on Block A*, which is a version of Theta* that is faster because it uses a hierarchical approach ([this article](https://drive.google.com/open?id=1jbFISJ4SRsnVN2R8UWHvOxKWuXFQgQvY) gets even more information on Block A*). 
 
-Appart of Block A*, there’s also another faster version for Theta* called Lazy Theta*. You can check this AI Game Dev article for more information on it, basically, in four more lines of code, it makes Theta* faster by performing less line of sight checks.
+Appart of Block A* , there’s also another faster version for Theta* called Lazy Theta* . You can check this AI Game Dev article for more information on it, basically, in four more lines of code, it makes Theta* faster by performing less line of sight checks.
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavslazytheta.png?raw=true" width="291px" height="169px"/>
@@ -228,7 +228,7 @@ Appart of Block A*, there’s also another faster version for Theta* called Lazy
 A good advantage of these algorithms is that they are pretty easy to understand and implement.
 
 #### Incremental Phi*
-To finish with angled pathfinding, just mention Incremental Phi*. It mixes Theta* and Field D*, by making an incremental version of Theta* (so, allowing fast-replanning). It’s useful for dynamic environments. [This paper](https://drive.google.com/open?id=1IlMBIdmF6ARN_VX7yaxn9NK5Z0mz-IlN) gets deep into it.
+To finish with angled pathfinding, just mention Incremental Phi* . It mixes Theta* and Field D* , making an incremental version of Theta* (so, allowing fast-replanning). It’s useful for dynamic environments. [This paper](https://drive.google.com/open?id=1IlMBIdmF6ARN_VX7yaxn9NK5Z0mz-IlN) gets deep into it.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
@@ -243,7 +243,7 @@ Before seeing it, let’s see the different types of map representations or how 
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hierarchy.jpg?raw=true" width="214px" height="143px"/>
 </p>
 
-Pathfinding with a large number of units on a large graph, all with different starting locations and potentially different destinations can be tricky and time and performance consuming if there is not a good strategy. Hierarchical pathfinding might solve this problem when needing the previous features. It breaks the graph into a hierarchy and, inside each hierarchy levels, into sectors (called clusters) and performs pathfinding first in the higher levels, and then, in the lower levels that these high-level paths touch. This is that, on a high level layer, a path is planned and then, a second one within clusters of lower level and so. HPA* is used to quickly find an optimal path for many units faster than running A* individually. The number of nodes to check out is lower (since we do smaller searches) and the performance is better. 
+Pathfinding with a large number of units on a large graph, all with different starting locations and potentially different destinations can be tricky and time-performance consuming if there is not a good strategy. Hierarchical pathfinding might solve this problem when needing the previous features. It breaks the graph into a hierarchy and, inside each hierarchy levels, into sectors (called clusters) and performs pathfinding first in the higher levels, and then, in the lower levels that these high-level paths touch. This is that, on a high level layer, a path is planned and then, a second one within clusters of lower level and so. HPA* is used to quickly find an optimal path for many units faster than running A* individually. The number of nodes to check out is lower (since we do smaller searches) and the performance is better. 
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hpa/grid-hierarchy.png?raw=true" width="268px" height="134px"/>
@@ -267,7 +267,7 @@ And to tackle these, it uses a combination of grid preprocessing to have a high-
 As you will see, many of the nowadays game uses this approach towards pathfinding. For that reason, you might understand better HPA*, by can check out the next section of this page explaining approaches by other games, especially the ones talking about Castle Story, Heroes on the Move and Killzone.
 
 #### Improving HPA* - Partial Refinement A* (PRA*)
-HPA* also has some improvements. One of them is Partial Refinement A* (PRA*), that combines the hierarchical map abstraction like HPA* but also connects the different levels of the hierarchy (keeping the current nodes’ connectivity inside a same level), forming kind of pyramids. Then, to find a path, a level of the hierarchy is chosen and search for nodes representing the origin and destination nodes of that path.
+HPA* also has some improvements. One of them is Partial Refinement A* (PRA* ), that combines the hierarchical map abstraction like HPA* but also connects the different levels of the hierarchy (keeping the current nodes’ connectivity inside a same level), forming kind of pyramids. Then, to find a path, a level of the hierarchy is chosen and search for nodes representing the origin and destination nodes of that path.
 So, at the higher level chosen, PRA* uses A* to find a path and then projects the first steps down to the next hierarchy levels until reaching the final one (the one in which we need the path to work), where the final path is refined, meaning that is definitively done by considering a corridor around the previous projected path. However, PRA* performance is similar to HPA*.
 
 [This paper](https://drive.google.com/open?id=1UsIyOZQZwcV07r3xKoZMbOmIl2Sdp24h) explains PRA* better and [this one](https://drive.google.com/open?id=17HYI_ZHk0RQ_LV1bzESXIis1mQaEZ85r) purposes an improvement on it.
@@ -726,7 +726,7 @@ Regarding memory, the only things to store are the IDs of the parent rectangle o
 Check out [this](https://harablog.wordpress.com/2011/09/01/rectangular-symmetry-reduction/) blog page of Daniel Harabor (the developer of RSR), which explains it visually and understandably. He also leaves there access to its papers to check RSR deeply.
 
 #### Hierarchical Annotated A* (HAA*)
-Hierarchical Annotated A* (HAA*) extends HPA* by dividing a map into traversable terrain and blocked areas (as traditional) but doing a detailed analysis on the different terrains that the traversable parts might have (and the costs), like water, sand…
+Hierarchical Annotated A* (HAA* ) extends HPA* by dividing a map into traversable terrain and blocked areas (as traditional) but doing a detailed analysis on the different terrains that the traversable parts might have (and the costs), like water, sand…
 This makes that the units that must move over the map have into account the terrain which they are passing through (since the path does it), allowing to have a map with different terrain types with an optimized pathfinding that can be efficiently supported in a game like an RTS. Also, it allows the moving of units with variable sizes.
 This approach is interesting because very little works focused on diverse-size moving elements and different terrain types (with different costs), case in which JPS or RSR might not be a good idea for you.
 
@@ -765,7 +765,7 @@ Being a, b and c the square expansion, d the moment in which stops and the right
 
 This uses more memory than other methods, but allows to have a pathfinding that has into account moving units sizes and terrain types.
 
-So, the algorithm has two parts, a modification of A* and a Hierarchical part. This modification of A* (called Annotated A*) consists on passing to the function (a part of its usual parameters), the size and the capability of the moving element and then, when exploring a node, it checks if its traversable for the size and capability that the element has, being a tile traversable if the clearance value is (at minimum) equal to the agent size and the terrain traversable according to the capability. Everything else, is the same than A*.
+So, the algorithm has two parts, a modification of A* and a Hierarchical part. This modification of A* (called Annotated A* ) consists on passing to the function (a part of its usual parameters), the size and the capability of the moving element and then, when exploring a node, it checks if its traversable for the size and capability that the element has, being a tile traversable if the clearance value is (at minimum) equal to the agent size and the terrain traversable according to the capability. Everything else, is the same than A*.
 
 On top of this algorithm, a hierarchical abstraction is made to speed up. To have it is difficult since, with different terrain types, it must be as approximate as possible that can be as representative of the map as possible. To achieve that, first the map is divided into adjacent Clusters connected with entrances (consisting on two tiles of the both connected clusters that must be of the same terrain type), allowing to represent terrains accurately in this hierarchical representation (event though seems to contain redundant or duplicated information).
 
