@@ -90,14 +90,14 @@ So it’s a matter of efficiency; efficiency helps the program running fast and 
 ### Before Starting
 Before starting, it’s important for you to know how A* works as well as how grid maps are abstracted in graphs to perform pathfinding and how everything is calculated (if you don’t you can check [this](https://www.redblobgames.com/pathfinding/a-star/introduction.html) page or [this](https://www.redblobgames.com/pathfinding/a-star/implementation.html) one about implementing A*). Also, remember that there are, at least, 3 kind of distance calculations that you can use for heuristics (g values) depending on how do you want pathfinding to work in your game. They are:
 
-  * Manhattan Distance for for 4 or 6 directions movement →  d = Cl * (|dx| + |dy|)
-  * Diagonal Movement (8 directions): Chebyshev Distance → d = Cd * max(|dx|, |dy|) for Cd = Cl or Octile Distance for Cd = Cl * sqrt(2) → d = Cl * (dx+dy) + (Cd - 2Cl) * min(dx, dy)
+  * Manhattan Distance for for 4 or 6 directions movement →  d = Cl * (abs(dx) + abs(dy))
+  * Diagonal Movement (8 directions): Chebyshev Distance → d = Cd * max(abs(dx), abs(dy)) for Cd = Cl or Octile Distance for Cd = Cl * sqrt(2) → d = Cl * (dx+dy) + (Cd - 2Cl) * min(dx, dy)
   * Euclidean Distance for straight line (any angle/direction) movement, a more expensive calculation and descaling (of g and h) problems →  d = Cl * sqrt(2*dx*dy)
   
 Where Cl is the linear cost (horizontal/vertical) of moving, Cd the diagonal one, dx = x-x0 and dy = y -y0. I'm saying this because you can play with heuristics to change the types of paths you get.
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ## A* First Improvements, Generalities and Context
@@ -114,7 +114,7 @@ Bidirectional Search is to start two searches in parallel, one from start to goa
 At the beginning of the search, it’s assumed that is more important to get to the destination rather fast than better, so it changes heuristics to F = G + H * W. This W is a weight associated to the heuristic which goes decreasing as getting closer to the goal, so it goes decreasing the importance of the heuristics and increases the importance of the actual cost of the path, making it faster at the begin and better at the end.
 
 #### Iterative Deepening (IDA*)
-[IDA*](https://es.wikipedia.org/wiki/IDA*) is an algorithm that can find the shortest path in a weighted graph. It uses A*’s heuristic to calculate the heuristic of getting to the goal node but, since it’s a depth-first search algorithm, it uses less memory than A*. Even though, it explores the most promising nodes so it does not go to the same depth always (meaning that the time spent is worth). It might explore the same node many times.
+[IDA](https://es.wikipedia.org/wiki/IDA*)* is an algorithm that can find the shortest path in a weighted graph. It uses A*’s heuristic to calculate the heuristic of getting to the goal node but, since it’s a depth-first search algorithm, it uses less memory than A*. Even though, it explores the most promising nodes so it does not go to the same depth always (meaning that the time spent is worth). It might explore the same node many times.
 So, basically, it starts by performing a depth-first search and stops when the heuristics (F = H + G) exceeds a determined value, so if the value is too large, it won’t be considered. This value starts as an estimate initially and it goes increasing at each iteration.
 
 IDA* works for memory constrained problems. While A* keeps a queue of nodes, IDA* do not remember them (excepting the ones in current path), so the memory needed is linear and lower than in A*. A good thing of IDA* is that doesn’t spend memory on lists since it goes in-depth, but it has some disadvantages that the usage of a base algorithm like [Fringe Search](https://en.wikipedia.org/wiki/Fringe_search) can solve (at least partially).
@@ -138,7 +138,7 @@ In this section I will talk about a way to improve and speed up A* through [incr
 Incremental searches were developed for mobile robots and autonomous vehicle navigation, so it’s a quite deep sector. They tend to have more efficient algorithms than A* (and based on it), but, as they were thought to robotics, they support one only unit in movement, so they might be inefficient for many pathfindings in short times, like the ones we need in games, but it’s good to know them to have a deeper vision on pathfinding.
 
 #### Fringe Saving A*
-[Fringe Saving A*](https://drive.google.com/open?id=1ejkyIuEKYb5_12k2F9QNcLZrgsZ212F1) launches an A* search and then, if detects a map change, restores the first A* search until the point in which map has changed. Then it begins an A* search from there, instead of doing it from scratch.
+[Fringe Saving A](https://drive.google.com/open?id=1ejkyIuEKYb5_12k2F9QNcLZrgsZ212F1)* launches an A* search and then, if detects a map change, restores the first A* search until the point in which map has changed. Then it begins an A* search from there, instead of doing it from scratch.
 
 #### Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets
 This variant of A* can handle moving target points. When there is a moving point, the H variable of the heuristics change. If the target is constantly moving, these H values might become inconsistent, so Generalized Adaptive A* (GAA*) updates these H values using information of previous searches and keeps them consistent.
@@ -154,7 +154,7 @@ This allows to find shortest paths in state spaces where the action costs can in
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/D.jpg?raw=true" width="125px" height="125px"/>
 </p>
 
-[Dynamic A*](https://en.wikipedia.org/wiki/D*) (D*) was developed for robotics (mobile robot and autonomous vehicle navigation) to make robots navigate with the shortest path possible and towards a goal in an unknown terrain based on assumptions made (such as no obstacles in the way).
+[Dynamic A](https://en.wikipedia.org/wiki/D*)* (D*) was developed for robotics (mobile robot and autonomous vehicle navigation) to make robots navigate with the shortest path possible and towards a goal in an unknown terrain based on assumptions made (such as no obstacles in the way).
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/bostondynamics-640x353.jpg?raw=true" width="160px" height="88px"/>
@@ -171,7 +171,7 @@ But nevertheless, even though being similar to A*, is more complex and has been 
 </p>
 
 Parallely, there is an (obsoleted) algorithm called DynamicSWSF-FP that stored the distance from every node to the destination node. It had a big initial setup when calling it, but after graph changes, it updated ONLY the nodes whose distances had changed.
-This is important for [Incremental A*](https://drive.google.com/open?id=1tHE54ptXXKkmyM84ALw130HJtO4LNvne), also called Lifelong Planning A* (LPA*) which is a combination between DynamicSWSF-FP and A*. In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A*, the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time (but it consumes memory).
+This is important for [Incremental A](https://drive.google.com/open?id=1tHE54ptXXKkmyM84ALw130HJtO4LNvne)* , also called Lifelong Planning A* (LPA*) which is a combination between DynamicSWSF-FP and A*. In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A*, the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time (but it consumes memory).
 Although, LPA* has a problem: it finds the best path from the same start to the same finish, but is not very used if the start point is moving or changing (such as units movement), since it works with pairs of the same coordinates. Also, another problem is that both D* and LPA* need lots of space (because, to understand it, you run A* and keep its information) to, if the map changes, decide if adjusting the path fastly. This means that, in a game with many units moving, it’s not practical to use these algorithms because it’s not just the memory used, but the fact that they been designed for robots, which is one only unit moving; if you use them for many units, it stops being better than A*.
 
 <p align="center">
@@ -179,14 +179,14 @@ Although, LPA* has a problem: it finds the best path from the same start to the 
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/robotPATH.png?raw=true" width="162px" height="182px"/>
 </p>
 
-So, to fix LPA* ’s heart, it appeared [D* Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D*), mentioned before as it obsoleted D*. Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
+So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D*), mentioned before as it obsoleted D*. Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/DLite.png?raw=true" width="137px" height="135px"/>
 </p>
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ### Angled Pathfinding
@@ -231,7 +231,7 @@ A good advantage of these algorithms is that they are pretty easy to understand 
 To finish with angled pathfinding, just mention Incremental Phi*. It mixes Theta* and Field D*, by making an incremental version of Theta* (so, allowing fast-replanning). It’s useful for dynamic environments. [This paper](https://drive.google.com/open?id=1IlMBIdmF6ARN_VX7yaxn9NK5Z0mz-IlN) gets deep into it.
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ## Nowadays - Hierarchies and other Games
@@ -273,7 +273,7 @@ So, at the higher level chosen, PRA* uses A* to find a path and then projects th
 [This paper](https://drive.google.com/open?id=1UsIyOZQZwcV07r3xKoZMbOmIl2Sdp24h) explains PRA* better and [this one](https://drive.google.com/open?id=17HYI_ZHk0RQ_LV1bzESXIis1mQaEZ85r) purposes an improvement on it.
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ### Other Games’ Approaches
@@ -427,7 +427,7 @@ In the GDC China 2007, this man, along with Shelby Hubick give a presentation ab
 In fact, I recently discovered that in [this](http://aigamedev.com/open/tutorials/clearance-based-pathfinding/) article of AI Game Dev, is said that Chris Jurney at a that GDC 2007 talk, explains that they use a similar method to HAA* (explained downwards) with the usage of a variant of [Brushfire](http://roboscience.org/book/html/Planning/Brushfire.html) algorithm to put numeric values to the tiles of the map according their nearness to an obstacle and, therefore, calculating if the size of a troop make it able to pass through an area. The reason why this is not very explained here is because is not very shared in the talk and the article about it in the AI Game Dev page is premium (and I cannot have access). Anyway, you have a similar approach detailed downwards if you are interested (HAA* section, link above in this paragraph).
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ## My Approach - Killing Path Symmetries
@@ -676,7 +676,7 @@ And finally, you can see the [paper](https://drive.google.com/open?id=1ICnE_fVsj
 All the links in this section (except some of the videos) were the basis to building it.
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ### Other Improvements
@@ -746,7 +746,7 @@ On top of this algorithm, a hierarchical abstraction is made to speed up. To hav
 [Here](http://aigamedev.com/open/tutorials/clearance-based-pathfinding/) you will find an article of AI Game Dev written by Daniel Harabor about HAA* (used for this section) in which it links to [this](https://harablog.files.wordpress.com/2009/01/haa.pdf) bigger paper explaining it better. In that article, they also purpose optimizations for this system which decrease the memory used and increase performance by optimizing both the map representation and the algorithm. Also, it shows an analysis on performance, proving that is a fast and good approach to tackle games that feature different terrain types and mobile unit sizes.
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
 
 ## Final Thoughts and Recommendations
@@ -760,40 +760,42 @@ I will transcribe here my questions and annotations on **bold** letters and his 
 
 With no more delay, here is the conversation:
 
-_Hi Lucho, 
+Hi Lucho, 
 
-_Thank you for the email; it’s always nice to hear from a fellow pathfinding enthusiast! I am happy to read that you found my research interesting and I am humbled by your kind assessment of it. I will try my best to answer your questions below, inlined
+Thank you for the email; it’s always nice to hear from a fellow pathfinding enthusiast! I am happy to read that you found my research interesting and I am humbled by your kind assessment of it. I will try my best to answer your questions below, inlined
 
 **The first question is related to JPS against SRC. I have seen that SRC is way faster than JPS but spends lots of memory, so would you recommend better to use JPS instead of SRC? (you know, since I feel that the improvement in the speed it's not worth with that memory usage in a context like an RTS videogame).**
 
-_A main advantage of JPS is that it runs online. That means if the map changes (e.g. your workers clear a new path through the forest, or your sappers blow up a bridge) then any subsequent shortest path searches will take those changes into account. SRC meanwhile assumes the map will remain static. Paths are computed faster than JPS and it’s also possible to extract just the first few steps of a path instead of searching all the way to the target. This can be advantageous because replanning is fast. The main price, as you know, is the offline preprocessing overhead of SRC and the online memory overhead.
+A main advantage of JPS is that it runs online. That means if the map changes (e.g. your workers clear a new path through the forest, or your sappers blow up a bridge) then any subsequent shortest path searches will take those changes into account. SRC meanwhile assumes the map will remain static. Paths are computed faster than JPS and it’s also possible to extract just the first few steps of a path instead of searching all the way to the target. This can be advantageous because replanning is fast. The main price, as you know, is the offline preprocessing overhead of SRC and the online memory overhead.
 
-_Which method is better depends on the situation. In games such as Dragon Age for example, the maps are not so big (usually < 100K tiles) and the space and time overheads are usually small.
+Which method is better depends on the situation. In games such as Dragon Age for example, the maps are not so big (usually < 100K tiles) and the space and time overheads are usually small.
 
-_In the last period I have been thinking about combining the advantages of JPS and SRC. There are a few ways to do this. One way is to combine the SRC database with a jump point database. In such a setup the SRC database tells the user which direction to take to reach the target and the jump point database tells how many steps to take in that direction before the path needs to turn. The preprocessing costs are the same as SRC and the memory overhead is similar. You can read more here:
+In the last period I have been thinking about combining the advantages of JPS and SRC. There are a few ways to do this. One way is to combine the SRC database with a jump point database. In such a setup the SRC database tells the user which direction to take to reach the target and the jump point database tells how many steps to take in that direction before the path needs to turn. The preprocessing costs are the same as SRC and the memory overhead is similar. You can read more here:
 http://harabor.net/data/papers/sbghs-toppgm-18.pdf
 
 **Then I was thinking on rectangular symmetry reduction. Do you think it's a good idea to mix it with JPS? I don't even know if that is possible.**
 
-_RSR has two advantages vs JPS:
- _1. Rooms are precomputed so there’s no grid scanning*
- _2. Rooms limit the area in which neighbours are found (JPS scans are only limited, in the worst case, by hitting the edge of the map).
+RSR has two advantages vs JPS:
+ 1. Rooms are precomputed so there’s no grid scanning*
+ 2. Rooms limit the area in which neighbours are found (JPS scans are only limited, in the worst case, by hitting the edge of the map).
 
-_It’s possible to add both of these advantages to JPS by
-_(a) precomputing jump points and,
-_(b) limiting the maximum distance for any jump to some fixed value k.
+It’s possible to add both of these advantages to JPS by: 
 
-_You can find out more here:
+ (a) precomputing jump points and,
+ (b) limiting the maximum distance for any jump to some fixed value k.
+
+You can find out more here:
 http://harabor.net/data/papers/harabor-grastien-icaps14.pdf
 https://www.youtube.com/watch?v=NmM4pv8uQwI
 
-**And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.
+**And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.**
 
-_This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path. The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this setting.
+This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path. The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this setting.
 
-_If your map is also dynamic, you might consider e.g. weighted A* (which is bounded suboptimal) or some type of anytime search (which returns a best path it can find for a given time limit).
+If your map is also dynamic, you might consider e.g. weighted A* (which is bounded suboptimal) or some type of anytime search (which returns a best path it can find for a given time limit).
 
 And here ends the conversation. I think that with this, we can already have an idea of which pathfinding areas to explore according to our game, but remember, we must avoid things like this:
+
 <video align="center" src="https://www.youtube.com/watch?v=TYlWFbCknAI&feature=youtu.be" width="320" height="200" controls preload></video>
 
 ## Links to Additional Information
@@ -817,5 +819,5 @@ I can’t leave without thanking people and entities that provide some help when
 Thanks Yatch Games, Beautifun Games, Rick Pillosu, Marc Garrigó, Roger Leon and especially to Daniel Harabor. And, finally, thanks to you, reader. If any trouble with anything I explain, you can find me on my [GitHub](https://github.com/lucho1) or e-mail me to luchosuaya99@gmail.com
 
 ***
-> *Many information? Looking for other section? Go back to [Index](#index)*
+> *Many information? Looking for other section? Go back to [Index](#index)
 ***
