@@ -695,6 +695,12 @@ And finally, you can see the [paper](https://drive.google.com/open?id=1ICnE_fVsj
 
 All the links in this section (except some of the videos) were the basis to building it.
 
+#### Jump Point Search Improvements
+There are some improvements that can speed up even more JPS and which you can explore. Harabor and Grastien present some improvings such as applying pruning rules over many nodes at a single time, detecting dead ends and forced neighbours or avoid the jumping over the goal position as well as preprocessing some jump points to make it faster (which actually mades harder to control the changes in the map during the program if any).
+These changes are presented in [this article](https://drive.google.com/file/d/1v639KW_MmQShgFzmsHZOkSjtCVfEInmm/view) and you can see a [video](https://www.youtube.com/watch?v=NmM4pv8uQwI) of a Harabor's presentation explaining it.
+
+Also there is a [talk in GDC Vault](https://www.gdcvault.com/play/1022094/JPS-Over-100x-Faster-than) at GDC 2015 hosted by [Steve Rabin](https://en.wikipedia.org/wiki/Steve_Rabin) (an specialist in videgames Artificial Intelligence) in which he explains how to pre-compute somethings to speed up JPS and then how to speed up even more by deleting directions towards which to explore by implementing a technique taht he calls "Bounding Goal", which is kind of making a bounding box around optimal nodes that we can reach and decide the directions towards which to explore.
+
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
 
