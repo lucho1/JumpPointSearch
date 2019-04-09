@@ -573,6 +573,35 @@ Now the whole exercise is totally done. The result should look like in the solut
 </p>
 
 ##### Exercise Solutions
+**TODO 1**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+</p>
+
+**TODO 2**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+</p>
+
+**TODO 3**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+</p>
+
+**TODO 4**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+</p>
+
+**TODO 5**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+</p>
+
+**TODO 6**
+<p align="center">
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+</p>
 
 #### Performance
 Now, with Jump Point Search implemented we can take measures! In the exercise, the Scene Module is ready to pick pathfinding measures (which are shown both in output and screen). If we run both algorithms for the same path, we can check how many steps (this only in the console output area in Visual Studio) each one did (or how many nodes exploring) and how fast they come up with a path for the same start/end points.
