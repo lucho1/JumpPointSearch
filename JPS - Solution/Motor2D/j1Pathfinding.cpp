@@ -314,7 +314,11 @@ int j1PathFinding::PropagateJPS(const iPoint& origin, const iPoint& destination)
 			break;
 		}
 
-		PathList AdjacentNodes = lower->PruneNeighbours(destination, this); //THIS IS THE ONLY DIFFERENCE WITH A*'s core
+
+		//TODO 1: Only difference with A* in the core behaviour: Instead of filling
+		//the Adjacent nodes list with the immediate neighbours, we call the function
+		//that must prune them
+		PathList AdjacentNodes = (*lower).PruneNeighbours(destination, this);
 
 		std::list<PathNode>::iterator it = AdjacentNodes.list.begin();
 		for (; it != AdjacentNodes.list.end(); it = next(it)) {
@@ -346,20 +350,23 @@ PathList PathNode::PruneNeighbours(const iPoint& destination, j1PathFinding* PF_
 	
 	PathList ret;
 
-	//Fill the neighbours list with the whole tile neighbours
+	//TODO 2: Here we do the step that A* does in its core,
+	//Fill the neighbours list with the real or immediate neighbours
+	//Then iterate it
 	PathList neighbours;
 	FindWalkableAdjacents(neighbours); 
 
-	//Now we will iterate it and select ONLY the neighbours that we want
 	std::list<PathNode>::iterator item = neighbours.list.begin();
 	for (; item != neighbours.list.end(); item = next(item)) {
 
-		//Direction from current node to the node which we are iterating
-		//Clamp is to make sure that direction is kept inside unitary factors (if d < -1, return -1 || if d > 1, return 1. Otherwise return d)
+		//TODO 3: For each iteration, calculate the direction from current node
+		//to its neighbour. You can use CLAMP (defined in p2Defs)
 		iPoint direction(CLAMP((*item).pos.x - pos.x, 1, -1), CLAMP((*item).pos.y - pos.y, 1, -1));
 
-		//Now Find a Jump Point and add it to the list if found
+		//TODO 4: Make a Jump towards the calculated direction to find the next Jump Point
 		PathNode* JumpPoint = PF_Module->Jump(pos, direction, destination, this);
+
+		//TODO 5: If any Jump Point is found, add it to the list that we must return
 		if (JumpPoint != nullptr)
 			ret.list.push_back(*JumpPoint);
 	}
@@ -370,53 +377,55 @@ PathList PathNode::PruneNeighbours(const iPoint& destination, j1PathFinding* PF_
 
 PathNode* j1PathFinding::Jump(iPoint current_position, iPoint direction, const iPoint& destination, PathNode* parent) {
 
-	iPoint next(current_position.x + direction.x, current_position.y + direction.y);
+	//Determine next possible Jump Point's Position
+	iPoint JumpPoint_pos(current_position.x + direction.x, current_position.y + direction.y);
 
-	if (IsWalkable(next) == false) //If next point isn't walkable, return nullptr
+	//If next point isn't walkable, return nullptr
+	if (IsWalkable(JumpPoint_pos) == false)
 		return nullptr;
 
-	PathNode *retJP = new PathNode(-1, -1, next, parent);
+	PathNode *ret_JumpPoint = new PathNode(-1, -1, JumpPoint_pos, parent);
 
-	if (retJP->pos == destination) //If next node is goal, return it
-		return retJP;
+	//If next point is goal, return it
+	if (ret_JumpPoint->pos == destination)
+		return ret_JumpPoint;
 
-	//Check diagonal directions
-	if (direction.x != 0 && direction.y != 0) {
+
+	//TODO 6: Check if there is any possible Jump Point in Straight Directions (horizontal and vertical)
+	//If found any, return it. Else, keep jumping in the same direction
+	/// Checking Horizontals
+	if (direction.x != 0 && direction.y == 0) {
+
+		if (IsWalkable(current_position + iPoint(0, 1)) == false && IsWalkable(current_position + iPoint(direction.x, 1)) == true) 
+				return ret_JumpPoint;
+		
+		else if (IsWalkable(current_position + iPoint(0, -1)) == false && IsWalkable(current_position + iPoint(direction.x, -1)) == true)
+				return ret_JumpPoint;
+
+	}
+	/// Checking Verticals
+	else if (direction.x == 0 && direction.y != 0) {
+
+			if (IsWalkable(current_position + iPoint(1, 0)) == false && IsWalkable(current_position + iPoint(1, direction.y)) == true)
+					return ret_JumpPoint;
+
+			else if (IsWalkable(current_position + iPoint(-1, 0)) == false && IsWalkable(current_position + iPoint(-1, direction.y)) == true)
+					return ret_JumpPoint;
+	}
+	//TODO 7: Do the same check than for Straight Lines but now for Diagonals!
+	//(Remember prunning rules for diagonals!)
+	/// Checking Diagonals
+	else if (direction.x != 0 && direction.y != 0) {
 
 		if (IsWalkable(current_position + iPoint(direction.x, 0)) == false)
-			return retJP;
+			return ret_JumpPoint;
 		else if (IsWalkable(current_position + iPoint(0, direction.y)) == false)
-			return retJP;
+			return ret_JumpPoint;
 
-		if (Jump(next, iPoint(direction.x, 0), destination, parent) != nullptr
-			|| Jump(next, iPoint(0, direction.y), destination, parent) != nullptr)
-			return retJP;
-	}
-	else { //Check Straight Directions
-
-		if (direction.x != 0) { //Horizontal
-
-			if (IsWalkable(current_position + iPoint(0, 1)) == false) {
-
-				if (IsWalkable(current_position + iPoint(direction.x, 1)) == true)
-					return retJP;
-			}
-			else if (IsWalkable(current_position + iPoint(0, -1)) == false)
-				if (IsWalkable(current_position + iPoint(direction.x, -1)) == true)
-					return retJP;
-		}
-		else { //Vertical
-
-			if (IsWalkable(current_position + iPoint(1, 0)) == false) {
-
-				if (IsWalkable(current_position + iPoint(1, direction.y)) == true)
-					return retJP;
-			}
-			else if (IsWalkable(current_position + iPoint(-1, 0)) == false)
-				if (IsWalkable(current_position + iPoint(-1, direction.y)) == true)
-					return retJP;
-		}
+		if (Jump(JumpPoint_pos, iPoint(direction.x, 0), destination, parent) != nullptr
+			|| Jump(JumpPoint_pos, iPoint(0, direction.y), destination, parent) != nullptr)
+			return ret_JumpPoint;
 	}
 
-	return Jump(next, direction, destination, parent);
+	return Jump(JumpPoint_pos, direction, destination, parent);
 }
