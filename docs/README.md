@@ -860,7 +860,7 @@ And here ends the conversation. I think that with this, we can already have an i
 <video src="https://github.com/lucho1/JumpPointSearch/blob/master/docs/LANoirePathfindingFAIL.mp4" width="320" height="200" controls preload></video>
 
 ## Links to Additional Information
-All the information that I have used to build this research is linked all over the text in their respective sections or directly given. Also, you can find more interesting links and additional information (from which, in some cases, I also extracted information for this web) here:
+All the information that I have used to build this research is linked all over the text in their respective sections or directly given. Also, you can find more interesting links and additional information (from which I also extracted information) here:
 
  * [Discussion](https://cstheory.stackexchange.com/questions/11855/how-do-the-state-of-the-art-pathfinding-algorithms-for-changing-graphs-d-d-l) on different pathfinding algorithms, explanations and links to articles explaining them.
 
