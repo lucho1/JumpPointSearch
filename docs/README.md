@@ -498,7 +498,7 @@ Our goal now is to go step by step implementing JPS in order to understand how i
 So, if you download the exercise [linked again here](https://github.com/lucho1/JumpPointSearch), the exercise folder is the one called "Handout". In there, there is the code with the exercises to do, but also a folder with an executable showing how the result should look like (inside Game folder). You can play with it a bit to check the A* and JPS visual and performatic differences. Then, if you go to the exercises code, you will see that nothing happens if you call JPS (if you call A*, this one is already done to do the path).
 So let's begin.
 
-**TODO 1**
+*TODO 1*
 
 After checking the header for pathfinding module, we must go to the JPS core, the **PropagateJPS()** function. In here, there is one only difference with the **PropagateAStar()** function, which is how the current node's neighbours are filled. In A*, we called the FillAdjacents() function to fill a list with the immediate neighbours, but now, in JPS, we must prune them.
 
@@ -508,7 +508,7 @@ After checking the header for pathfinding module, we must go to the JPS core, th
 
 You won't see anything of JPS working until TODO 4 (but to find a path with the same start/goal node because of its core that calls him). The ms showing can change because they measure the time that lasts calling the **PropagateJPF()** function and, of course, A* because is already done and you don't need to do it (it's not the exercise focus), take it into account.
 
-**TODO 2**
+*TODO 2*
 
 Now let's go to the **PruneNeighbours()** functions in which we will do the incoming TODOs. First, in TODO 2, we must create and fill a list with the immediate neighbours of the current node (just as A* do, the step that we deleted in JPS core). Then iterate that list.
 
@@ -517,13 +517,13 @@ Next is an image of TODOs 2, 3 and 4:
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/explanation/todo234EXP.PNG?raw=true" width="808px" height="335px"/>
 </p>
 
-**TODO 3**
+*TODO 3*
 
 Once the second TODO is done, inside each iteration, we must calculate the direction from the current node to its neighbour that is currently being iterated. Remember to use [CLAMP](https://stackoverflow.com/questions/21656574/why-is-there-no-clamp-function-in-math-h) method, defined in p2Defs header (inside Core/Tools) to keep the direction inside a unitary factor (between -1 and 1).
 
 On the next TODOs, JPS will start working, until now you shouldn't have been able to see nothing from JPS.
 
-**TODO 4**
+*TODO 4*
 
 Once the direction is calculated, perform a Jump towards that direction to find the next Jump Point. Then, if any one is found, add it to the list that we must return (already created).
 
@@ -535,7 +535,7 @@ If this is done correctly, JPS should be able to find strictly straigh paths (or
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo4resultjps2.PNG?raw=true" width="320px" height="164px"/>
 </p>
     
-**TODO 5**
+*TODO 5*
 
 Now is time to code the **Jump()** function. Let's begin by determining how the algorithm, according to the rules stated, must explore towards straight directions (horizonals and verticals).
 Remember that we just have to keep looking until finding a Jump Point, and a Jump Point is found **[Keep Going]**
@@ -548,18 +548,18 @@ Next is an image of TODOs 5 and 6:
 If some Jump Point is found, return it. Otherwise, just keep exploring with recursive magic. By now, you should be able to build (only) straight paths JPS (as in TODO 4 but with the nodes explored in the middle) and see their speed difference (and the steps taken by each one in output console of Visual Studio):
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES-As.PNG?raw=true" width="457px" height="232px"/>
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES.PNG?raw=true" width="457px" height="235px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES-As.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES.PNG?raw=true" width="381px" height="195px"/>
 </p>
 
 If you change the heuristics in the function **CalculateF()** and select the DiagonalDistance() to calculate H values, you can build some paths with JPS that are not only straight in itself, but all its parts are formed by straight paths (with colliders in the middle), like this:
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES2-As.PNG?raw=true" width="457px" height="232px"/>
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES2.PNG?raw=true" width="457px" height="234px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES2-As.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo5RES2.PNG?raw=true" width="381px" height="195px"/>
 </p>
 
-**TODO 6**
+*TODO 6*
 
 Finally we have to do the same than TODO 5 but with diagonal directions. For this, remember that a Jump Point is found if **[Keep going]**.
 
@@ -568,8 +568,8 @@ In the function **FindWalkableAdjacent()**, remember to uncomment the lines that
 Now the whole exercise is totally done. The result should look like in the solution executable in Game folder. You should be able to build any path with both algorithms and see the efficiency differences (and steps taken by each one in output console of Visual Studio).
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="457px" height="235px"/>
- <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6resultjps.PNG?raw=true" width="457px" height="236px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6result.PNG?raw=true" width="381px" height="195px"/>
+ <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/jps/Implementation/todosResults/todo6resultjps.PNG?raw=true" width="457px" height="195px"/>
 </p>
 
 ###### Exercise Solutions
