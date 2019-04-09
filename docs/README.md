@@ -54,6 +54,7 @@ I am Lucho Suaya, a student of the Bahcelor’s Degree in Video Games by [UPC](h
          * [Hierarchical Annotated A* (HAA*)](#hierarchical-annotated-a-haa)
   6. [Final Thoughts and Recommendations](#final-thoughts-and-recommendations)
   7. [Links to Additional Information](#links-to-additional-information)
+  8. [Thanks](#thanks)
 
 ## Research Organization
 As you may see in the index, this page has many sections and many information. It’s possible that you are not interested in everything that is explained here, so to ease your accessibility, let me explain how the research is organized (apart of introduction part).
@@ -749,7 +750,71 @@ On top of this algorithm, a hierarchical abstraction is made to speed up. To hav
 ***
 
 ## Final Thoughts and Recommendations
+After all the information gathered here, I think that a conclusion is needed. There are lots of manners to improve A* ‘s pathfinding, to make it faster, to make it lighter… So we have to take a balance and put in there many things to have into account. First of all, we have to know what our game needs in terms of pathfinding efficiency and memory usage. Maybe, just by improving a bit A* our game runs okay, or maybe we have such a big map and we need a very fast pathfinding…
+Is a matter of putting into a balance the concepts of optimal and best paths, fastness and memory use as well as how much it cares for our game a realistic pathfinding and things like that.
+
+In more specific terms, talking about Jump Point Search, we have seen that it’s a great A* improvement, but it can happen that is not the best take for our game, for that reason I introduce you Rectangular Symmetry Reduction and Hierarchically Annotated A*, the three of them developed by Daniel Harabor, for the cases in which JPS is not helpful. This can be the case if your map has different terrains with different crossing weights (case in which you will need to give memory and speed) or if you want precise and realistic paths (same case, less speed and memory but more good-looking IA).
+For this reason, and because he is the creator, I have been emailing Daniel Harabor with questions regarding this matters, and, rather than being me the one that gives you some recommendations on what pathfinding to use and when and which guidelines to follow, let him be the one telling you.
+
+I will transcribe here my questions and annotations on **bold** letters and his answers on *italic*. In a case we mention [SRC](http://www.harabor.net/daniel/index.php/pathfinding/), a short path algorithm that spends more memory to increase speed (decreasing pathfinding time until the order of nanoseconds). It was the fastest algorithm in a [competition of grid path planning of 2014](https://www.cs.du.edu/~sturtevant/papers/GPPC-2014.pdf). In the link, there is an overview, but I didn't inquired much on it because at that moment I was just looking over SRC and it seemed very complex to implement (and was not the main focus for my purposes because of the memory that needs).
+
+With no more delay, here is the conversation:
+
+_Hi Lucho, 
+
+_Thank you for the email; it’s always nice to hear from a fellow pathfinding enthusiast! I am happy to read that you found my research interesting and I am humbled by your kind assessment of it. I will try my best to answer your questions below, inlined
+
+**The first question is related to JPS against SRC. I have seen that SRC is way faster than JPS but spends lots of memory, so would you recommend better to use JPS instead of SRC? (you know, since I feel that the improvement in the speed it's not worth with that memory usage in a context like an RTS videogame).**
+
+_A main advantage of JPS is that it runs online. That means if the map changes (e.g. your workers clear a new path through the forest, or your sappers blow up a bridge) then any subsequent shortest path searches will take those changes into account. SRC meanwhile assumes the map will remain static. Paths are computed faster than JPS and it’s also possible to extract just the first few steps of a path instead of searching all the way to the target. This can be advantageous because replanning is fast. The main price, as you know, is the offline preprocessing overhead of SRC and the online memory overhead.
+
+_Which method is better depends on the situation. In games such as Dragon Age for example, the maps are not so big (usually < 100K tiles) and the space and time overheads are usually small.
+
+_In the last period I have been thinking about combining the advantages of JPS and SRC. There are a few ways to do this. One way is to combine the SRC database with a jump point database. In such a setup the SRC database tells the user which direction to take to reach the target and the jump point database tells how many steps to take in that direction before the path needs to turn. The preprocessing costs are the same as SRC and the memory overhead is similar. You can read more here:
+http://harabor.net/data/papers/sbghs-toppgm-18.pdf
+
+**Then I was thinking on rectangular symmetry reduction. Do you think it's a good idea to mix it with JPS? I don't even know if that is possible.**
+
+_RSR has two advantages vs JPS:
+ _1. Rooms are precomputed so there’s no grid scanning*
+ _2. Rooms limit the area in which neighbours are found (JPS scans are only limited, in the worst case, by hitting the edge of the map).
+
+_It’s possible to add both of these advantages to JPS by
+_(a) precomputing jump points and,
+_(b) limiting the maximum distance for any jump to some fixed value k.
+
+_You can find out more here:
+http://harabor.net/data/papers/harabor-grastien-icaps14.pdf
+https://www.youtube.com/watch?v=NmM4pv8uQwI
+
+**And finally, for videogames in which the nodes of the graph are weighted because of different terrains, I imagine that JPS might not be a very good idea, so what would you recommend to use? I was guessing that RSR or HAA*, but I might be wrong, so I wanted to confirm it.
+
+_This is a great question. In dynamic cost settings JPS will no longer guarantee to return the optimal path. The interesting point here is that symmetries still exist and they might also be fruitfully exploited. RSR could be used for this purpose but I have never tried that experiment. HAA* and SRC will also work in this setting.
+
+_If your map is also dynamic, you might consider e.g. weighted A* (which is bounded suboptimal) or some type of anytime search (which returns a best path it can find for a given time limit).
+
+And here ends the conversation. I think that with this, we can already have an idea of which pathfinding areas to explore according to our game, but remember, we must avoid things like this:
+<video align="center" src="https://www.youtube.com/watch?v=TYlWFbCknAI&feature=youtu.be" width="320" height="200" controls preload></video>
+
 ## Links to Additional Information
+All the information that I have used to build this research is linked all over the text in their respective sections or directly given. Also, you can find more interesting links and additional information (from which, in some cases, I also extracted information for this web) here:
+
+ * [Discussion](https://cstheory.stackexchange.com/questions/11855/how-do-the-state-of-the-art-pathfinding-algorithms-for-changing-graphs-d-d-l) on different pathfinding algorithms, explanations and links to articles explaining them.
+
+ * Full A* guide in [Amit’s Thoughts on Pathfinding](http://theory.stanford.edu/~amitp/GameProgramming/) page at [Red Blob Games](https://www.redblobgames.com/).
+
+ * [Daniel Harabor’s](http://www.harabor.net/daniel/) [thesis](http://harabor.net/data/papers/thesis.pdf) on pathfinding and [blog pages](https://harablog.wordpress.com/2011/08/26/fast-pathfinding-via-symmetry-breaking/) about pathfinding via symmetry breaking, which are together in [this document](https://users.cecs.anu.edu.au/~dharabor/data/papers/harabor-aigamedev12.pdf)
+
+ * [Survey Document](http://drops.dagstuhl.de/opus/volltexte/2013/4333/pdf/4.pdf) on recent work in pathfinding in games by Adi Botea, Bruno Bouzy, Michael Buro, Christian Bauckhage and Dana Nau.
+
+ * [AI Game Dev](http://aigamedev.com/) page from where I extracted many articles and [GDC Talks](https://www.gdconf.com/) from which I extracted many information (linked them in their corresponding section of this page). Many of the ones I used (bot of AI Game Dev and GDC Talks) I compiled their links on [this pdf](https://drive.google.com/open?id=18Wqf03jAJGCQaCKi4lPRxV_-e8QBIsyi).
+
+
+You can also find curious information on looking for other kind of approaches to perform pathfinding (of course, for understandable reasons, I didn’t put here all the existing ways) or other curious investigations such as LEARCH, a combination of machine-learning algorithms used to teach robots how to find near-optimal paths on their own, based on neural networks. [This paper](https://arrow.dit.ie/cgi/viewcontent.cgi?article=1063&context=itbj) mentions some about it, can be interesting (I didn’t read it deeply).
+
+## Thanks
+I can’t leave without thanking people and entities that provide some help when building all this, either with a small e-mail, a big answering e-mail or just by supporting the research.
+Thanks Yatch Games, Beautifun Games, Rick Pillosu, Marc Garrigó, Roger Leon and especially to Daniel Harabor. And, finally, thanks to you, reader. If any trouble with anything I explain, you can find me on my [GitHub](https://github.com/lucho1) or e-mail me to luchosuaya99@gmail.com
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
