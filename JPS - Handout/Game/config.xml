@@ -1,0 +1,34 @@
+<!-- Config file for the game -->
+
+<config>
+  <app>
+    <title>JPS - AStar Optimizations</title>
+    <organization>UPC/Project II - Lucho Suaya</organization>
+  </app>
+	
+  <renderer>
+    <vsync value="false"/>
+  </renderer>
+
+  <window>
+    <resolution width="1024" height="620" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="true"/>
+    <fullscreen_window value="false"/>
+  </window>
+
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+  
+  <fonts>
+    <open_sans id="0" file="fonts/open_sans/OpenSans-Regular.ttf" size="15" />
+    <end/>
+  </fonts>
+
+</config>
