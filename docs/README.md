@@ -67,7 +67,7 @@ As you may see in the index, this page has many sections and many information. I
   
 Then I conclude this research with [final thoughts](#final-thoughts-and-recommendations) and some [additional information](#links-to-additional-information).
 
-You can check a [diapositives presentation](https://drive.google.com/open?id=11SCDpKlDce9Gievg4LTOLhFot-Zl2kif) for this research too (helpful for the later exercise).
+You can check a [diapositives presentation](https://drive.google.com/open?id=1z-SMxq7d6cR9azI72IHSUD-tmf23vmtv) for this research too (helpful for the later exercise).
 
 ## Introduction to Problem
 As you may deduce, in many games, there is a need to find paths from a location to another, for example, to give a path for a unit to move. To do this, we build algorithms in order to find these paths in an automatic manner. In this research, we will talk about one specific algorithm, which I will suppose you already know, the A*, in order to find optimizations and improvements for it.
@@ -120,10 +120,10 @@ At the beginning of the search, it’s assumed that is more important to get to 
 So, basically, it starts by performing a depth-first search and stops when the heuristics (F = H + G) exceeds a determined value, so if the value is too large, it won’t be considered. This value starts as an estimate initially and it goes increasing at each iteration.
 
 IDA* works for memory constrained problems. While A* keeps a queue of nodes, IDA* do not remember them (excepting the ones in current path), so the memory needed is linear and lower than in A*. A good thing of IDA* is that doesn’t spend memory on lists since it goes in-depth, but it has some disadvantages that the usage of a base algorithm like [Fringe Search](https://en.wikipedia.org/wiki/Fringe_search) can solve (at least partially).
-[This](https://drive.google.com/open?id=1Yu3bnZXCnRsxiuk6l-ZbHEQbF7mGe8a2) paper explains it deeper.
+[This paper](https://drive.google.com/file/d/1S4yyMGDOsTIbsLeT9RTA7xI0X0RVAU87/view?usp=sharing) explains it deeper.
 
 #### Building This Section
-To build this section, apart of the links used and placed over the text above, I have used fragments of [this](https://drive.google.com/open?id=1D_NkL1co6TvEbcS5PyoceycbSPr59IDu) thesis that explains, among others, interesting things on Heuristics, IDA*, A* and Fringe Search.
+To build this section, apart of the links used and placed over the text above, I have used fragments of [this thesis](https://drive.google.com/file/d/1tSYPiozY7BI65rwKyajTkIJ4vB_WFIgs/view?usp=sharing) that explains, among others, interesting things on Heuristics, IDA*, A* and Fringe Search.
 Also, I have used a part of [this](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html) page in [Amit’s Thoughts on Pathfinding](http://theory.stanford.edu/~amitp/GameProgramming/).
 
 ***
