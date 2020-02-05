@@ -124,14 +124,14 @@ IDA* works for memory constrained problems. While A* keeps a queue of nodes, IDA
 
 #### Building This Section
 To build this section, apart of the links used and placed over the text above, I have used fragments of [this thesis](https://drive.google.com/file/d/1tSYPiozY7BI65rwKyajTkIJ4vB_WFIgs/view?usp=sharing) that explains, among others, interesting things on Heuristics, IDA*, A* and Fringe Search.
-Also, I have used a part of [this](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html) page in [Amit’s Thoughts on Pathfinding](http://theory.stanford.edu/~amitp/GameProgramming/).
+Also, I have used a part of [this page](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html) in [Amit’s Thoughts on Pathfinding](http://theory.stanford.edu/~amitp/GameProgramming/).
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)*
 
 
 ### Paths Recalculations - Incremental Searches
-In this section I will talk about a way to improve and speed up A* through [incremental searches](https://drive.google.com/open?id=1tmqB_ooKRxiBzbYO6aB7ptmx3B62rwTk) which uses information from previous searches to have a basis over which to build the new searches and, therefore, spend less time (speed up searches for sequences of similar problems by using experience from previous problems).
+In this section I will talk about a way to improve and speed up A* through [incremental searches](https://drive.google.com/file/d/1i-ViagNKWOXffQsBwW3KbT3u_4JchGT0/view?usp=sharing) which uses information from previous searches to have a basis over which to build the new searches and, therefore, spend less time (speed up searches for sequences of similar problems by using experience from previous problems).
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/incremental.jpg?raw=true" width="172px" height="138px"/>
@@ -140,7 +140,7 @@ In this section I will talk about a way to improve and speed up A* through [incr
 Incremental searches were developed for mobile robots and autonomous vehicle navigation, so it’s a quite deep sector. They tend to have more efficient algorithms than A* (and based on it), but, as they were thought to robotics, they support one only unit in movement, so they might be inefficient for many pathfindings in short times, like the ones we need in games, but it’s good to know them to have a deeper vision on pathfinding.
 
 #### Fringe Saving A*
-[Fringe Saving A](https://drive.google.com/open?id=1ejkyIuEKYb5_12k2F9QNcLZrgsZ212F1)* launches an A* search and then, if detects a map change, restores the first A* search until the point in which map has changed. Then it begins an A* search from there, instead of doing it from scratch.
+[Fringe Saving A](https://drive.google.com/file/d/1HRmVgx7UwJ-8npARCh5CSIC_Kl1NT1t-/view?usp=sharing)* launches an A* search and then, if detects a map change, restores the first A* search until the point in which map has changed. Then it begins an A* search from there, instead of doing it from scratch.
 
 #### Generalized Adaptive A* (GAA*) - Initial Approach to Moving Targets
 This variant of A* can handle moving target points. When there is a moving point, the H variable of the heuristics change. If the target is constantly moving, these H values might become inconsistent, so Generalized Adaptive A* (GAA*) updates these H values using information of previous searches and keeps them consistent.
@@ -149,7 +149,7 @@ This variant of A* can handle moving target points. When there is a moving point
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/movingtargetGIF.gif?raw=true" width="147px" height="147px"/>
 </p>
 
-This allows to find shortest paths in state spaces where the action costs can increase over time since consistent h-values remain consistent after action cost increases. It’s easy to implement and understand and better explained in [this article](https://drive.google.com/open?id=1e4gbDqxuCwCO9b-5i8fIykFHqmW92qTK).
+This allows to find shortest paths in state spaces where the action costs can increase over time since consistent h-values remain consistent after action cost increases. It’s easy to implement and understand and better explained in [this article](https://drive.google.com/file/d/1prnCt2AhIm-Pq8dPNyjOn9cQHxeRu9xk/view?usp=sharing).
 
 #### Dynamic A* (D* ) and Lifelong Planning A* (LPA*)
 <p align="center">
@@ -173,7 +173,7 @@ But nevertheless, even though being similar to A*, is more complex and has been 
 </p>
 
 Parallely, there is an (obsoleted) algorithm called DynamicSWSF-FP that stored the distance from every node to the destination node. It had a big initial setup when calling it, but after graph changes, it updated ONLY the nodes whose distances had changed.
-This is important for [Incremental A](https://drive.google.com/open?id=1tHE54ptXXKkmyM84ALw130HJtO4LNvne)* , also called Lifelong Planning A* (LPA* ) which is a combination between DynamicSWSF-FP and A* . In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A* , the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time but consumes memory.
+This is important for [Incremental A](https://drive.google.com/file/d/1yV8AcM54Ky3WueRJzajmRTFfyZlZ4kOl/view?usp=sharing)* , __also called Lifelong Planning A* (LPA* )__ which is a combination between DynamicSWSF-FP and A* . In the core, is the same than A* but when the graph changes, the later searches for the same start/finish pairs uses the information of previous searches to reduce the number of nodes to look at, so LPA* is mainly used when the costs of the nodes changes because with A* , the path can be annulled by them (which means that has to be restarted). LPA* can re-use the previous computations to do a new path, which saves time but consumes memory.
 Although, LPA* has a problem: it finds the best path from the same start to the same finish, but is not very used if the start point is moving or changing (such as units movement), since it works with pairs of the same coordinates. Also, another problem is that both D* and LPA* need lots of space (because, to understand it, you run A* and keep its information) to, if the map changes, decide if adjusting the path fastly. This means that, in a game with many units moving, it’s not practical to use these algorithms because it’s not just the memory used, but the fact that they been designed for robots, which is one only unit moving; if you use them for many units, it stops being better than A*.
 
 <p align="center">
@@ -181,7 +181,7 @@ Although, LPA* has a problem: it finds the best path from the same start to the 
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/robotPATH.png?raw=true" width="162px" height="182px"/>
 </p>
 
-So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/open?id=1_QszpFqF8jxi3zLHE1_JJQKlAd3cQVPU) (not based on D* ), mentioned before as it obsoleted D* . Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
+So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/file/d/1MRzGYuP-R7Hxe06J_N9U10diHDL7SJcq/view?usp=sharing) (not based on D* ), mentioned before as it obsoleted D* . Generally, D* and D* Lite have the same behaviour but D* Lite uses LPA* to recalculate map information (LPA* is better on doing so). Also, is simpler to implement and to understand than D* and always runs at least as fast as D*.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/DLite.png?raw=true" width="137px" height="135px"/>
@@ -202,10 +202,10 @@ So, to fix LPA* ’s heart, it appeared [DStar Lite](https://drive.google.com/op
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/angledpath.png?raw=true" width="332px" height="138px"/>
 </p>
 
-For a comparison and explanation between different angled pathfinding algorithm, check out [this paper](https://drive.google.com/open?id=1O7HlD0lUHE7M5B2ruPDhUol4wgrRnG7M).
+For a comparison and explanation between different angled pathfinding algorithms, check out [this paper](https://drive.google.com/file/d/1HckwZmKwGPr9UK99yZ7-rpLJWkrVH7B2/view?usp=sharing).
 
 #### Field D*
-Field D* is a variant of D* Lite that does not constraints to a grid, it gives the best path moving along any angle adding smooth to the path by using interpolation (which complicates it a bit). It was used for a Mars Rovers, see [this paper](https://drive.google.com/open?id=1GbV9tLGrmLRy2EqLdXikn8gY7Ko4xnAA) for more information.
+Field D* is a variant of D* Lite that does not constraints to a grid, it gives the best path moving along any angle adding smooth to the path by using interpolation (which complicates it a bit). It was used for a Mars Rovers, see [this paper](https://drive.google.com/file/d/1iPehYztUl0oizKflyNnXDWwcOoUG3670/view?usp=sharing) for more information.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/Mars1.jpeg?raw=true" width="192px" height="192px"/>
@@ -218,7 +218,7 @@ The next is an image of a comparison between A* (in Red) and Lazy Theta* (in Blu
 </p>
 
 Theta* is an A* and D* variant (like Field D* ) but it doesn’t has fast-replanning capabilities. It runs on square grids and it finds shortest paths that do not strictly follow the grid by pointing to adjacent ancestors, if there is a line of sight towards that node, it can save it as a parent node, skipping the nodes in-between (what is called visibility).
-See this [AI Game Dev article](http://aigamedev.com/open/tutorials/theta-star-any-angle-paths/) for further information, is well explained there. Also you can see this [paper](https://drive.google.com/open?id=1hMGIUlks5_YRiU9zSVlU0H2R-VNUp-so) in which there’s a longer and deeper explanation on angled pathfinding and also, on Block A*, which is a version of Theta* that is faster because it uses a hierarchical approach ([this article](https://drive.google.com/open?id=1jbFISJ4SRsnVN2R8UWHvOxKWuXFQgQvY) gets even more information on Block A*). 
+See this [AI Game Dev article](http://aigamedev.com/open/tutorials/theta-star-any-angle-paths/) for further information, is well explained there. Also you can see [this paper](https://drive.google.com/file/d/1gWq_sLpT9y4eDeuwk-qc8fVy_yJlP7St/view?usp=sharing) in which there is a longer and deeper explanation on angled pathfinding and also, on _Block A*_, which is a version of Theta* that is faster because it uses a hierarchical approach ([this article](https://drive.google.com/file/d/1D29tneewFcmQT21_mSxEZ-VLCgQKD28p/view?usp=sharing) gets even more information on Block A*). 
 
 Appart of Block A* , there’s also another faster version for Theta* called Lazy Theta* . You can check this AI Game Dev article for more information on it, basically, in four more lines of code, it makes Theta* faster by performing less line of sight checks.
 
@@ -230,7 +230,7 @@ Appart of Block A* , there’s also another faster version for Theta* called Laz
 A good advantage of these algorithms is that they are pretty easy to understand and implement.
 
 #### Incremental Phi*
-To finish with angled pathfinding, just mention Incremental Phi* . It mixes Theta* and Field D* , making an incremental version of Theta* (so, allowing fast-replanning). It’s useful for dynamic environments. [This paper](https://drive.google.com/open?id=1IlMBIdmF6ARN_VX7yaxn9NK5Z0mz-IlN) gets deep into it.
+To finish with angled pathfinding, just mention Incremental Phi* . It mixes Theta* and Field D* , making an incremental version of Theta* (so, allowing fast-replanning). It’s useful for dynamic environments. [This paper](https://drive.google.com/file/d/1G8pX0ty8g18VE13BClTPC0kni3YmwK6H/view?usp=sharing) gets deep into it.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
