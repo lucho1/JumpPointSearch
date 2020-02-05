@@ -218,9 +218,9 @@ The next is an image of a comparison between A* (in Red) and Lazy Theta* (in Blu
 </p>
 
 Theta* is an A* and D* variant (like Field D* ) but it doesn’t has fast-replanning capabilities. It runs on square grids and it finds shortest paths that do not strictly follow the grid by pointing to adjacent ancestors, if there is a line of sight towards that node, it can save it as a parent node, skipping the nodes in-between (what is called visibility).
-See this [AI Game Dev article](http://aigamedev.com/open/tutorials/theta-star-any-angle-paths/) for further information, is well explained there. Also you can see [this paper](https://drive.google.com/file/d/1gWq_sLpT9y4eDeuwk-qc8fVy_yJlP7St/view?usp=sharing) in which there is a longer and deeper explanation on angled pathfinding and also, on _Block A*_, which is a version of Theta* that is faster because it uses a hierarchical approach ([this article](https://drive.google.com/file/d/1D29tneewFcmQT21_mSxEZ-VLCgQKD28p/view?usp=sharing) gets even more information on Block A*). 
+See this [AI Game Dev article](https://web.archive.org/web/20190717211246/http://aigamedev.com/open/tutorials/theta-star-any-angle-paths/) for further information, is well explained there. Also you can see [this paper](https://drive.google.com/file/d/1gWq_sLpT9y4eDeuwk-qc8fVy_yJlP7St/view?usp=sharing) in which there is a longer and deeper explanation on angled pathfinding and also, on _Block A*_, which is a version of Theta* that is faster because it uses a hierarchical approach ([this article](https://drive.google.com/file/d/1D29tneewFcmQT21_mSxEZ-VLCgQKD28p/view?usp=sharing) gets even more information on Block A*). 
 
-Appart of Block A* , there’s also another faster version for Theta* called Lazy Theta* . You can check this AI Game Dev article for more information on it, basically, in four more lines of code, it makes Theta* faster by performing less line of sight checks.
+Appart of Block A* , there’s also another faster version for Theta* called Lazy Theta* . You can check [this AI Game Dev article](https://web.archive.org/web/20190717210943/http://aigamedev.com/open/tutorial/lazy-theta-star) for more information on it, basically, in four more lines of code, it makes Theta* faster by performing less line of sight checks.
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/thetavslazytheta.png?raw=true" width="291px" height="169px"/>
@@ -258,7 +258,7 @@ Pathfinding with a large number of units on a large graph, all with different st
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/hierarchyPF3.png?raw=true" width="268px" height="220px"/>
 </p>
 
-The hierarchical pathfinding addresses, mainly, three issues (the next parts are very well explained in this [AI Game Dev article](http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/), which also includes the HPA* paper to download and a evaluation of the algorithm):
+The hierarchical pathfinding addresses, mainly, three issues (the next parts are very well explained in this [AI Game Dev article](https://web.archive.org/web/20190716202239/http://aigamedev.com/open/review/near-optimal-hierarchical-pathfinding/), which also includes the HPA* paper to download and a evaluation of the algorithm):
 
   1. Dynamic environment and paths changings
   2. A* ’s slow performance in big maps
@@ -272,20 +272,22 @@ As you will see, many of the nowadays game uses this approach towards pathfindin
 HPA* also has some improvements. One of them is Partial Refinement A* (PRA* ), that combines the hierarchical map abstraction like HPA* but also connects the different levels of the hierarchy (keeping the current nodes’ connectivity inside a same level), forming kind of pyramids. Then, to find a path, a level of the hierarchy is chosen and search for nodes representing the origin and destination nodes of that path.
 So, at the higher level chosen, PRA* uses A* to find a path and then projects the first steps down to the next hierarchy levels until reaching the final one (the one in which we need the path to work), where the final path is refined, meaning that is definitively done by considering a corridor around the previous projected path. However, PRA* performance is similar to HPA*.
 
-[This paper](https://drive.google.com/open?id=1UsIyOZQZwcV07r3xKoZMbOmIl2Sdp24h) explains PRA* better and [this one](https://drive.google.com/open?id=17HYI_ZHk0RQ_LV1bzESXIis1mQaEZ85r) purposes an improvement on it.
+[This paper](https://drive.google.com/file/d/1ZL_hVxI4VHMsst9wo74KAS48LjwkG2mT/view?usp=sharing) explains PRA* better and [this one](https://drive.google.com/file/d/1nZc6QXf7TmAISfv3bnWPvl-FQigadwIE/view?usp=sharing) purposes an improvement on it.
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
 
 
 ### Other Games’ Approaches
-Until here, we have been looking different ways to improve A* ’s performance. Anyway, we should also see how other different games try to overcome the problem to take them as a reference (since they are the ones that have people investigating for their games to work). First of all, to have the first clue, mention that [this]() project is a package for unity that provides an improved A* version and supports different graph set ups (navigation meshes, waypoints…) and even ways to automate them. It’s used by games like [Kim](https://store.steampowered.com/app/433400/Kim/), [Folk Tale](http://www.gamesfoundry.com/), [Divide](http://www.explodingtuba.com/), [CubeMen](http://cubementd.com/) or [Dark Frontier](https://www.youtube.com/watch?v=tOc-xdtufmg).
+Until here, we have been looking different ways to improve A* ’s performance. Anyway, we should also see how other different games try to overcome the problem to take them as a reference (since they are the ones that have people investigating for their games to work). First of all, to have the first clue, mention that [this](https://arongranberg.com/astar/#) project is a package for unity that provides an improved A* version and supports different graph set ups (navigation meshes, waypoints…) and even ways to automate them. It’s used by games like [Kim](https://store.steampowered.com/app/433400/Kim/), [Folk Tale](http://www.gamesfoundry.com/), [Divide](http://www.explodingtuba.com/), [CubeMen](http://cubementd.com/) or [Dark Frontier](https://www.youtube.com/watch?v=tOc-xdtufmg).
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/unity.jpg?raw=true" width="285px" height="154px"/>
 </p>
 
 I would like to mention that we have tried (with time enough, like a month or two ago) to contact different studios and companies to ask them how they work towards pathfinding, but only two answered. I would like to thank them, one is [Beautifun Games](https://beautifungames.com/) (whose we will talk now) and the other is [Yatch Club Games](https://yachtclubgames.com/), developers of games like [Shovel Knight](https://yachtclubgames.com/shovel-knight/) or [Cyber Shadow](https://yachtclubgames.com/cyber-shadow/). I won’t talk about them because they answered that they do not use pathfinding in their games since they are simple enough.
+
+In addition, is also helpful to mention that Unity Engine's [Navigation](https://learn.unity.com/search?k=%5B%22q%3ANavigation%22%5D) is done with a [Miko Mononen's](https://github.com/memononen) library that ease all the process of pathfinding and creating Navigation meshes. This library is called [Recast](https://github.com/recastnavigation/recastnavigation). 
 
 Without further delay, let’s keep moving!
 
@@ -310,8 +312,10 @@ As they needed to save a lot of memory, and to make it more faster, they statica
 
 I won’t talk more about Starcraft II pathfinding since it’s not in the direction of this research, but if you want to know more, you can go to that [2011 GDC talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) in which he explains it deeper (minutes 3 to 20), which is the same talk in which the orators explain the pathfinding for Heroes on the Move and Dragon Age Origin. Also, check the section 2.4 (Triangulation Based Pathfinding) of [this Pathfinding book](http://drops.dagstuhl.de/opus/volltexte/2013/4333/pdf/4.pdf) (pages 24-25) that explains a bit about Pathfinding with triangulated map representations.
 
-> ** *Specifically, [Constrained Delaunay Triangulation](https://en.wikipedia.org/wiki/Constrained_Delaunay_triangulation), which is a generalization of the [Delaunay Triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) that not always accomplishes a rule called the Delaunay Condition that states that the circle circumscribed of each triangle dividing, in this case the map, cannot contain any vertex of other triangle.
+> *Specifically, [Constrained Delaunay Triangulation](https://en.wikipedia.org/wiki/Constrained_Delaunay_triangulation), which is a generalization of the [Delaunay Triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) that not always accomplishes a rule called the Delaunay Condition that states that the circle circumscribed of each triangle dividing, in this case the map, cannot contain any vertex of other triangle.
 A [Triangulation](https://en.wikipedia.org/wiki/Triangulation_(geometry)) is the division of the map into triangles, for the people who does not know.*
+
+Probably they used this to build a Navigation Map in which use a pathfinding algorithm on top.
 
 ###### Dragon Age Origins
 The case of [Dragon Age Origins](https://www.ea.com/es-es/games/dragon-age/dragon-age-origins) is similar to the ones of its same talk in [GDC 2011 talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) (minute 36 to 54), Starcraft II and Heroes on the Move, and as they were before, [Nathan Sturtevant](https://www.cs.du.edu/~sturtevant/) (consultant for [BioWare](http://www.bioware.com/) that implemented pathfinding engine) do not explain a lot regarding to pathfinding itself since it seems pretty similar to the previous talks, so it focuses more on path smoothing, quality and trap avoidance (how to prevent pathfinding to make weird things and make it look good).
@@ -357,7 +361,7 @@ To know the place where to cross between lines, they just calculated the nearest
 This pathfinding way is also explained in the same [GDC 2011 talk](https://www.gdcvault.com/play/1014514/AI-Navigation-It-s-Not) than Starcraft II and Dragon Age Origin (from minute 20 to 36).
 
 ###### Supernauts
-Harri Hatinen, Lead Programmer of [Grand Cru](http://grandcrugames.com/), explained in the GDC China 2014 that they abstracted the map to a [Navigation Mesh](https://en.wikipedia.org/wiki/Navigation_mesh) and mixed with hierarchy representation for [Supernauts](http://supernauts.com/). I could recover the [presentation](https://drive.google.com/file/d/1HIj5jPo2WcK7q9KyQ6ADoWFakRCGPbd-/view?usp=sharing) in which explains how they handle the navigation map, how they make it work (taking into account the frontier between nodes and its longitude, How the IA knows where to pass by in a large frontier between nodes?) and how they update it each time that the map changes.
+Harri Hatinen, Lead Programmer of [Grand Cru](http://grandcrugames.com/), explained in the GDC China 2014 that they abstracted the map to a [Navigation Mesh](https://en.wikipedia.org/wiki/Navigation_mesh) and mixed with hierarchy representation for [Supernauts](http://supernauts.com/). I could recover the [presentation](https://drive.google.com/file/d/1b30cx62uwYH7o3FOoXELR7iuVgDXuzuO/view?usp=sharing) in which explains how they handle the navigation map, how they make it work (taking into account the frontier between nodes and its longitude, How the IA knows where to pass by in a large frontier between nodes?) and how they update it each time that the map changes.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/supernauts.jpg?raw=true" width="341px" height="256px"/>
@@ -367,8 +371,10 @@ There is a [video](https://www.gdcvault.com/play/1021705/Advanced-Real-time-Path
 
 #### Hierarchical Pathfinding
 ###### Castle Story
-Another interesting talk, this case in the GDC 2018, was the one by Alain Benoit, Lead Programmer and CTO (Chief Technology Officer) of [Sauropod Studio](https://www.sauropodstudio.com/english-1). I could only find the [diapositives](https://drive.google.com/open?id=1oH2uebOgW39KZxkZp4Z6xxiqnfAX9yS_)’ presentation because to see the video you must be a GDC member (which I’m not, I’m a student and sadly I don’t have 550$ each year to invest in GDC), but in case you are, I leave you the search of that presentation [here](https://www.gdcvault.com/search.php#&category=free&firstfocus=&keyword=Benoit+Alain&conference_id=).
+Another interesting talk, this case in the GDC 2018, was the one by Alain Benoit, Lead Programmer and CTO (Chief Technology Officer) of [Sauropod Studio](https://www.sauropodstudio.com/english-1). I could only find the [diapositives](https://drive.google.com/file/d/1tMWzsa2w9dnm7UgKaYsrmEuRPevzuREb/view?usp=sharing)’ presentation because to see the video you must be a GDC member (which I’m not, I’m a student and sadly I don’t have 550$ each year to invest in GDC), but in case you are, I leave you the search of that presentation [here](https://www.gdcvault.com/search.php#&category=free&firstfocus=&keyword=Benoit+Alain&conference_id=).
 Anyway, with the diapositives it’s pretty understandable that for their game, [Castle Story](http://www.castlestory.net/), they decided to use Hierarchical Pathfinding to fulfill their needs to have many agents moving, dynamic obstacles, stairs and blockages, deformable terrain and buildable blocks in a large scale map.
+
+Note that they mention all this for Voxel worlds (worlds built from cubes called [Voxels](https://en.wikipedia.org/wiki/Voxel) instead of triangles, as traditionally), and I'm not sure how this can affect the research or the pathfinding; probably the map abstraction is a bit different.
 
 <p align="center">
  <img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/Astar%20Trap2.png?raw=true" width="326px" height="242px"/>
@@ -389,7 +395,7 @@ To find optimum paths, they state a certain chain of rules such as explore lower
 <p align="center"><img src="https://raw.githubusercontent.com/lucho1/JumpPointSearch/master/docs/Images/other%20games/Castle%20Story/hierarcy8.PNG?raw=true" width="435px" height="184px"/></p>
 
 ###### KillZone 2
-I can’t talk that much about Killzone 2 since the only thing I have is [this](https://drive.google.com/file/d/1GlsWO-dw_8zj3AENfcwjmSQysAmHZIH9/view) power point from the Game AI Conference celebrated in Paris in 2009.
+I can’t talk that much about Killzone 2 since the only thing I have is [this](https://drive.google.com/file/d/1GFXOqh7_cnDC1btXf4j7VOxuMec1wLeY/view?usp=sharing) power point from the Game AI Conference celebrated in Paris in 2009.
 From the diapositives I could translate and extract that they use kind of a mix between waypoints and hierarchy (a set of areas created as groups of waypoints):
 
 <p align="center">
@@ -415,7 +421,7 @@ Now from here, each squad of units has an own pathfinder which finds a path betw
 Again, this is a translation with some interpretations of the powerpoint linked above, I’m not 100% sure on how it actually works since I can’t go deeply on it with only this presentation, so I might be wrong in something.
 
 ###### Company of Heroes and Dawn of War 2
-The [AI Game Dev](http://aigamedev.com/) platform (sadly seems closed by now), interviewed Chris Jurney, which worked as Senior Programmer in [Relic Entertainment](http://aigamedev.com/) and at [Kaos Studios](http://aigamedev.com/). It was part of the development of Company of Heroes and Dawn of War 2, games for which he was interviewed in the interview that I’m talking about. You can see the transcription in [PDF](http://aigamedev.com/) and the [MP3](http://aigamedev.com/) recording.
+The [AI Game Dev](http://aigamedev.com/) platform (sadly seems closed by now, [check the page in the past](https://web.archive.org/web/20190715174621/http://aigamedev.com/) from the internet web archive, was a really nice page about AI), interviewed Chris Jurney, which worked as Senior Programmer in [Relic Entertainment](https://www.relic.com/) and at [Kaos Studios](https://en.wikipedia.org/wiki/Kaos_Studios). It was part of the development of Company of Heroes and Dawn of War 2, games for which he was interviewed in the interview that I’m talking about. You can see the transcription in [PDF](https://drive.google.com/file/d/15ptkIv0VGAtUVbHgd5zZnHzR5YX2UEv5/view?usp=sharing) and the [MP3](https://drive.google.com/file/d/1oACefHj95g7V2OznQmPU8LCW_NH0mwAa/view?usp=sharing) recording.
 
 In there, he explains that the pathfinding in Company of Heroes worked as well with Hierarchical Pathfinding in a map of thousand of meters (so thousands of cells) in which the worst case was 1000x250 (250 000 cells). This was very complicated to implement (especially for map changes and updates), so he says that HPA* can be a good complexity-decrementer (event thought it confesses that he did not tried).
 
@@ -425,8 +431,8 @@ In there, he explains that the pathfinding in Company of Heroes worked as well w
 </p>
 
 With hierarchical pathfinding, he says that each unit can recalculate behaviour each 3/10 to half a second to follow a leader that actually knows the whole picture and re-evaluates the route every second.
-In the GDC China 2007, this man, along with Shelby Hubick give a presentation about AI in Destructive environments in Company of Heroes, in case you are interested in it. This is the [Audio](https://drive.google.com/open?id=1r9MsnRnyEZ6S28W-YduDSiUJf2pat2Wc) (again, couldn’t find a video, sorry).
-In fact, I recently discovered that in [this](http://aigamedev.com/open/tutorials/clearance-based-pathfinding/) article of AI Game Dev, is said that Chris Jurney at a that GDC 2007 talk, explains that they use a similar method to HAA* (explained downwards) with the usage of a variant of [Brushfire](http://roboscience.org/book/html/Planning/Brushfire.html) algorithm to put numeric values to the tiles of the map according their nearness to an obstacle and, therefore, calculating if the size of a troop make it able to pass through an area. The reason why this is not very explained here is because is not very shared in the talk and the article about it in the AI Game Dev page is premium (and I cannot have access). Anyway, you have a similar approach detailed downwards if you are interested (HAA* section, link above in this paragraph).
+In the GDC China 2007, this man, along with Shelby Hubick give a presentation about AI in Destructive environments in Company of Heroes, in case you are interested in it. This is the [Audio](https://drive.google.com/file/d/1oACefHj95g7V2OznQmPU8LCW_NH0mwAa/view?usp=sharing) (again, couldn’t find a video, sorry).
+In fact, I recently discovered that in [this article of AI Game Dev](https://web.archive.org/web/20190725152735/http://aigamedev.com/open/tutorials/clearance-based-pathfinding) about Clearance Pathfanding and HAA* , is said that Chris Jurney, in that GDC 2007 talk, explains that they use a similar method to HAA* (explained downwards) with the usage of a variant of [Brushfire algorithm](http://roboscience.org/book/html/Planning/Brushfire.html) to put numeric values to the tiles of the map according their nearness to an obstacle and, therefore, calculating if the size of a troop make it able to pass through an area. The reason why this is not very well explained here is because is not completely shared in the talk and the article about it in the AI Game Dev page is premium (and I cannot have access). Anyway, you have a similar approach detailed [downwards](#hierarchical-annotated-a-haa) if you are interested (HAA* section).
 
 ***
 > *Many information? Looking for other section? Go back to [Index](#index)
