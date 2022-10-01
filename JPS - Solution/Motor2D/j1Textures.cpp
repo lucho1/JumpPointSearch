@@ -79,6 +79,8 @@ SDL_Texture* const j1Textures::Load(const char* path)
 // Unload texture
 bool j1Textures::UnLoad(SDL_Texture* texture)
 {
+	if (!texture)
+		return true;
 
 	std::list<SDL_Texture*>::iterator item = textures.begin();
 	for (; item != textures.end(); item = next(item)) {

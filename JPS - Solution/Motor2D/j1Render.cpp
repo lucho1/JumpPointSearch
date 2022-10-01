@@ -116,6 +116,9 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 // Blit to screen
 bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
+	if (!texture)
+		return true;
+
 	bool ret = true;
 	uint scale = App->win->GetScale();
 

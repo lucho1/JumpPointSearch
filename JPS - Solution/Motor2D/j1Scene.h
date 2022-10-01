@@ -39,7 +39,7 @@ private:
 	SDL_Texture* debug_tex;
 	bool activateJPS = false;
 	j1PerfTimer PathfindingTimer;
-	double Ptime;
+	double Ptime = 0.0;
 
 	//Performance Test Showing (Debug Purposes)
 	char* AlgorithmUsed = "Algorithm Used: A-Star (press F to change)";
@@ -50,7 +50,7 @@ private:
 	SDL_Rect ms_charRect = { 0, 0, 1, 1 };
 	SDL_Texture*  ms_charText = nullptr;
 
-	char number_ms[10];
+	char number_ms[10] = "0000";
 	SDL_Texture *number_msTexture = nullptr;
 	SDL_Rect number_ms_rect = { 0, 0, 1, 1 };
 
