@@ -59,14 +59,13 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-
 	// Switch between A* and JPS
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 
 		activateJPS = !activateJPS;
 		App->tex->UnLoad(algorithmUsed_text);
 
-		if (activateJPS == true)
+		if (activateJPS)
 			AlgorithmUsed = "Algorithm Used: JPS (press F to change)";
 		else
 			AlgorithmUsed = "Algorithm Used: A-Star (press F to change)";
@@ -89,7 +88,6 @@ bool j1Scene::PreUpdate()
 	{
 		if(origin_selected == true)
 		{
-
 			LOG("========PATHFINDING PERFORMANCE TEST RESULTS=========");
 			LOG("Using Algorithm: %s", AlgorithmUsed);
 
@@ -120,17 +118,16 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		App->render->camera.y += 5;
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		App->render->camera.y -= 5;
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		App->render->camera.x += 5;
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera.x -= 5;
 
 	App->map->Draw();
