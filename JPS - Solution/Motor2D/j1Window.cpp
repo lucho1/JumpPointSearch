@@ -38,8 +38,8 @@ bool j1Window::Awake(pugi::xml_node& config)
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
 
-		width = config.child("resolution").attribute("width").as_int(640);
-		height = config.child("resolution").attribute("height").as_int(480);
+		width = config.child("resolution").attribute("width").as_int(1080);
+		height = config.child("resolution").attribute("height").as_int(720);
 		scale = config.child("resolution").attribute("scale").as_int(1);
 
 		if(fullscreen == true)
