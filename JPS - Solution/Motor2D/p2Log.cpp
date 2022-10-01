@@ -29,8 +29,11 @@ void log(const char file[], int line, const char* format, ...)
 
 void saveLogFile()
 {
-	const std::string projectDir = std::filesystem::current_path().u8string() + "\\output";
-	const std::string filepath = projectDir + "\\logs.txt";
+	const std::string targetDir = std::filesystem::current_path().u8string() + "\\output";
+	const std::string filepath = targetDir + "\\logs.txt";
+
+	if(!std::filesystem::exists(targetDir) || !std::filesystem::is_directory(targetDir))
+		std::filesystem::create_directory(targetDir);
 
 	std::ofstream ofs(filepath.c_str(), std::ios_base::out | std::ios_base::trunc);
 	for (const std::string& message : logs)
