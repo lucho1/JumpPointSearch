@@ -23,15 +23,12 @@ j1Scene::~j1Scene()
 bool j1Scene::Awake()
 {
 	LOG("Loading Scene");
-	bool ret = true;
-
-	return ret;
+	return true;
 }
 
 // Called before the first frame
 bool j1Scene::Start()
 {
-
 	//if(App->map->Load("iso.tmx") == true)
 	if (App->map->Load("iso_walk.tmx") == true)
 	{

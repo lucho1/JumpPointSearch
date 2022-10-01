@@ -101,8 +101,8 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	}
 	else if(data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x - y) * (data.tile_width * 0.5f);
-		ret.y = (x + y) * (data.tile_height * 0.5f);
+		ret.x = (int)((x - y) * (data.tile_width * 0.5f));
+		ret.y = (int)((x + y) * (data.tile_height * 0.5f));
 	}
 	else
 	{
@@ -142,11 +142,13 @@ iPoint j1Map::WorldToMap(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
+
 	SDL_Rect rect;
 	rect.w = tile_width;
 	rect.h = tile_height;
 	rect.x = margin + ((rect.w + spacing) * (relative_id % num_tiles_width));
 	rect.y = margin + ((rect.h + spacing) * (relative_id / num_tiles_width));
+	
 	return rect;
 }
 
@@ -174,6 +176,7 @@ bool j1Map::CleanUp()
 		RELEASE(*item2);
 		item2 = next(item2);
 	}
+
 	data.layers.clear();
 
 	// Clean up the pugui tree
@@ -199,24 +202,17 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	// Load general info ----------------------------------------------
-	if(ret == true)
-	{
+	if(ret)
 		ret = LoadMap();
-	}
 
 	// Load all tilesets info ----------------------------------------------
 	pugi::xml_node tileset;
 	for(tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
 		TileSet* set = new TileSet();
-
-		if(ret == true)
+		if (ret)
 		{
 			ret = LoadTilesetDetails(tileset, set);
-		}
-
-		if(ret == true)
-		{
 			ret = LoadTilesetImage(tileset, set);
 		}
 
@@ -231,11 +227,11 @@ bool j1Map::Load(const char* file_name)
 
 		ret = LoadLayer(layer, lay);
 
-		if(ret == true)
+		if(ret)
 			data.layers.push_back(lay);
 	}
 
-	if(ret == true)
+	if(ret)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
@@ -295,10 +291,6 @@ bool j1Map::LoadMap()
 		if(bg_color.length() > 0)
 		{
 			std::string	 red, green, blue;
-			bg_color.substr(1, 2);
-			bg_color.substr(3, 4);
-			bg_color.substr(5, 6);
-
 			int v = 0;
 
 			sscanf_s(red.data(), "%x", &v);
@@ -314,21 +306,13 @@ bool j1Map::LoadMap()
 		std::string orientation(map.attribute("orientation").as_string());
 
 		if(orientation == "orthogonal")
-		{
 			data.type = MAPTYPE_ORTHOGONAL;
-		}
 		else if(orientation == "isometric")
-		{
 			data.type = MAPTYPE_ISOMETRIC;
-		}
 		else if(orientation == "staggered")
-		{
 			data.type = MAPTYPE_STAGGERED;
-		}
 		else
-		{
 			data.type = MAPTYPE_UNKNOWN;
-		}
 	}
 
 	return ret;
