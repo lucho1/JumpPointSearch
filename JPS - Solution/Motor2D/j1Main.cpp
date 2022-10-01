@@ -105,7 +105,9 @@ int main(int argc, char* args[])
 		}
 	}
 
+	LOG("Quitting Program...\n");
 	LOG("... Bye! :)\n");
+	saveLogFile();
 
 	// Dump memory leaks
 	return result;
