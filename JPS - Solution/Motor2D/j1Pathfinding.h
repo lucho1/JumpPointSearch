@@ -31,6 +31,9 @@ public:
 	// To request all tiles involved in the last generated path
 	const std::vector<iPoint>* GetLastPath() const;
 
+	// Clean Last Path
+	void ClearLastPath();
+
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
 

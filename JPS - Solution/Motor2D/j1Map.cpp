@@ -264,6 +264,13 @@ bool j1Map::Load(const char* file_name)
 	return ret;
 }
 
+bool j1Map::SwitchMap(const char* path)
+{
+	CleanUp();
+	map_loaded = Load(path);
+	return map_loaded;
+}
+
 // Load map general properties
 bool j1Map::LoadMap()
 {

@@ -12,13 +12,13 @@ j1PathFinding::j1PathFinding() : j1Module(), map(NULL), width(0), height(0)
 // Destructor
 j1PathFinding::~j1PathFinding()
 {
-	RELEASE_ARRAY(map);
+	CleanUp();
 }
 
 // Called before quitting
 bool j1PathFinding::CleanUp()
 {
-	LOG("Freeing pathfinding library");
+	LOG("Freeing pathfinding module");
 
 	last_path.clear();
 	RELEASE_ARRAY(map);
@@ -63,6 +63,11 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 const std::vector<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
+}
+
+void j1PathFinding::ClearLastPath()
+{
+	last_path.clear();
 }
 
 // PathList ------------------------------------------------------------------------

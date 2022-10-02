@@ -3,8 +3,18 @@
 
 #include "j1Module.h"
 #include "j1PerfTimer.h"
+#include "j1Timer.h"
 
 struct SDL_Texture;
+
+struct FontTexture
+{
+	FontTexture(const std::string& text) : fontText(text) {}
+
+	std::string fontText = "";
+	SDL_Rect fontRect = { 0, 0, 1, 1 };
+	SDL_Texture* fontTexture = nullptr;
+};
 
 class j1Scene : public j1Module
 {
@@ -33,27 +43,47 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+
+private:
+	
+	// Fonts
+	SDL_Texture* SetupFontText(const std::string& text, SDL_Rect* textRect);
+
+	// Map setup
+	bool LoadMap(const char* mapFilepath);
+	void SetupMap(const char* mapFilepath);
+	std::string GetCurrentMapBlitText();
+
+	// Switch maps
+	void SwitchMap();
+
+
 private:
 
 	//Pathfinding Debug Stuff
 	SDL_Texture* debug_tex;
 	bool activateJPS = false;
 	j1PerfTimer PathfindingTimer;
-	double Ptime = 0.0;
 
-	//Performance Test Showing (Debug Purposes)
-	char* AlgorithmUsed = "Algorithm Used: A-Star (press F to change)";
-	SDL_Rect algorithmUsed_rect = {0, 0, 1, 1};
-	SDL_Texture* algorithmUsed_text = nullptr;
+	//Performance Test Showing
+	FontTexture algorithmInfo = "Algorithm Used: A-Star (press F to change)";
+	FontTexture timeInfo = "Lasted Time (ms): ";
+	FontTexture millisecondsInfo = "0000";
 
-	char* ms_char = "Lasted Time (ms): ";
-	SDL_Rect ms_charRect = { 0, 0, 1, 1 };
-	SDL_Texture*  ms_charText = nullptr;
+	// Maps
+	const char* map1 = "iso_walk.tmx";
+	const char* map2 = "iso.tmx";
 
-	char number_ms[10] = "0000";
-	SDL_Texture *number_msTexture = nullptr;
-	SDL_Rect number_ms_rect = { 0, 0, 1, 1 };
+	// Map Info
+	FontTexture cameraInfo = "Press C to reset the Camera position";
+	FontTexture cameraMoveInfo = "Move with WASD or Arrows - Shift to speed up";
+	FontTexture currentMap = "none";
+	FontTexture mapLoadError = "dummy error";
+	FontTexture mapLoadFatal = "dummy fatal error";
+	FontTexture quitInfo = "Press ESC to close program";
 
+	j1Timer errorMessageTimer;
+	bool showMapFatal = false;
 };
 
 #endif // __j1SCENE_H__
