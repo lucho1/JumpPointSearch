@@ -17,13 +17,13 @@ public:
 	uint32 Read() const;
 	float ReadSec() const;
 
+	bool IsRunning() const;
+
 private:
 
-	uint32	started_at;
-	uint32  stopped_at;
-	bool running;
-
-
+	uint32	started_at = 0;
+	uint32  stopped_at = 0;
+	bool running = false;
 };
 
 #endif //__j1TIMER_H__

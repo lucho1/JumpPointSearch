@@ -9,11 +9,10 @@
 // ---------------------------------------------
 j1Timer::j1Timer()
 {
-	Start();
 }
 
-void j1Timer::StartFrom(uint32 ms) {
-
+void j1Timer::StartFrom(uint32 ms)
+{
 	running = true;
 	started_at = SDL_GetTicks() + (ms);
 }
@@ -21,11 +20,12 @@ void j1Timer::StartFrom(uint32 ms) {
 // ---------------------------------------------
 void j1Timer::Start()
 {
+	running = true;
 	started_at = SDL_GetTicks();
 }
 
-void j1Timer::Stop() {
-
+void j1Timer::Stop()
+{
 	running = false;
 	stopped_at = SDL_GetTicks();
 }
@@ -33,8 +33,7 @@ void j1Timer::Stop() {
 // ---------------------------------------------
 uint32 j1Timer::Read() const
 {
-
-	if (running == true)
+	if (running)
 		return (SDL_GetTicks() - started_at);
 	else
 		return stopped_at - started_at;
@@ -43,9 +42,13 @@ uint32 j1Timer::Read() const
 // ---------------------------------------------
 float j1Timer::ReadSec() const
 {
-
-	if (running == true)
+	if (running)
 		return (float)(SDL_GetTicks() - started_at) / 1000.0f;
 	else
 		return (float)(stopped_at - started_at) / 1000.0f;
+}
+
+bool j1Timer::IsRunning() const
+{
+	return running;
 }
