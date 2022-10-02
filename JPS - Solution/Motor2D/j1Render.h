@@ -42,6 +42,9 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	// Camera
+	void ResetCameraPosition();
+
 public:
 
 	SDL_Renderer*	renderer;

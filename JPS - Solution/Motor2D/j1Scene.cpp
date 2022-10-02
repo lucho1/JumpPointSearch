@@ -53,6 +53,9 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	// Reset Camera Position
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+		App->render->ResetCameraPosition();
 
 	// Switch Maps
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
@@ -120,17 +123,21 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	float camSpeed = 3.0f;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT)
+		camSpeed *= 20.0f;
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		App->render->camera.y += 5;
+		App->render->camera.y += (int)camSpeed;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->render->camera.y -= 5;
+		App->render->camera.y -= (int)camSpeed;
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		App->render->camera.x += 5;
+		App->render->camera.x += (int)camSpeed;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		App->render->camera.x -= 5;
+		App->render->camera.x -= (int)camSpeed;
 
 	App->map->Draw();
 
@@ -234,6 +241,7 @@ void j1Scene::SetupMap(const char* mapFilepath)
 	RELEASE_ARRAY(data);
 	currentMap.fontText = mapFilepath;
 	App->render->ResetCameraPosition();
+}
 
 std::string j1Scene::GetCurrentMapBlitText()
 {

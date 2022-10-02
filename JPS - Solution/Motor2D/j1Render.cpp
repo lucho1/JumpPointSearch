@@ -92,6 +92,12 @@ void j1Render::SetBackgroundColor(SDL_Color color)
 	background = color;
 }
 
+void j1Render::ResetCameraPosition()
+{
+	camera.x = 0;
+	camera.y = 0;
+}
+
 void j1Render::SetViewPort(const SDL_Rect& rect)
 {
 	SDL_RenderSetViewport(renderer, &rect);
